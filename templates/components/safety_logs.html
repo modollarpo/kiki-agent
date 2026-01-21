@@ -1,0 +1,44 @@
+<div class="glass-card mt-8 p-4 font-mono text-xs border-t-2 border-[#00ff88]/20">
+    <div class="flex justify-between items-center mb-2">
+        <h3 class="text-[#00ff88] uppercase tracking-widest">SyncShield™ Live Audit</h3>
+        <div class="flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+            <span class="text-gray-500">LIVE FEED</span>
+        </div>
+    </div>
+    <div id="log-container" class="h-48 overflow-y-auto space-y-1 scrollbar-hide bg-black/40 p-3 rounded">
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io();
+    socket.on('new_log', function(data) {
+        const container = document.getElementById('log-container');
+        const div = document.createElement('div');
+        // Color coding based on log type
+        const color = data.type === 'SHIELD-BLOCK' ? 'text-red-400' : 
+                      data.type === 'SHIELD-PASS' ? 'text-green-400' : 'text-gray-300';
+        div.className = `${color} border-l-2 pl-2 border-current opacity-0 transition-opacity duration-500 typewriter`;
+        div.textContent = data.msg;
+        container.appendChild(div);
+        setTimeout(() => div.classList.remove('opacity-0'), 10);
+        container.scrollTop = container.scrollHeight;
+    });
+</script>
+<style>
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: .15em solid #00ff88;
+  animation: typing 1.2s steps(40, end), blink-caret .75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #00ff88; }
+}
+</style>

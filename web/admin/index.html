@@ -198,6 +198,37 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- SyncShield Log Section -->
+                <div class="syncshield-log-container mb-6">
+                    <h3 class="font-bold text-lg">SyncShield™ Log</h3>
+                    <div class="flex items-center gap-2 mb-2">
+                        <input id="filter-syncshield-id" class="input input-xs" placeholder="Creative ID">
+                        <input id="filter-syncshield-reason" class="input input-xs" placeholder="Reason">
+                        <input id="filter-syncshield-platform" class="input input-xs" placeholder="Platform">
+                        <input id="filter-syncshield-user" class="input input-xs" placeholder="User">
+                        <input id="filter-syncshield-severity" class="input input-xs" placeholder="Severity">
+                        <input id="filter-syncshield-start" type="datetime-local" class="input input-xs" placeholder="Start">
+                        <input id="filter-syncshield-end" type="datetime-local" class="input input-xs" placeholder="End">
+                        <button id="granular-filter-syncshield-btn" class="btn btn-xs btn-info">Granular Filter</button>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <input id="log-retention-days" class="input input-xs w-20" type="number" min="1" placeholder="Days">
+                        <input id="log-retention-max" class="input input-xs w-24" type="number" min="1" placeholder="Max Entries">
+                        <button id="update-log-retention-btn" class="btn btn-xs btn-warning">Update Retention</button>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <button id="download-syncshield-log-btn" class="btn btn-xs btn-success">Download CSV</button>
+                        <button id="download-syncshield-log-json-btn" class="btn btn-xs btn-success">Download JSON</button>
+                        <button id="download-syncshield-log-xlsx-btn" class="btn btn-xs btn-success">Download Excel</button>
+                        <button id="download-syncshield-log-pdf-btn" class="btn btn-xs btn-success">Download PDF</button>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <input id="syncshield-api-push-url" class="input input-xs w-96" placeholder="API Push Endpoint URL">
+                        <button id="set-syncshield-api-push-btn" class="btn btn-xs btn-primary">Set API Push URL</button>
+                    </div>
+                    <div id="syncshield-log" class="bg-gray-900 text-green-300 p-3 rounded h-40 overflow-y-auto text-xs font-mono"></div>
+                </div>
             </div>
 
             <!-- Services Tab -->
@@ -338,6 +369,7 @@
                         </div>
                         <div id="analytics-summary" class="mb-4"></div>
                         <div id="creative-insights" class="mb-4"></div>
+                        <div id="syncmemory-top-styles" class="mb-4"></div>
                         <canvas id="creative-trend-chart" height="120" class="mb-4"></canvas>
                         <canvas id="ltv-distribution-chart" height="120" class="mb-4"></canvas>
                         <canvas id="approval-rate-pie" height="120" class="mb-4"></canvas>

@@ -1,3 +1,30 @@
+// --- SyncMemory: Top Styles ---
+async function loadSyncMemoryTopStyles() {
+    const res = await fetch(`${API_BASE}/creative-gallery/memory/top-styles`);
+    let topStyles = [];
+    if (res.ok) {
+        topStyles = (await res.json()).top_styles;
+    }
+    renderSyncMemoryTopStyles(topStyles);
+}
+
+function renderSyncMemoryTopStyles(topStyles) {
+    const container = document.getElementById('syncmemory-top-styles');
+    if (!container) return;
+    if (!topStyles.length) {
+        container.innerHTML = '<p class="text-muted">No memory insights yet.</p>';
+        return;
+    }
+    let html = '<h6>Top Creative Styles (Last 7 Days)</h6><ul class="list-group">';
+    topStyles.forEach(style => {
+        html += `<li class="list-group-item bg-dark text-light d-flex justify-content-between align-items-center">
+            <span><b>${style.style}</b></span>
+            <span class="badge bg-success">$${style.total_revenue.toFixed(2)} / ${style.count} uses</span>
+        </li>`;
+    });
+    html += '</ul>';
+    container.innerHTML = html;
+}
 // KIKI Super-Admin Dashboard - Client Application
 
 const API_BASE = 'http://localhost:8085';
@@ -506,6 +533,7 @@ if (document.getElementById('creative-trend-chart')) {
 if (creativeAnalyticsTab) {
     creativeAnalyticsTab.addEventListener('shown.bs.tab', () => {
         setTimeout(loadAnomalyExplanations, 1300);
+        setTimeout(loadSyncMemoryTopStyles, 800);
     });
 }
 
@@ -922,6 +950,159 @@ $('#escalate-btn').on('click', function() {
     .then(r => r.json())
     .then(data => {
       showModal(`<h4>Escalated Creatives</h4><ul>${data.escalated.map(cid => `<li>${cid}</li>`).join('')}</ul>`);
+    });
+});
+
+// Live SyncShield™ log feed
+function refreshSyncShieldLog() {
+  fetch('/syncshield/log')
+    .then(r => r.json())
+    .then(data => {
+      let html = '<ul>';
+      data.log.slice().reverse().forEach(e => {
+        html += `<li><b>${e.timestamp}</b> [${e.creative_id}]: ${e.reason}</li>`;
+      });
+      html += '</ul>';
+      $('#syncshield-log').html(html);
+    });
+}
+setInterval(refreshSyncShieldLog, 5000);
+$('#trigger-syncshield-test-btn').on('click', function() {
+  fetch('/syncshield/log/test', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+      refreshSyncShieldLog();
+      showModal(`<b>Test event triggered:</b><br>${JSON.stringify(data.event)}`);
+    });
+});
+$('#filter-syncshield-btn').on('click', function() {
+  const creativeId = $('#filter-syncshield-id').val();
+  const reason = $('#filter-syncshield-reason').val();
+  fetch('/syncshield/log/filter', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({creative_id: creativeId, reason})
+  })
+    .then(r => r.json())
+    .then(data => {
+      let html = '<ul>';
+      data.log.slice().reverse().forEach(e => {
+        html += `<li><b>${e.timestamp}</b> [${e.creative_id}]: ${e.reason}</li>`;
+      });
+      html += '</ul>';
+      $('#syncshield-log').html(html);
+    });
+});
+$('#advanced-filter-syncshield-btn').on('click', function() {
+  const creativeId = $('#filter-syncshield-id').val();
+  const reason = $('#filter-syncshield-reason').val();
+  const start = $('#filter-syncshield-start').val();
+  const end = $('#filter-syncshield-end').val();
+  fetch('/syncshield/log/filter/advanced', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({creative_id: creativeId, reason, start, end})
+  })
+    .then(r => r.json())
+    .then(data => {
+      let html = '<ul>';
+      data.log.slice().reverse().forEach(e => {
+        html += `<li><b>${e.timestamp}</b> [${e.creative_id}]: ${e.reason}</li>`;
+      });
+      html += '</ul>';
+      $('#syncshield-log').html(html);
+    });
+});
+$('#download-syncshield-log-json-btn').on('click', function() {
+  window.open('/syncshield/log/download/json', '_blank');
+});
+$('#download-syncshield-log-xlsx-btn').on('click', function() {
+  window.open('/syncshield/log/download/xlsx', '_blank');
+});
+$('#granular-filter-syncshield-btn').on('click', function() {
+  const creativeId = $('#filter-syncshield-id').val();
+  const reason = $('#filter-syncshield-reason').val();
+  const start = $('#filter-syncshield-start').val();
+  const end = $('#filter-syncshield-end').val();
+  const platform = $('#filter-syncshield-platform').val();
+  const user = $('#filter-syncshield-user').val();
+  const severity = $('#filter-syncshield-severity').val();
+  fetch('/syncshield/log/filter/granular', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({creative_id: creativeId, reason, start, end, platform, user, severity})
+  })
+    .then(r => r.json())
+    .then(data => {
+      let html = '<ul>';
+      data.log.slice().reverse().forEach(e => {
+        html += `<li><b>${e.timestamp}</b> [${e.creative_id}] (${e.platform || ''}, ${e.user || ''}, ${e.severity || ''}): ${e.reason}</li>`;
+      });
+      html += '</ul>';
+      $('#syncshield-log').html(html);
+    });
+});
+$('#update-log-retention-btn').on('click', function() {
+  const days = parseInt($('#log-retention-days').val(), 10);
+  const maxEntries = parseInt($('#log-retention-max').val(), 10);
+  fetch('/syncshield/log/retention', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({days, max_entries: maxEntries})
+  })
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<b>Retention updated:</b> ${data.days} days, ${data.max_entries} entries`);
+    });
+});
+$('#download-syncshield-log-pdf-btn').on('click', function() {
+  window.open('/syncshield/log/download/pdf', '_blank');
+});
+$('#set-syncshield-api-push-btn').on('click', function() {
+  const url = $('#syncshield-api-push-url').val();
+  fetch('/syncshield/log/push', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({url})
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        showModal(`<b>API push URL set:</b> ${data.url}`);
+      } else {
+        showModal(`<b>Error:</b> ${data.error}`);
+      }
+    });
+});
+
+// Demo buttons
+$('#trigger-retraining-demo-btn').on('click', function() {
+  fetch('/demo/trigger_retraining', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({model: 'dRNN', reason: 'Manual dashboard demo'})
+  })
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<b>Retraining triggered:</b> ${data.model} (${data.reason})`);
+    });
+});
+$('#log-event-demo-btn').on('click', function() {
+  fetch('/demo/log_event', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({agent: 'DemoAgent', event_type: 'DemoEvent', payload: '{"msg": "Demo event from dashboard"}'})
+  })
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<b>Demo event logged!</b>`);
+    });
+});
+$('#observability-demo-btn').on('click', function() {
+  fetch('/demo/observability', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<b>Observability trace sent!</b>`);
     });
 });
 

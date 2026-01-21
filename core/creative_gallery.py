@@ -1,4 +1,25 @@
-from flask import Blueprint, jsonify, request
+# --- SyncMemory: Agent creative suggestion logic ---
+from threading import Lock
+_style_suggestion_lock = Lock()
+_style_suggestion_idx = 0
+
+def get_next_best_style():
+    """Rotate through top 3 styles for agent suggestion."""
+    global _style_suggestion_idx
+    top_styles = get_last_week_top_styles(limit=3)
+    if not top_styles:
+        return 'default'
+    with _style_suggestion_lock:
+        style = top_styles[_style_suggestion_idx % len(top_styles)]['style']
+        _style_suggestion_idx += 1
+    return style
+
+# Endpoint for agent to fetch next best style
+@creative_gallery_bp.route('/creative-gallery/memory/next-style', methods=['GET'])
+def get_memory_next_style():
+    style = get_next_best_style()
+    return jsonify({'next_style': style})
+from flask import Blueprint, jsonify, request, render_template
 import os
 import json
 from urllib.request import urlretrieve
@@ -15,8 +36,25 @@ import smtplib
 from email.mime.text import MIMEText
 from urllib.parse import urlencode
 from collections import Counter
+from glob import glob
+from flask_socketio import SocketIO, emit
+import time
+
+# Import SyncMemory
+from core.syncmemory import log_creative_performance, get_last_week_top_styles
 
 creative_gallery_bp = Blueprint('creative_gallery', __name__)
+
+# Initialize SocketIO (ensure this is only done once in your app)
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+def log_to_shield(message, status="INFO"):
+    """Helper to stream logs to the dashboard UI"""
+    timestamp = time.strftime("%H:%M:%S")
+    socketio.emit('new_log', {
+        'msg': f"[{timestamp}] {status}: {message}",
+        'type': status
+    })
 
 # Example: Scan output/videos for MP4s and pair with LTV (stub/demo)
 def get_gallery_items():
@@ -144,8 +182,19 @@ def approve_creative():
     global pending_approvals
     pending_approvals = [c for c in pending_approvals if c['creative_id'] != creative_id]
     approval_history.append({'creative_id': creative_id, 'timestamp': datetime.utcnow().isoformat()})
+    # --- SyncMemory: Log creative performance ---
+    # For demo, extract style and revenue from creative_id or stub
+    style = creative_id.split('_')[1] if '_' in creative_id else 'default'
+    revenue = 100 + hash(creative_id) % 500  # Stub: random revenue
+    log_creative_performance(creative_id, style, revenue, approved_at=datetime.utcnow().isoformat())
     send_notification(f"Creative {creative_id} approved.")
     return jsonify({'success': True, 'message': 'Creative approved.'})
+# Endpoint: Get last week's top creative styles (SyncMemory)
+@creative_gallery_bp.route('/creative-gallery/memory/top-styles', methods=['GET'])
+def get_memory_top_styles():
+    limit = int(request.args.get('limit', 5))
+    top_styles = get_last_week_top_styles(limit=limit)
+    return jsonify({'top_styles': top_styles})
 
 @creative_gallery_bp.route('/creative-gallery/export', methods=['GET'])
 def export_creatives_csv():
@@ -302,16 +351,20 @@ monitor_approval_rate()
 
 # Custom trigger: auto-generate creatives when new product is added (stub)
 def on_new_product(product):
+    # --- SyncMemory: Rotate top style suggestion ---
+    style = product.get('style', get_next_best_style())
     bg_image = product.get('bg_image', 'assets/default_bg.jpg')
     output_dir = 'output/videos'
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"creative_{product.get('id', 'demo')}.mp4")
+    # Attach style to product for video engine and memory
+    product['style'] = style
     from creatives.video_engine import SyncCreateVideo
     engine = SyncCreateVideo(bg_image, product)
     engine.make_video(output_path)
     creative_id = f"creative_{product.get('id', 'demo')}"
-    pending_approvals.append({'creative_id': creative_id, 'video_url': f'/static/videos/{creative_id}.mp4'})
-    send_notification(f"Auto-generated creative for new product: {creative_id}")
+    pending_approvals.append({'creative_id': creative_id, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
+    send_notification(f"Auto-generated creative for new product: {creative_id} (style: {style})")
     schedule_auto_approval(creative_id)
 
 # Example endpoint to simulate new product event
@@ -365,6 +418,9 @@ def generate_creative():
     data = request.get_json()
     bg_image = data.get('bg_image')
     product = data.get('product', {})
+    # --- SyncMemory: Rotate top style suggestion for agent ---
+    style = product.get('style', get_next_best_style())
+    product['style'] = style
     output_dir = 'output/videos'
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"creative_{product.get('id', 'demo')}.mp4")
@@ -378,10 +434,10 @@ def generate_creative():
     engine.make_video(output_path)
     # Auto-submit for approval
     creative_id = f"creative_{product.get('id', 'demo')}"
-    pending_approvals.append({'creative_id': creative_id, 'video_url': f'/static/videos/{creative_id}.mp4'})
-    send_notification(f"Creative {creative_id} submitted for approval.")
+    pending_approvals.append({'creative_id': creative_id, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
+    send_notification(f"Creative {creative_id} (style: {style}) submitted for approval.")
     schedule_auto_approval(creative_id)
-    return jsonify({'success': True, 'video_url': f'/static/videos/{creative_id}.mp4'})
+    return jsonify({'success': True, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
 
 # Further automation: notify on export, auto-export daily
 from threading import Timer
@@ -672,103 +728,378 @@ def export_analytics_xlsx():
     workbook.close()
     return jsonify({'success': True, 'xlsx': xlsx_path})
 
-# Further workflow intelligence: auto-reject creatives with LTV < 30 after 48h pending
-LTV_AUTO_REJECT_THRESHOLD = 30
-AUTO_REJECT_HOURS = 48
+# Additional export formats: XML and TXT
 
-def auto_reject_low_ltv():
-    from datetime import datetime
-    now = datetime.utcnow()
-    for c in list(pending_approvals):
-        for item in get_gallery_items():
-            if item['creative_id'] == c['creative_id'] and item['ltv'] < LTV_AUTO_REJECT_THRESHOLD:
-                # In production, track submit time; here, reject after 48h
-                approval_history.append({'creative_id': c['creative_id'], 'timestamp': now.isoformat(), 'auto_rejected': True, 'reason': 'Low LTV'})
-                pending_approvals.remove(c)
-                send_notification(f"Auto-rejected low-LTV creative: {c['creative_id']}")
-    Timer(3600, auto_reject_low_ltv).start()
+def export_syncshield_log_xml():
+    from xml.etree.ElementTree import Element, SubElement, tostring
+    root = Element('SyncShieldLog')
+    for e in syncshield_log:
+        entry = SubElement(root, 'Event')
+        for k, v in e.items():
+            SubElement(entry, k).text = str(v)
+    xml_str = tostring(root, encoding='utf-8').decode('utf-8')
+    xml_path = f'output/syncshield_log_{int(time.time())}.xml'
+    with open(xml_path, 'w', encoding='utf-8') as f:
+        f.write(xml_str)
+    send_notification(f"SyncShield™ log XML exported: {xml_path}")
+    return xml_path
 
-auto_reject_low_ltv()
+def export_syncshield_log_txt():
+    txt_path = f'output/syncshield_log_{int(time.time())}.txt'
+    with open(txt_path, 'w', encoding='utf-8') as f:
+        for e in syncshield_log:
+            line = f"{e.get('timestamp', '')} [{e.get('creative_id', '')}] {e.get('reason', '')}\n"
+            f.write(line)
+    send_notification(f"SyncShield™ log TXT exported: {txt_path}")
+    return txt_path
 
-# Custom workflow: auto-approve creatives with LTV > 200 instantly
-LTV_AUTO_APPROVE_THRESHOLD = 200
+# Custom scheduling: monthly PDF report
+def schedule_monthly_syncshield_pdf_report():
+    def export():
+        generate_weekly_syncshield_report(custom_title='SyncShield™ Monthly Audit Report')
+        Timer(30*24*60*60, export).start()
+    Timer(20, export).start()  # Start after 20s for demo
 
-def auto_approve_high_ltv():
-    for c in list(pending_approvals):
-        for item in get_gallery_items():
-            if item['creative_id'] == c['creative_id'] and item['ltv'] > LTV_AUTO_APPROVE_THRESHOLD:
-                approved_creatives.add(c['creative_id'])
-                pending_approvals.remove(c)
-                approval_history.append({'creative_id': c['creative_id'], 'timestamp': datetime.utcnow().isoformat(), 'auto_approved': True})
-                send_notification(f"Auto-approved high-LTV creative: {c['creative_id']}")
-    Timer(60, auto_approve_high_ltv).start()
+schedule_monthly_syncshield_pdf_report()
 
-auto_approve_high_ltv()
+# Further reporting automation: send all exports to webhook
+def send_export_to_webhook(file_path, export_type):
+    if not WEBHOOK_URL:
+        return
+    try:
+        with open(file_path, 'rb') as f:
+            requests.post(WEBHOOK_URL, files={'file': (os.path.basename(file_path), f)}, data={'type': export_type})
+    except Exception as e:
+        print(f"[NOTIFY ERROR] Webhook export: {e}")
 
-# Advanced analytics: anomaly detection and trend prediction
-@creative_gallery_bp.route('/creative-gallery/analytics/anomaly', methods=['GET'])
-def analytics_anomaly():
-    import numpy as np
-    ltv_values = [c['ltv'] for c in get_gallery_items() if 'ltv' in c]
-    if not ltv_values:
-        return jsonify({'anomalies': []})
-    mean = np.mean(ltv_values)
-    std = np.std(ltv_values)
-    anomalies = [c for c in get_gallery_items() if abs(c['ltv'] - mean) > 2 * std]
-    return jsonify({'anomalies': anomalies, 'mean': mean, 'std': std})
+# Example: call send_export_to_webhook after each export
+def export_and_notify_all_formats():
+    pdf_path = generate_weekly_syncshield_report()
+    send_export_to_webhook(pdf_path, 'pdf')
+    csv_path = f'output/syncshield_log_{int(time.time())}.csv'
+    with open(csv_path, 'w', newline='') as csvfile:
+        if syncshield_log:
+            writer = csv.DictWriter(csvfile, fieldnames=syncshield_log[0].keys())
+            writer.writeheader()
+            writer.writerows(syncshield_log)
+    send_export_to_webhook(csv_path, 'csv')
+    xml_path = export_syncshield_log_xml()
+    send_export_to_webhook(xml_path, 'xml')
+    txt_path = export_syncshield_log_txt()
+    send_export_to_webhook(txt_path, 'txt')
 
-@creative_gallery_bp.route('/creative-gallery/analytics/trend', methods=['GET'])
-def analytics_trend():
-    import numpy as np
-    from datetime import datetime
-    items = sorted(get_gallery_items(), key=lambda x: x.get('timestamp', ''))
-    ltv_series = [c['ltv'] for c in items if 'ltv' in c]
-    if len(ltv_series) < 2:
-        return jsonify({'trend': 'insufficient data'})
-    x = np.arange(len(ltv_series))
-    y = np.array(ltv_series)
-    coeffs = np.polyfit(x, y, 1)
-    trend = 'up' if coeffs[0] > 0 else 'down' if coeffs[0] < 0 else 'flat'
-    return jsonify({'trend': trend, 'slope': float(coeffs[0])})
+# SyncShield™ Log: live unsafe content blocking feed
+syncshield_log = []
 
-# Export: filter by date range and status
-@creative_gallery_bp.route('/creative-gallery/analytics/export/csv', methods=['POST'])
-def export_analytics_csv_filtered():
-    import csv
-    from flask import request
-    from io import StringIO
+# Customizable log schema: allow extra fields
+SYNC_SHIELD_LOG_FIELDS = ['timestamp', 'creative_id', 'reason', 'platform', 'user', 'severity', 'details']
+
+def log_syncshield_event(event):
+    # Accept any extra fields, but only store those in SYNC_SHIELD_LOG_FIELDS
+    filtered_event = {k: v for k, v in event.items() if k in SYNC_SHIELD_LOG_FIELDS}
+    for field in SYNC_SHIELD_LOG_FIELDS:
+        if field not in filtered_event:
+            filtered_event[field] = ''
+    syncshield_log.append(filtered_event)
+    enforce_log_retention()
+
+# API push: POST log events to external endpoint
+import requests
+SYNC_SHIELD_API_PUSH_URL = None  # Set via endpoint
+
+@creative_gallery_bp.route('/syncshield/log/push', methods=['POST'])
+def push_syncshield_log():
+    global SYNC_SHIELD_API_PUSH_URL
     data = request.get_json() or {}
+    url = data.get('url')
+    if url:
+        SYNC_SHIELD_API_PUSH_URL = url
+        return jsonify({'success': True, 'url': url})
+    return jsonify({'success': False, 'error': 'No URL provided'}), 400
+
+def push_log_event_to_api(event):
+    if SYNC_SHIELD_API_PUSH_URL:
+        try:
+            requests.post(SYNC_SHIELD_API_PUSH_URL, json=event, timeout=2)
+        except Exception:
+            pass
+
+# Call push_log_event_to_api(event) after logging
+old_log_syncshield_event = log_syncshield_event
+def log_syncshield_event(event):
+    old_log_syncshield_event(event)
+    push_log_event_to_api(event)
+
+@creative_gallery_bp.route('/syncshield/log', methods=['GET'])
+def get_syncshield_log():
+    return jsonify({'log': syncshield_log})
+
+# Example: Call this function when unsafe content is blocked
+# log_syncshield_event({'timestamp': '2026-01-21T12:00:00Z', 'creative_id': 'abc123', 'reason': 'Brand safety violation'})
+
+@creative_gallery_bp.route('/syncshield/log/test', methods=['POST'])
+def trigger_syncshield_test_event():
+    from datetime import datetime
+    import random
+    test_event = {
+        'timestamp': datetime.utcnow().isoformat() + 'Z',
+        'creative_id': f'test_{random.randint(1000,9999)}',
+        'reason': random.choice([
+            'Brand safety violation',
+            'Copyrighted content',
+            'Inappropriate language',
+            'Unsafe visual detected',
+            'Blocked by custom guardrail'
+        ])
+    }
+    log_syncshield_event(test_event)
+    return jsonify({'success': True, 'event': test_event})
+
+from flask import request
+
+@creative_gallery_bp.route('/syncshield/log/filter', methods=['POST'])
+def filter_syncshield_log():
+    data = request.get_json() or {}
+    creative_id = data.get('creative_id')
+    reason = data.get('reason')
+    filtered = syncshield_log
+    if creative_id:
+        filtered = [e for e in filtered if creative_id in e['creative_id']]
+    if reason:
+        filtered = [e for e in filtered if reason.lower() in e['reason'].lower()]
+    return jsonify({'log': filtered})
+
+@creative_gallery_bp.route('/syncshield/log/download', methods=['GET'])
+def download_syncshield_log():
+    import csv
+    from io import StringIO
+    output = StringIO()
+    if syncshield_log:
+        writer = csv.DictWriter(output, fieldnames=syncshield_log[0].keys())
+        writer.writeheader()
+        writer.writerows(syncshield_log)
+    return output.getvalue(), 200, {'Content-Type': 'text/csv', 'Content-Disposition': 'attachment; filename=syncshield_log.csv'}
+
+@creative_gallery_bp.route('/syncshield/log/filter/advanced', methods=['POST'])
+def advanced_filter_syncshield_log():
+    data = request.get_json() or {}
+    creative_id = data.get('creative_id')
+    reason = data.get('reason')
     start = data.get('start')
     end = data.get('end')
-    status = data.get('status')
-    filtered = get_gallery_items()
+    filtered = syncshield_log
+    if creative_id:
+        filtered = [e for e in filtered if creative_id in e['creative_id']]
+    if reason:
+        filtered = [e for e in filtered if reason.lower() in e['reason'].lower()]
     if start:
-        filtered = [c for c in filtered if c.get('timestamp', '') >= start]
+        filtered = [e for e in filtered if e['timestamp'] >= start]
     if end:
-        filtered = [c for c in filtered if c.get('timestamp', '') <= end]
-    if status:
-        filtered = [c for c in filtered if c.get('status') == status]
-    output = StringIO()
-    if filtered:
-        writer = csv.DictWriter(output, fieldnames=filtered[0].keys())
-        writer.writeheader()
-        writer.writerows(filtered)
-    return output.getvalue(), 200, {'Content-Type': 'text/csv'}
+        filtered = [e for e in filtered if e['timestamp'] <= end]
+    return jsonify({'log': filtered})
 
-# Workflow: escalate creatives with >3 rejections in 7 days
-@creative_gallery_bp.route('/creative-gallery/workflow/escalate', methods=['POST'])
-def escalate_rejected_creatives():
+@creative_gallery_bp.route('/syncshield/log/filter/granular', methods=['POST'])
+def granular_filter_syncshield_log():
+    data = request.get_json() or {}
+    creative_id = data.get('creative_id')
+    reason = data.get('reason')
+    start = data.get('start')
+    end = data.get('end')
+    platform = data.get('platform')
+    user = data.get('user')
+    severity = data.get('severity')
+    filtered = syncshield_log
+    if creative_id:
+        filtered = [e for e in filtered if creative_id in e.get('creative_id', '')]
+    if reason:
+        filtered = [e for e in filtered if reason.lower() in e.get('reason', '').lower()]
+    if start:
+        filtered = [e for e in filtered if e.get('timestamp', '') >= start]
+    if end:
+        filtered = [e for e in filtered if e.get('timestamp', '') <= end]
+    if platform:
+        filtered = [e for e in filtered if e.get('platform', '').lower() == platform.lower()]
+    if user:
+        filtered = [e for e in filtered if e.get('user', '') == user]
+    if severity:
+        filtered = [e for e in filtered if e.get('severity', '').lower() == severity.lower()]
+    return jsonify({'log': filtered})
+
+# Custom retention: configurable days and max entries
+LOG_RETENTION_DAYS = 30
+LOG_RETENTION_MAX = 500
+
+def set_log_retention(days=None, max_entries=None):
+    global LOG_RETENTION_DAYS, LOG_RETENTION_MAX
+    if days is not None:
+        LOG_RETENTION_DAYS = days
+    if max_entries is not None:
+        LOG_RETENTION_MAX = max_entries
+    enforce_log_retention()
+
+@creative_gallery_bp.route('/syncshield/log/retention', methods=['POST'])
+def update_log_retention():
+    data = request.get_json() or {}
+    days = data.get('days')
+    max_entries = data.get('max_entries')
+    set_log_retention(days, max_entries)
+    return jsonify({'success': True, 'days': LOG_RETENTION_DAYS, 'max_entries': LOG_RETENTION_MAX})
+
+@creative_gallery_bp.route('/syncshield/log/download/pdf', methods=['GET'])
+def download_syncshield_log_pdf():
+    from fpdf import FPDF
+    from flask import Response
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 10, 'SyncShield Log', ln=1)
+    pdf.set_font('Arial', '', 10)
+    for e in syncshield_log:
+        line = f"{e.get('timestamp', '')} [{e.get('creative_id', '')}] {e.get('reason', '')}"
+        pdf.multi_cell(0, 8, line)
+    pdf_output = pdf.output(dest='S').encode('latin1')
+    return pdf_output, 200, {'Content-Type': 'application/pdf', 'Content-Disposition': 'attachment; filename=syncshield_log.pdf'}
+
+# Log retention: keep only last N days or M entries
+LOG_RETENTION_DAYS = 30
+LOG_RETENTION_MAX = 500
+
+def enforce_log_retention():
     from datetime import datetime, timedelta
     now = datetime.utcnow()
-    week_ago = now - timedelta(days=7)
-    rejections = {}
-    for h in approval_history:
-        if h.get('action') == 'rejected' and h.get('timestamp'):
-            t = datetime.fromisoformat(h['timestamp'])
-            if t > week_ago:
-                cid = h['creative_id']
-                rejections[cid] = rejections.get(cid, 0) + 1
-    escalated = [cid for cid, count in rejections.items() if count > 3]
-    for cid in escalated:
-        send_notification(f"Escalation: Creative {cid} rejected >3 times in 7 days!")
-    return jsonify({'escalated': escalated})
+    cutoff = now - timedelta(days=LOG_RETENTION_DAYS)
+    syncshield_log[:] = [e for e in syncshield_log if e.get('timestamp', '') >= cutoff.isoformat()]
+    while len(syncshield_log) > LOG_RETENTION_MAX:
+        syncshield_log.pop(0)
+
+# Call enforce_log_retention() after each log event
+old_log_syncshield_event = log_syncshield_event
+def log_syncshield_event(event):
+    old_log_syncshield_event(event)
+    enforce_log_retention()
+
+@creative_gallery_bp.route('/syncshield/log/download/json', methods=['GET'])
+def download_syncshield_log_json():
+    from flask import Response
+    import json
+    return Response(json.dumps(syncshield_log, indent=2), mimetype='application/json', headers={'Content-Disposition': 'attachment; filename=syncshield_log.json'})
+
+@creative_gallery_bp.route('/syncshield/log/download/xlsx', methods=['GET'])
+def download_syncshield_log_xlsx():
+    import xlsxwriter
+    from io import BytesIO
+    output = BytesIO()
+    if syncshield_log:
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet()
+        fieldnames = list(syncshield_log[0].keys())
+        for col, name in enumerate(fieldnames):
+            worksheet.write(0, col, name)
+        for row, e in enumerate(syncshield_log, 1):
+            for col, name in enumerate(fieldnames):
+                worksheet.write(row, col, e.get(name, ''))
+        workbook.close()
+        output.seek(0)
+        return output.read(), 200, {'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Content-Disposition': 'attachment; filename=syncshield_log.xlsx'}
+    return '', 204
+
+# Automated weekly SyncShield™ audit report (PDF) generation and notification
+from fpdf import FPDF
+
+def generate_weekly_syncshield_report(custom_title=None, include_details=False, email_to=None):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Arial', 'B', 14)
+    title = custom_title or 'SyncShield™ Weekly Audit Report'
+    pdf.cell(0, 10, title, ln=1)
+    pdf.set_font('Arial', '', 10)
+    pdf.cell(0, 8, f'Generated: {datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")}', ln=1)
+    pdf.ln(2)
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 8, 'Summary', ln=1)
+    pdf.set_font('Arial', '', 10)
+    pdf.cell(0, 8, f'Total Events: {len(syncshield_log)}', ln=1)
+    pdf.ln(2)
+    pdf.set_font('Arial', 'B', 12)
+    pdf.cell(0, 8, 'Recent Events', ln=1)
+    pdf.set_font('Arial', '', 9)
+    for e in syncshield_log[-50:]:
+        line = f"{e.get('timestamp', '')} [{e.get('creative_id', '')}] {e.get('reason', '')}"
+        if include_details and e.get('details'):
+            line += f" | Details: {e['details']}"
+        pdf.multi_cell(0, 6, line)
+    pdf_path = f'output/syncshield_audit_{int(time.time())}.pdf'
+    pdf.output(pdf_path)
+    send_notification(f"Weekly SyncShield™ audit report generated: {pdf_path}")
+    if email_to:
+        try:
+            with open(pdf_path, 'rb') as f:
+                msg = MIMEText(f"See attached SyncShield™ audit report.")
+                msg['Subject'] = title
+                msg['From'] = EMAIL_USER
+                msg['To'] = email_to
+                from email.mime.application import MIMEApplication
+                part = MIMEApplication(f.read(), Name=os.path.basename(pdf_path))
+                part['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+                from email.mime.multipart import MIMEMultipart
+                mmsg = MIMEMultipart()
+                mmsg.attach(msg)
+                mmsg.attach(part)
+                with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
+                    server.starttls()
+                    server.login(EMAIL_USER, EMAIL_PASS)
+                    server.sendmail(EMAIL_USER, [email_to], mmsg.as_string())
+        except Exception as e:
+            print(f"[NOTIFY ERROR] Email PDF: {e}")
+    return pdf_path
+
+# Schedule additional automated exports (daily CSV)
+def schedule_daily_syncshield_csv_export():
+    def export():
+        csv_path = f'output/syncshield_log_{int(time.time())}.csv'
+        import csv
+        with open(csv_path, 'w', newline='') as csvfile:
+            if syncshield_log:
+                writer = csv.DictWriter(csvfile, fieldnames=syncshield_log[0].keys())
+                writer.writeheader()
+                writer.writerows(syncshield_log)
+        send_notification(f"Daily SyncShield™ log CSV exported: {csv_path}")
+        Timer(24*60*60, export).start()
+    Timer(10, export).start()  # Start after 10s for demo
+
+schedule_daily_syncshield_csv_export()
+
+# Automated monthly SyncShield™ audit report (PDF) generation and notification
+def schedule_monthly_syncshield_pdf_report():
+    def export():
+        generate_weekly_syncshield_report(custom_title='SyncShield™ Monthly Audit Report')
+        Timer(30*24*60*60, export).start()
+    Timer(20, export).start()  # Start after 20s for demo
+
+schedule_monthly_syncshield_pdf_report()
+
+# Further reporting automation: send all exports to webhook
+def send_export_to_webhook(file_path, export_type):
+    if not WEBHOOK_URL:
+        return
+    try:
+        with open(file_path, 'rb') as f:
+            requests.post(WEBHOOK_URL, files={'file': (os.path.basename(file_path), f)}, data={'type': export_type})
+    except Exception as e:
+        print(f"[NOTIFY ERROR] Webhook export: {e}")
+
+# Example: call send_export_to_webhook after each export
+def export_and_notify_all_formats():
+    pdf_path = generate_weekly_syncshield_report()
+    send_export_to_webhook(pdf_path, 'pdf')
+    csv_path = f'output/syncshield_log_{int(time.time())}.csv'
+    with open(csv_path, 'w', newline='') as csvfile:
+        if syncshield_log:
+            writer = csv.DictWriter(csvfile, fieldnames=syncshield_log[0].keys())
+            writer.writeheader()
+            writer.writerows(syncshield_log)
+    send_export_to_webhook(csv_path, 'csv')
+    xml_path = export_syncshield_log_xml()
+    send_export_to_webhook(xml_path, 'xml')
+    txt_path = export_syncshield_log_txt()
+    send_export_to_webhook(txt_path, 'txt')
