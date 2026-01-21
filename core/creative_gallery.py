@@ -2,6 +2,11 @@
 from threading import Lock
 _style_suggestion_lock = Lock()
 _style_suggestion_idx = 0
+# --- Agent Feedback State ---
+_agent_feedback = {
+    'style_success': {},  # style: approvals
+    'style_failure': {},  # style: rejections
+}
 
 def get_next_best_style():
     """Rotate through top 3 styles for agent suggestion."""
@@ -10,9 +15,19 @@ def get_next_best_style():
     if not top_styles:
         return 'default'
     with _style_suggestion_lock:
-        style = top_styles[_style_suggestion_idx % len(top_styles)]['style']
-        _style_suggestion_idx += 1
-    return style
+            # --- Agent Feedback: Adjust suggestion based on feedback ---
+            # Prioritize styles with most approvals, deprioritize with most rejections
+            style_scores = {}
+            for s in top_styles:
+                style = s['style']
+                success = _agent_feedback['style_success'].get(style, 0)
+                failure = _agent_feedback['style_failure'].get(style, 0)
+                style_scores[style] = success - failure
+            # Sort styles by score, fallback to rotation
+            sorted_styles = sorted(top_styles, key=lambda s: style_scores.get(s['style'], 0), reverse=True)
+            style = sorted_styles[_style_suggestion_idx % len(sorted_styles)]['style']
+            _style_suggestion_idx += 1
+        return style
 
 # Endpoint for agent to fetch next best style
 @creative_gallery_bp.route('/creative-gallery/memory/next-style', methods=['GET'])
@@ -42,6 +57,15 @@ import time
 
 # Import SyncMemory
 from core.syncmemory import log_creative_performance, get_last_week_top_styles
+# Morning Briefing import
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../hub'))
+from morning_brief import generate_briefing
+@creative_gallery_bp.route('/api/morning-brief', methods=['GET'])
+def api_morning_brief():
+    briefing = generate_briefing()
+    return jsonify(briefing)
 
 creative_gallery_bp = Blueprint('creative_gallery', __name__)
 
@@ -187,6 +211,13 @@ def approve_creative():
     style = creative_id.split('_')[1] if '_' in creative_id else 'default'
     revenue = 100 + hash(creative_id) % 500  # Stub: random revenue
     log_creative_performance(creative_id, style, revenue, approved_at=datetime.utcnow().isoformat())
+        # --- Agent Feedback: Learn from approval ---
+        _agent_feedback['style_success'][style] = _agent_feedback['style_success'].get(style, 0) + 1
+        send_notification(f"Agent feedback: Style '{style}' approved. Success count: {_agent_feedback['style_success'][style]}")
+        # Optionally, update style suggestion logic (e.g., boost successful styles)
+        # For demo, if a style is approved >3 times, notify prioritization
+        if _agent_feedback['style_success'][style] > 3:
+            send_notification(f"Agent feedback: Style '{style}' prioritized due to repeated approvals.")
     send_notification(f"Creative {creative_id} approved.")
     return jsonify({'success': True, 'message': 'Creative approved.'})
 # Endpoint: Get last week's top creative styles (SyncMemory)
@@ -435,9 +466,17 @@ def generate_creative():
     # Auto-submit for approval
     creative_id = f"creative_{product.get('id', 'demo')}"
     pending_approvals.append({'creative_id': creative_id, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
-    send_notification(f"Creative {creative_id} (style: {style}) submitted for approval.")
-    schedule_auto_approval(creative_id)
-    return jsonify({'success': True, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
+        send_notification(f"Creative {creative_id} (style: {style}) submitted for approval.")
+        # --- Agent Action: Auto-approve if style has high success ---
+        auto_approve = _agent_feedback['style_success'].get(style, 0) > 5
+        if auto_approve:
+            approved_creatives.add(creative_id)
+            approval_history.append({'creative_id': creative_id, 'timestamp': datetime.utcnow().isoformat(), 'auto': True, 'agent_feedback': 'auto-approved'})
+            send_notification(f"Agent auto-approved creative {creative_id} due to high style success.")
+            log_creative_performance(creative_id, style, 0, approved_at=datetime.utcnow().isoformat())
+        else:
+            schedule_auto_approval(creative_id)
+        return jsonify({'success': True, 'video_url': f'/static/videos/{creative_id}.mp4', 'style': style})
 
 # Further automation: notify on export, auto-export daily
 from threading import Timer
@@ -633,6 +672,13 @@ def reject_creative():
     global pending_approvals
     pending_approvals = [c for c in pending_approvals if c['creative_id'] != creative_id]
     approval_history.append({'creative_id': creative_id, 'timestamp': datetime.utcnow().isoformat(), 'rejected': True, 'reason': reason})
+        # --- Agent Feedback: Learn from rejection ---
+        style = creative_id.split('_')[1] if '_' in creative_id else 'default'
+        _agent_feedback['style_failure'][style] = _agent_feedback['style_failure'].get(style, 0) + 1
+        send_notification(f"Agent feedback: Style '{style}' rejected. Failure count: {_agent_feedback['style_failure'][style]}")
+        # Optionally, update style suggestion logic (e.g., deprioritize failed styles)
+        if _agent_feedback['style_failure'][style] > 2:
+            send_notification(f"Agent feedback: Style '{style}' deprioritized due to repeated rejections.")
     send_notification(f"Creative {creative_id} rejected. Reason: {reason}")
     return jsonify({'success': True, 'message': 'Creative rejected.'})
 

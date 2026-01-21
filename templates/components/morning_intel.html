@@ -1,0 +1,28 @@
+<!-- KIKI Morning Briefing Card -->
+<div class="border-4 border-neon-midnight rounded-xl p-4 mb-6 flex flex-col items-center" style="border-image: linear-gradient(90deg, #0ff, #f0f, #00f) 1;">
+  <h2 class="text-2xl font-bold mb-2 text-center">KIKI Morning Briefing</h2>
+  <div class="grid grid-cols-3 gap-4 w-full">
+    <div class="flex flex-col items-center">
+      <span class="text-lg font-semibold">Revenue Recovered</span>
+      <span id="briefing-revenue" class="text-3xl text-green-400 font-bold">$0</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <span class="text-lg font-semibold">Shield Interventions</span>
+      <span id="briefing-blocks" class="text-3xl text-red-400 font-bold">0</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <span class="text-lg font-semibold">Strategic Insight</span>
+      <textarea id="briefing-insight" class="w-full h-20 p-2 border rounded bg-black text-white" readonly></textarea>
+    </div>
+  </div>
+</div>
+<script>
+// Fetch briefing data from backend endpoint (assume /api/morning-brief)
+fetch('/api/morning-brief')
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('briefing-revenue').textContent = `$${data.revenue}`;
+    document.getElementById('briefing-blocks').textContent = data.safety_blocks;
+    document.getElementById('briefing-insight').value = data.ai_insight;
+  });
+</script>
