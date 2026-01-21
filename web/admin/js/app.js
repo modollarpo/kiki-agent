@@ -875,4 +875,54 @@ $('#creative-analytics').on('click', '.creative-drilldown', function() {
   showCreativeActions(creativeId);
 });
 
+// Anomaly detection and trend analytics
+$('#anomaly-btn').on('click', function() {
+  fetch('/creative-gallery/analytics/anomaly')
+    .then(r => r.json())
+    .then(data => {
+      let html = `<h4>Anomalies (mean: ${data.mean.toFixed(2)}, std: ${data.std.toFixed(2)})</h4><ul>`;
+      data.anomalies.forEach(c => {
+        html += `<li>${c.creative_id}: LTV ${c.ltv}</li>`;
+      });
+      html += '</ul>';
+      showModal(html);
+    });
+});
+$('#trend-btn').on('click', function() {
+  fetch('/creative-gallery/analytics/trend')
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<h4>LTV Trend: ${data.trend} (slope: ${data.slope})</h4>`);
+    });
+});
+// Filtered export
+$('#export-csv-filtered-btn').on('click', function() {
+  const start = $('#filter-start').val();
+  const end = $('#filter-end').val();
+  const status = $('#filter-status').val();
+  fetch('/creative-gallery/analytics/export/csv', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({start, end, status})
+  })
+    .then(r => r.text())
+    .then(csv => {
+      const blob = new Blob([csv], {type: 'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'analytics_filtered.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+});
+// Escalate workflow
+$('#escalate-btn').on('click', function() {
+  fetch('/creative-gallery/workflow/escalate', {method: 'POST'})
+    .then(r => r.json())
+    .then(data => {
+      showModal(`<h4>Escalated Creatives</h4><ul>${data.escalated.map(cid => `<li>${cid}</li>`).join('')}</ul>`);
+    });
+});
+
 console.log('✅ Dashboard client loaded');

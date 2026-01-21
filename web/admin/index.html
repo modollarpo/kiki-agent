@@ -318,6 +318,24 @@
                             <button id="export-json-btn" class="btn btn-secondary">Export JSON</button>
                             <button id="export-xlsx-btn" class="btn btn-secondary">Export Excel</button>
                         </div>
+                        <div class="analytics-advanced-buttons flex gap-2 mb-4">
+                            <button id="anomaly-btn" class="btn btn-warning">Detect Anomalies</button>
+                            <button id="trend-btn" class="btn btn-info">Show LTV Trend</button>
+                        </div>
+                        <div class="analytics-filter-export flex gap-2 mb-4">
+                            <input id="filter-start" type="date" class="input input-sm" placeholder="Start date">
+                            <input id="filter-end" type="date" class="input input-sm" placeholder="End date">
+                            <select id="filter-status" class="input input-sm">
+                                <option value="">All Statuses</option>
+                                <option value="approved">Approved</option>
+                                <option value="pending">Pending</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <button id="export-csv-filtered-btn" class="btn btn-secondary">Export Filtered CSV</button>
+                        </div>
+                        <div class="workflow-automation flex gap-2 mb-4">
+                            <button id="escalate-btn" class="btn btn-error">Escalate Rejected Creatives</button>
+                        </div>
                         <div id="analytics-summary" class="mb-4"></div>
                         <div id="creative-insights" class="mb-4"></div>
                         <canvas id="creative-trend-chart" height="120" class="mb-4"></canvas>
