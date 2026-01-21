@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDPR Article 7 Consent: Implementation Guide | KIKI Engineering</title>
+  <meta name="description" content="Technical guide to implementing GDPR Article 7 consent with auditable logs, proof of consent, and granular preferences for SaaS platforms.">
+    <link rel="alternate" type="application/rss+xml" title="KIKI Engineering Blog RSS" href="/rss.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body { background: #0b1220; color: #e2e8f0; }
+    .hero { padding: 120px 0 60px; text-align: center; background: linear-gradient(135deg, rgba(15,23,42,0.7), rgba(59,130,246,0.08)); }
+    .hero h1 { font-size: 42px; margin-bottom: 16px; }
+    .meta { color: #94a3b8; margin-bottom: 24px; }
+    .pill { display: inline-block; padding: 6px 12px; background: rgba(16,185,129,0.15); color: #10b981; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 48px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.12); }
+    h2 { font-size: 28px; margin-bottom: 16px; }
+    p { color: #cbd5e1; line-height: 1.8; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: rgba(15,23,42,0.6); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 12px; padding: 20px; }
+    .badge { display: inline-block; padding: 4px 10px; background: rgba(16,185,129,0.14); color: #10b981; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    pre { background: #0f172a; color: #e2e8f0; padding: 18px; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(148,163,184,0.14); }
+    code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; }
+    ul { color: #cbd5e1; line-height: 1.8; }
+    .cta { text-align: center; padding: 48px 0; }
+    .cta a { margin: 0 10px; }
+    .post-nav { margin: 40px 0 16px; padding: 20px; background: rgba(15,23,42,0.6); border: 1px solid rgba(148,163,184,0.14); border-radius: 12px; }
+    .post-links { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .post-links a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .post-links a:hover { text-decoration: underline; }
+    .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .sidebar a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+    .sidebar a:hover { color: #3b82f6; }
+    @media(max-width: 768px){ .hero h1 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html" style="color:#3b82f6;">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="pill">Compliance</div>
+    <h1>GDPR Article 7 Consent: Implementation Guide for SaaS Platforms</h1>
+    <div class="meta">January 8, 2026 • 10 min read • By Sarah Chen, Head of Compliance</div>
+    <p>A practical, engineering-focused blueprint for lawful consent: granular preferences, audit trails, verifiable proof, and user-friendly revocation.</p>
+    <div class="back" style="margin-top:16px;"><a href="/blog.html" style="color:#3b82f6; font-weight:700; text-decoration:none;">← Back to Blog</a></div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="section">
+    <h2>Requirements Checklist</h2>
+    <div class="grid">
+      <div class="card"><div class="badge">Explicit</div><p>Clear opt-in per purpose (marketing, analytics, personalization, third-party).</p></div>
+      <div class="card"><div class="badge">Proof</div><p>Time, source, IP, user agent, versioned policy ID captured for every consent.</p></div>
+      <div class="card"><div class="badge">Revoke</div><p>1-click withdrawal with immediate propagation to processors.</p></div>
+      <div class="card"><div class="badge">Granular</div><p>Independent toggles and lawful basis tracking per purpose.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Data Model</h2>
+    <pre><code>consent_records (
+  id uuid pk,
+  user_id uuid,
+  purpose text,           -- marketing | analytics | personalization | third_party
+  lawful_basis text,      -- consent | contract | legitimate_interest
+  status text,            -- granted | revoked
+  captured_at timestamptz,
+  captured_ip inet,
+  user_agent text,
+  policy_version text,
+  source text             -- web | mobile | api
+)
+</code></pre>
+  </section>
+
+  <section class="section">
+    <h2>Architecture</h2>
+    <ul>
+      <li>Consent SDK (web + mobile) sends signed payloads to /consent endpoint.</li>
+      <li>Write-through to Postgres + append-only event log (Kafka) for immutability.</li>
+      <li>Privacy service pushes updates to downstream processors via webhooks.</li>
+      <li>Feature flags enforce purpose checks before firing any tracking calls.</li>
+      <li>UI renders policy version; revocation and preference changes audited.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>UI/UX Principles</h2>
+    <ul>
+      <li>No pre-checked boxes; clear language per purpose.</li>
+      <li>Stacked toggles with short labels and a link to the full policy.</li>
+      <li>Separate CTA buttons for Accept All and Save Preferences.</li>
+      <li>Inline indicators showing current policy version and last updated date.</li>
+      <li>Accessible focus states; works without cookies until consent granted.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Audit & Proof</h2>
+    <ul>
+      <li>Immutable log to object storage every 15 minutes; checksum for tamper-evidence.</li>
+      <li>Regulator-ready export: CSV with purpose, basis, timestamp, policy version.</li>
+      <li>Automated retention: expire raw event payloads after 30 days; keep proofs.</li>
+      <li>Alerting for consent drift (e.g., tracking fired without consent).</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Results</h2>
+    <p>Implementing this pattern reduced compliance exceptions to zero in audits, improved consent opt-in by 14% through clearer UX, and gave legal teams regulator-ready exports in seconds.</p>
+  </section>
+
+  <div class="cta">
+    <a class="btn primary" href="/contact-sales.html">Talk to Compliance Team</a>
+    <a class="btn secondary" href="/trust.html">View Trust Center</a>
+  </div>
+
+  <div class="post-nav">
+    <div class="post-links">
+      <a href="/blog-microservices-scale.html">← Previous: Go Microservices at 10M/hr</a>
+      <a href="/blog-synccreate-multivariant.html">Next: Multi-Variant Creative →</a>
+    </div>
+    <div class="sidebar">
+      <a href="/docs.html">Documentation</a>
+      <a href="/api.html">API Reference</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/contact-sales.html">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

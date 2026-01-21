@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources - KIKI™ Knowledge Base & Learning Center</title>
+  <meta name="description" content="KIKI Resources: whitepapers, guides, templates, webinars, and learning materials for customer retention experts.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .resources-hero{padding:120px 0 80px;text-align:center;background:linear-gradient(180deg,rgba(37,99,235,.05),rgba(15,23,42,.8))}
+    .resources-hero h1{font-size:48px;color:#f8fafc;margin-bottom:20px;font-weight:800}
+    .resources-hero p{font-size:20px;color:#94a3b8;max-width:700px;margin:0 auto}
+    .resource-tabs{display:flex;gap:16px;margin:40px 0;border-bottom:1px solid rgba(51,65,85,.5);overflow-x:auto}
+    .resource-tab{padding:16px 24px;color:#94a3b8;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+    .resource-tab:hover{color:#f1f5f9}
+    .resource-tab.active{color:#3b82f6;border-bottom-color:#3b82f6}
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:32px;margin:60px 0}
+    .resource-card{background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:12px;padding:32px;transition:all .3s;cursor:pointer}
+    .resource-card:hover{transform:translateY(-4px);border-color:rgba(59,130,246,.5);box-shadow:0 15px 30px rgba(59,130,246,.1)}
+    .resource-type{display:inline-block;background:rgba(59,130,246,.2);color:#3b82f6;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;text-transform:uppercase;margin-bottom:12px}
+    .resource-title{font-size:20px;color:#f1f5f9;margin-bottom:12px;font-weight:700}
+    .resource-desc{color:#94a3b8;line-height:1.8;margin-bottom:20px;min-height:60px}
+    .resource-meta{display:flex;gap:12px;justify-content:space-between;align-items:center;color:#64748b;font-size:13px}
+    .resource-download{display:inline-block;color:#3b82f6;text-decoration:none;font-weight:600;margin-top:16px;padding-top:16px;border-top:1px solid rgba(51,65,85,.3)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:40px"/></div>
+    <nav><a href="/index.html">Home</a><a href="/docs.html">Docs</a><a href="/api.html">API</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/about.html">About</a><a href="/contact-sales.html" class="btn-nav">Contact Sales</a></nav>
+  </div>
+</header>
+
+<section class="resources-hero">
+  <div class="container">
+    <h1>Resources & Learning Center</h1>
+    <p>Whitepapers, guides, templates, and webinars to master customer retention strategies.</p>
+  </div>
+</section>
+
+<section style="padding:80px 0">
+  <div class="container">
+    <div class="resource-tabs">
+      <div class="resource-tab active" onclick="filterResources('all')">All Resources</div>
+      <div class="resource-tab" onclick="filterResources('whitepaper')">Whitepapers</div>
+      <div class="resource-tab" onclick="filterResources('guide')">Guides</div>
+      <div class="resource-tab" onclick="filterResources('template')">Templates</div>
+      <div class="resource-tab" onclick="filterResources('webinar')">Webinars</div>
+    </div>
+
+    <div class="resource-grid" id="resourceGrid">
+      <!-- Whitepapers -->
+      <div class="resource-card" data-category="whitepaper">
+        <div class="resource-type">📄 Whitepaper</div>
+        <h3 class="resource-title">The Art of Predictive Churn</h3>
+        <p class="resource-desc">Comprehensive guide to building ML models that predict customer churn 30-90 days in advance with 89%+ accuracy.</p>
+        <div class="resource-meta">
+          <span>42 pages</span>
+          <span>15 min read</span>
+        </div>
+        <a href="#" class="resource-download">Download PDF →</a>
+      </div>
+
+      <div class="resource-card" data-category="whitepaper">
+        <div class="resource-type">📄 Whitepaper</div>
+        <h3 class="resource-title">LTV Optimization Strategies</h3>
+        <p class="resource-desc">Data-driven strategies to increase customer lifetime value by 40%+ through personalization and pricing optimization.</p>
+        <div class="resource-meta">
+          <span>38 pages</span>
+          <span>12 min read</span>
+        </div>
+        <a href="#" class="resource-download">Download PDF →</a>
+      </div>
+
+      <div class="resource-card" data-category="whitepaper">
+        <div class="resource-type">📄 Whitepaper</div>
+        <h3 class="resource-title">Retention Metrics That Matter</h3>
+        <p class="resource-desc">Framework for selecting and tracking KPIs that directly impact revenue. Includes benchmark data across 10+ industries.</p>
+        <div class="resource-meta">
+          <span>31 pages</span>
+          <span>9 min read</span>
+        </div>
+        <a href="#" class="resource-download">Download PDF →</a>
+      </div>
+
+      <!-- Guides -->
+      <div class="resource-card" data-category="guide">
+        <div class="resource-type">📚 Guide</div>
+        <h3 class="resource-title">KIKI Implementation Handbook</h3>
+        <p class="resource-desc">Step-by-step guide for deploying KIKI in production. Covers data preparation, integrations, testing, and go-live.</p>
+        <div class="resource-meta">
+          <span>50 pages</span>
+          <span>Technical</span>
+        </div>
+        <a href="#" class="resource-download">Read Guide →</a>
+      </div>
+
+      <div class="resource-card" data-category="guide">
+        <div class="resource-type">📚 Guide</div>
+        <h3 class="resource-title">Customer Retention Playbook</h3>
+        <p class="resource-desc">Battle-tested playbook with 25+ tactics for reducing churn. Includes templates, scripts, and campaign frameworks.</p>
+        <div class="resource-meta">
+          <span>67 pages</span>
+          <span>Operational</span>
+        </div>
+        <a href="#" class="resource-download">Read Guide →</a>
+      </div>
+
+      <div class="resource-card" data-category="guide">
+        <div class="resource-type">📚 Guide</div>
+        <h3 class="resource-title">GDPR Compliance for Retention</h3>
+        <p class="resource-desc">Comprehensive guide to running retention campaigns while maintaining 100% GDPR compliance. Legal review included.</p>
+        <div class="resource-meta">
+          <span>44 pages</span>
+          <span>Compliance</span>
+        </div>
+        <a href="#" class="resource-download">Read Guide →</a>
+      </div>
+
+      <!-- Templates -->
+      <div class="resource-card" data-category="template">
+        <div class="resource-type">📋 Template</div>
+        <h3 class="resource-title">Churn Prevention Campaign</h3>
+        <p class="resource-desc">Email campaign template for win-back. Customize subject lines, offers, and messaging for your customer base.</p>
+        <div class="resource-meta">
+          <span>5 email templates</span>
+          <span>HTML + Text</span>
+        </div>
+        <a href="#" class="resource-download">Download ZIP →</a>
+      </div>
+
+      <div class="resource-card" data-category="template">
+        <div class="resource-type">📋 Template</div>
+        <h3 class="resource-title">Retention Dashboard</h3>
+        <p class="resource-desc">Pre-built Google Sheets dashboard for tracking retention KPIs, cohort analysis, and churn trends. Auto-refresh enabled.</p>
+        <div class="resource-meta">
+          <span>12 tabs</span>
+          <span>Google Sheets</span>
+        </div>
+        <a href="#" class="resource-download">Clone Template →</a>
+      </div>
+
+      <div class="resource-card" data-category="template">
+        <div class="resource-type">📋 Template</div>
+        <h3 class="resource-title">ROI Calculation Workbook</h3>
+        <p class="resource-desc">Excel workbook for calculating KIKI ROI based on your churn, LTV, and customer base. Pre-loaded with industry benchmarks.</p>
+        <div class="resource-meta">
+          <span>3 worksheets</span>
+          <span>Excel/CSV</span>
+        </div>
+        <a href="#" class="resource-download">Download XLS →</a>
+      </div>
+
+      <!-- Webinars -->
+      <div class="resource-card" data-category="webinar">
+        <div class="resource-type">🎥 Webinar</div>
+        <h3 class="resource-title">Predictive Analytics 101</h3>
+        <p class="resource-desc">Introduction to ML-based churn prediction. Covers model types, data preparation, and implementation in 45 minutes.</p>
+        <div class="resource-meta">
+          <span>45 min</span>
+          <span>Jan 25, 2026</span>
+        </div>
+        <a href="#" class="resource-download">Register →</a>
+      </div>
+
+      <div class="resource-card" data-category="webinar">
+        <div class="resource-type">🎥 Webinar</div>
+        <h3 class="resource-title">Building Retention Strategies</h3>
+        <p class="resource-desc">Advanced retention tactics from companies that reduced churn by 40%+. Real-world case studies and Q&A included.</p>
+        <div class="resource-meta">
+          <span>60 min</span>
+          <span>Feb 1, 2026</span>
+        </div>
+        <a href="#" class="resource-download">Register →</a>
+      </div>
+
+      <div class="resource-card" data-category="webinar">
+        <div class="resource-type">🎥 Webinar</div>
+        <h3 class="resource-title">KIKI Platform Masterclass</h3>
+        <p class="resource-desc">Deep dive into KIKI features. Learn about all 6 agents, integrations, API, compliance, and best practices in 90 minutes.</p>
+        <div class="resource-meta">
+          <span>90 min</span>
+          <span>Feb 8, 2026</span>
+        </div>
+        <a href="#" class="resource-download">Register →</a>
+      </div>
+
+      <div class="resource-card" data-category="webinar">
+        <div class="resource-type">🎥 Webinar</div>
+        <h3 class="resource-title">SaaS Metrics Demystified</h3>
+        <p class="resource-desc">Master NRR, CAC, LTV, churn, and expansion revenue. Learn how to benchmark against industry standards.</p>
+        <div class="resource-meta">
+          <span>45 min</span>
+          <span>Feb 15, 2026</span>
+        </div>
+        <a href="#" class="resource-download">Register →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:rgba(15,23,42,.3);padding:80px 0">
+  <div class="container">
+    <h2 class="section-title">Featured Learning Path</h2>
+    <p class="section-subtitle">Complete this 3-part series to become a retention expert</p>
+    
+    <div style="max-width:900px;margin:40px auto">
+      <div style="display:flex;gap:24px;margin-bottom:32px;padding:32px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:12px;align-items:start">
+        <div style="font-size:40px;font-weight:800;color:#3b82f6;min-width:60px">1</div>
+        <div>
+          <h3 style="color:#f1f5f9;font-size:22px;margin-bottom:12px;font-weight:700">Foundation: Retention Metrics</h3>
+          <p style="color:#cbd5e1;line-height:1.8;margin-bottom:16px">Learn the core KPIs: churn rate, NRR, CAC, LTV, and expansion revenue. Includes benchmark data for your industry.</p>
+          <a href="#" style="color:#3b82f6;text-decoration:none;font-weight:600">Start Learning →</a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:24px;margin-bottom:32px;padding:32px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:12px;align-items:start">
+        <div style="font-size:40px;font-weight:800;color:#3b82f6;min-width:60px">2</div>
+        <div>
+          <h3 style="color:#f1f5f9;font-size:22px;margin-bottom:12px;font-weight:700">Strategy: Predictive & Personalization</h3>
+          <p style="color:#cbd5e1;line-height:1.8;margin-bottom:16px">Master ML-based churn prediction and personalized retention campaigns. See 15+ tactical examples.</p>
+          <a href="#" style="color:#3b82f6;text-decoration:none;font-weight:600">Continue Learning →</a>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:24px;padding:32px;background:rgba(15,23,42,.6);border:1px solid rgba(51,65,85,.5);border-radius:12px;align-items:start">
+        <div style="font-size:40px;font-weight:800;color:#3b82f6;min-width:60px">3</div>
+        <div>
+          <h3 style="color:#f1f5f9;font-size:22px;margin-bottom:12px;font-weight:700">Implementation: KIKI Platform</h3>
+          <p style="color:#cbd5e1;line-height:1.8;margin-bottom:16px">Deploy KIKI, configure agents, set up integrations, and launch your first campaigns. Hands-on walkthrough.</p>
+          <a href="#" style="color:#3b82f6;text-decoration:none;font-weight:600">Complete Series →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:80px 0">
+  <div class="container" style="text-align:center">
+    <h2 class="section-title">Can't Find What You're Looking For?</h2>
+    <p class="section-subtitle">Our team can create custom resources tailored to your needs.</p>
+    <div style="margin-top:32px">
+      <a href="/contact-sales.html" class="btn primary large">Request Custom Content</a>
+      <a href="/faq.html" class="btn secondary large">View FAQ</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/docs.html">Documentation</a><a href="/api.html">API Reference</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved.</small></div>
+  </div>
+</footer>
+
+<script>
+function filterResources(category) {
+  const cards = document.querySelectorAll('.resource-card');
+  const tabs = document.querySelectorAll('.resource-tab');
+  
+  tabs.forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

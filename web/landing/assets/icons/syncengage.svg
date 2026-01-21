@@ -1,0 +1,27 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Retention/Target Icon -->
+  <defs>
+    <linearGradient id="targetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer ring -->
+  <circle cx="32" cy="32" r="26" stroke="url(#targetGradient)" stroke-width="3" fill="none" opacity="0.4"/>
+  
+  <!-- Middle ring -->
+  <circle cx="32" cy="32" r="18" stroke="url(#targetGradient)" stroke-width="3" fill="none" opacity="0.6"/>
+  
+  <!-- Inner ring -->
+  <circle cx="32" cy="32" r="10" stroke="url(#targetGradient)" stroke-width="3" fill="none" opacity="0.8"/>
+  
+  <!-- Center bullseye -->
+  <circle cx="32" cy="32" r="5" fill="url(#targetGradient)"/>
+  
+  <!-- Engagement arrows -->
+  <path d="M32 6 L32 12 L28 9 Z" fill="#10b981"/>
+  <path d="M58 32 L52 32 L55 28 Z" fill="#10b981"/>
+  <path d="M32 58 L32 52 L36 55 Z" fill="#10b981"/>
+  <path d="M6 32 L12 32 L9 36 Z" fill="#10b981"/>
+</svg>

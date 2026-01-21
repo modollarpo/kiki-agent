@@ -1,0 +1,175 @@
+syntax = "proto3";
+
+package syncflow.v1;
+
+option go_package = "github.com/user/kiki-agent/api/proto/syncflow";
+
+import "google/protobuf/timestamp.proto";
+
+// SyncFlow™ - Execution Layer for Multi-Platform Bid Placement
+// This service coordinates bid placement across 7 ad platforms
+// with circuit breaker resilience and audit trail logging
+
+service SyncFlowService {
+  // PlaceBid executes a single bid on a platform
+  rpc PlaceBid(BidRequest) returns (BidResponse);
+
+  // PlaceBidBatch executes multiple bids atomically
+  rpc PlaceBidBatch(BidBatchRequest) returns (BidBatchResponse);
+
+  // GetBudgetStatus returns current budget utilization
+  rpc GetBudgetStatus(BudgetStatusRequest) returns (BudgetStatusResponse);
+
+  // GetCircuitBreakerStatus returns resilience layer status
+  rpc GetCircuitBreakerStatus(CircuitBreakerRequest) returns (CircuitBreakerResponse);
+}
+
+// BidRequest - Input for placing a bid on an ad platform
+message BidRequest {
+  // Request metadata
+  string request_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  
+  // Customer context
+  string customer_id = 3;
+  string campaign_id = 4;
+  
+  // LTV prediction (from SyncValue™)
+  double predicted_ltv = 5;        // LTV from dRNN
+  double confidence = 6;           // Prediction confidence
+  
+  // Bid calculation
+  double bid_amount = 7;           // Calculated bid ($)
+  BidSource bid_source = 8;        // AI or fallback
+  
+  // Platform details
+  Platform platform = 9;           // Target ad platform
+  string platform_account_id = 10; // Platform-specific account
+  
+  // Budget constraints
+  double max_budget = 11;          // Maximum budget for this campaign
+  double current_spend = 12;       // Current spend in window
+  
+  // Metadata
+  map<string, string> metadata = 13;
+  string explanation = 14;         // AI explanation (for audit trail)
+}
+
+// Platform - Supported ad platforms
+enum Platform {
+  PLATFORM_UNSPECIFIED = 0;
+  GOOGLE_ADS = 1;
+  META = 2;
+  TIKTOK = 3;
+  LINKEDIN = 4;
+  AMAZON = 5;
+  TRADEDESK = 6;
+  X = 7;                           // Twitter/X
+}
+
+// BidSource - Origin of bid calculation
+enum BidSource {
+  BID_SOURCE_UNSPECIFIED = 0;
+  AI_PREDICTION = 1;               // From SyncValue™ dRNN
+  HEURISTIC_FALLBACK = 2;          // From circuit breaker fallback
+  MANUAL_OVERRIDE = 3;             // Manual intervention
+}
+
+// BidResponse - Result of bid placement
+message BidResponse {
+  // Response metadata
+  string request_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  
+  // Bid result
+  bool success = 3;
+  string message = 4;
+  
+  // Platform response
+  string platform_bid_id = 5;      // Platform-assigned bid ID
+  BidStatus status = 6;
+  
+  // Budget tracking
+  double remaining_budget = 7;
+  double total_spend = 8;
+  
+  // Performance
+  int64 execution_time_ms = 9;     // Time to place bid
+  
+  // Circuit breaker state
+  CircuitBreakerState circuit_state = 10;
+  bool used_fallback = 11;
+  
+  // Audit trail ID
+  string audit_id = 12;            // Reference to audit log entry
+}
+
+// BidStatus - Status of bid placement
+enum BidStatus {
+  BID_STATUS_UNSPECIFIED = 0;
+  ACCEPTED = 1;                    // Bid accepted by platform
+  REJECTED = 2;                    // Bid rejected (budget, compliance, etc.)
+  PENDING = 3;                     // Bid pending approval
+  FAILED = 4;                      // Technical failure
+  BUDGET_EXCEEDED = 5;             // Budget constraint violated
+}
+
+// CircuitBreakerState - Circuit breaker status
+enum CircuitBreakerState {
+  CIRCUIT_STATE_UNSPECIFIED = 0;
+  CLOSED = 1;                      // Healthy - AI active
+  OPEN = 2;                        // Degraded - using fallback
+  HALF_OPEN = 3;                   // Recovery - testing AI
+}
+
+// Batch messages
+message BidBatchRequest {
+  repeated BidRequest requests = 1;
+  bool atomic = 2;                 // All-or-nothing execution
+}
+
+message BidBatchResponse {
+  repeated BidResponse responses = 1;
+  int32 total_requested = 2;
+  int32 successful = 3;
+  int32 failed = 4;
+}
+
+// Budget status messages
+message BudgetStatusRequest {
+  string campaign_id = 1;
+  Platform platform = 2;
+}
+
+message BudgetStatusResponse {
+  double total_budget = 1;
+  double current_spend = 2;
+  double remaining_budget = 3;
+  double spend_rate_per_minute = 4;
+  google.protobuf.Timestamp window_start = 5;
+  google.protobuf.Timestamp window_end = 6;
+  bool budget_exceeded = 7;
+}
+
+// Circuit breaker status messages
+message CircuitBreakerRequest {
+  Platform platform = 1;           // Optional: specific platform
+}
+
+message CircuitBreakerResponse {
+  CircuitBreakerState state = 1;
+  int64 total_requests = 2;
+  int64 successful_requests = 3;
+  int64 failed_requests = 4;
+  int64 fallback_activations = 5;
+  double current_accuracy = 6;
+  
+  // Latency metrics
+  double p50_latency_ms = 7;
+  double p95_latency_ms = 8;
+  double p99_latency_ms = 9;
+  
+  // State transitions
+  int32 state_transitions_today = 10;
+  google.protobuf.Timestamp last_state_change = 11;
+}

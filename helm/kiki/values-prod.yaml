@@ -1,0 +1,171 @@
+# Production Helm Values for KIKI Platform
+# Override via: helm upgrade ... --set key=value or -f values-prod.yaml
+
+global:
+  namespace: kiki
+  imageRegistry: "ghcr.io/your-org/kiki"  # Update to your registry
+  ingressClass: nginx
+  tlsSecretName: kiki-tls-prod
+  domain:
+    shield: shield.kiki.io        # Update to your domain
+    engage: engage.kiki.io        # Update to your domain
+  imagePullPolicy: IfNotPresent
+  logLevel: info
+
+# ============================================================================
+# Redis Configuration (Production Managed)
+# ============================================================================
+redis:
+  # Use managed Redis (AWS ElastiCache, Azure Cache, GCP Memorystore)
+  # Example AWS ElastiCache endpoint:
+  address: "kiki-prod-redis.xxxxx.ng.0001.use1.cache.amazonaws.com:6379"
+  # For password-protected Redis, inject via External Secrets
+  passwordSecret:
+    name: kiki-runtime-secrets
+    key: REDIS_PASSWORD
+  enabled: true
+  replicaCount: 3
+
+# ============================================================================
+# SyncShield (Regulatory Guardrail Agent)
+# ============================================================================
+syncshield:
+  enabled: true
+  image: "syncshield:latest"     # Set by CD workflow: --set syncshield.image=syncshield:v1.0.0
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+# ============================================================================
+# SyncEngage (Retention Agent)
+# ============================================================================
+syncengage:
+  enabled: true
+  image: "syncengage:latest"     # Set by CD workflow
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+# ============================================================================
+# SyncValue (LTV AI Service)
+# ============================================================================
+syncvalue:
+  enabled: true
+  image: "syncvalue:latest"      # Set by CD workflow
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 80
+
+# ============================================================================
+# SyncFlow (Execution Engine)
+# ============================================================================
+syncflow:
+  enabled: true
+  image: "syncflow:latest"       # Set by CD workflow
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 80
+
+# ============================================================================
+# Ingress Configuration
+# ============================================================================
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/limit-rps: "50"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  tls:
+    - secretName: kiki-tls-prod
+      hosts:
+        - shield.kiki.io
+        - engage.kiki.io
+  hosts:
+    - host: shield.kiki.io
+      paths:
+        - path: /
+          pathType: Prefix
+          backend: syncshield
+    - host: engage.kiki.io
+      paths:
+        - path: /
+          pathType: Prefix
+          backend: syncengage
+
+# ============================================================================
+# External Secrets Integration
+# ============================================================================
+externalSecrets:
+  enabled: true
+  provider: aws              # aws | azure | gcp
+  region: us-east-1          # AWS region
+  refreshInterval: 1h        # Secret refresh frequency
+
+# ============================================================================
+# OpenTelemetry Observability
+# ============================================================================
+otel:
+  enabled: true
+  collector:
+    endpoint: "otel-collector.monitoring.svc.cluster.local:4317"
+    logLevel: info
+  jaeger:
+    endpoint: "jaeger-collector.monitoring.svc.cluster.local:14268"
+    samplingRate: 0.1         # 10% sampling for prod
+
+# ============================================================================
+# Pod Disruption Budgets (High Availability)
+# ============================================================================
+pdb:
+  enabled: true
+  minAvailable: 2
+
+# ============================================================================
+# Network Policies (Security)
+# ============================================================================
+networkPolicy:
+  enabled: true
+  allowExternal: false
+  allowDNS: true

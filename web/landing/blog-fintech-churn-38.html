@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTech Case Study: 38% Churn Reduction in 90 Days | KIKI Engineering</title>
+  <meta name="description" content="How KIKI reduced churn by 38% for a FinTech client in 90 days with LTV scoring, risk alerts, and multi-channel retention campaigns.">
+  <link rel="alternate" type="application/rss+xml" title="KIKI Engineering Blog RSS" href="/rss.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body { background: #0b1220; color: #e2e8f0; }
+    .hero { padding: 120px 0 60px; text-align: center; background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(15,23,42,0.7)); }
+    .hero h1 { font-size: 42px; margin-bottom: 16px; }
+    .meta { color: #94a3b8; margin-bottom: 24px; }
+    .pill { display: inline-block; padding: 6px 12px; background: rgba(59,130,246,0.15); color: #3b82f6; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 48px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.12); }
+    h2 { font-size: 28px; margin-bottom: 16px; }
+    p { color: #cbd5e1; line-height: 1.8; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: rgba(15,23,42,0.6); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 12px; padding: 20px; }
+    .badge { display: inline-block; padding: 4px 10px; background: rgba(34,197,94,0.14); color: #22c55e; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    ul { color: #cbd5e1; line-height: 1.8; }
+    .cta { text-align: center; padding: 48px 0; }
+    .cta a { margin: 0 10px; }
+    .post-nav { margin: 40px 0 16px; padding: 20px; background: rgba(15,23,42,0.6); border: 1px solid rgba(148,163,184,0.14); border-radius: 12px; }
+    .post-links { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .post-links a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .post-links a:hover { text-decoration: underline; }
+    .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .sidebar a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+    .sidebar a:hover { color: #3b82f6; }
+    @media(max-width: 768px){ .hero h1 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html" style="color:#3b82f6;">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="pill">Case Studies</div>
+    <h1>How We Helped a FinTech Reduce Churn by 38% in 90 Days</h1>
+    <div class="meta">December 18, 2025 • 9 min read • By David Park, Engagement Lead</div>
+    <p>A technical breakdown of our PayFlow Financial deployment: architecture, data strategy, and the retention playbooks that delivered a 38% churn reduction.</p>
+    <div class="back" style="margin-top:16px;"><a href="/blog.html" style="color:#3b82f6; font-weight:700; text-decoration:none;">← Back to Blog</a></div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="section">
+    <h2>Baseline</h2>
+    <div class="grid">
+      <div class="card"><div class="badge">-38% churn</div><p>Net churn reduced over 90 days vs. control.</p></div>
+      <div class="card"><div class="badge">+21% NRR</div><p>Net revenue retention uplift via upsell offers to high-LTV cohorts.</p></div>
+      <div class="card"><div class="badge">+11 days</div><p>Lead time gained on churn signals vs. legacy rules.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Architecture</h2>
+    <ul>
+      <li>Data sources: product analytics, billing events, KYC status, support tickets.</li>
+      <li>LTV + churn scores served via gRPC to journey orchestration (SyncEngage).</li>
+      <li>Feature store freshness: 15 minutes for behavioral, 4 hours for financial.</li>
+      <li>Audiences synced to Braze and Twilio for multi-channel messaging.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Playbooks Launched</h2>
+    <ul>
+      <li><strong>Card-decline save:</strong> proactive outreach within 30 minutes of failed payment, with smart retries and dynamic incentives.</li>
+      <li><strong>Activation boost:</strong> concierge onboarding for users with low feature coverage after day 7.</li>
+      <li><strong>High-value recovery:</strong> personalized offers for top LTV decile showing risk signals.</li>
+      <li><strong>Support-triggered journeys:</strong> escalate unhappy tickets to success managers with retention offers.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Why It Worked</h2>
+    <ul>
+      <li>Better lead time: 11 extra days enabled meaningful save actions.</li>
+      <li>Precision: campaigns targeted only high-risk, high-value users.</li>
+      <li>Channel mix: email + SMS + in-app with channel fallback logic.</li>
+      <li>Measurement: holdout cohorts and per-playbook lift tracking.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Results</h2>
+    <p>Churn dropped by 38% in 90 days; NRR improved by 21%; incentive spend decreased 19% due to precision targeting. Exec sponsor approved global rollout and added three new geos.</p>
+  </section>
+
+  <div class="cta">
+    <a class="btn primary" href="/contact-sales.html">See a Retention Demo</a>
+    <a class="btn secondary" href="/case-studies.html">View More Case Studies</a>
+  </div>
+
+  <div class="post-nav">
+    <div class="post-links">
+      <a href="/blog-feature-engineering-churn.html">← Previous: Churn Feature Engineering</a>
+      <span></span>
+    </div>
+    <div class="sidebar">
+      <a href="/docs.html">Documentation</a>
+      <a href="/api.html">API Reference</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/contact-sales.html">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

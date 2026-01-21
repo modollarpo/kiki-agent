@@ -1,0 +1,55 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.21.x'
+      - name: Go build SyncShield
+        run: go build ./cmd/syncshield
+      - name: Go build SyncEngage
+        run: go build ./cmd/syncengage
+      - name: Go build SyncValue
+        run: |
+          if [ -d "cmd/syncvalue" ]; then go build ./cmd/syncvalue; else echo "no syncvalue dir yet"; fi
+      - name: Go build SyncFlow
+        run: |
+          if [ -d "cmd/syncflow" ]; then go build ./cmd/syncflow; else echo "no syncflow dir yet"; fi
+      - name: Run unit tests
+        run: go test ./...
+      - name: Setup Python for SyncCreate
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate SyncCreate dependencies
+        run: |
+          if [ -f "cmd/creative/requirements.txt" ]; then 
+            pip install -r cmd/creative/requirements.txt
+          fi
+      - name: Build Docker images
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/syncshield:sha-${{ github.sha }} ./cmd/syncshield
+          docker build -t ghcr.io/${{ github.repository }}/syncengage:sha-${{ github.sha }} ./cmd/syncengage
+          if [ -d "cmd/syncvalue" ]; then docker build -t ghcr.io/${{ github.repository }}/syncvalue:sha-${{ github.sha }} ./cmd/syncvalue; fi
+          if [ -d "cmd/syncflow" ]; then docker build -t ghcr.io/${{ github.repository }}/syncflow:sha-${{ github.sha }} ./cmd/syncflow; fi
+          if [ -d "cmd/creative" ]; then docker build -t ghcr.io/${{ github.repository }}/synccreate:sha-${{ github.sha }} ./cmd/creative; fi
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push images
+        run: |
+          docker push ghcr.io/${{ github.repository }}/syncshield:sha-${{ github.sha }}
+          docker push ghcr.io/${{ github.repository }}/syncengage:sha-${{ github.sha }}
+          if [ -d "cmd/syncvalue" ]; then docker push ghcr.io/${{ github.repository }}/syncvalue:sha-${{ github.sha }}; fi
+          if [ -d "cmd/syncflow" ]; then docker push ghcr.io/${{ github.repository }}/syncflow:sha-${{ github.sha }}; fi
+          if [ -d "cmd/creative" ]; then docker push ghcr.io/${{ github.repository }}/synccreate:sha-${{ github.sha }}; fi

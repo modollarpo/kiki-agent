@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Reference - KIKI™ Enterprise Platform</title>
+  <meta name="description" content="Complete REST API documentation for KIKI Platform - endpoints, authentication, request/response formats, and code examples.">
+  <link rel="canonical" href="https://kiki.example.com/api">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .api-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    .api-header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding-top: 40px;
+    }
+    .api-title {
+      font-size: 48px;
+      color: #f8fafc;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+    .api-subtitle {
+      color: #94a3b8;
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .api-version {
+      display: inline-block;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .endpoint-section {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    .endpoint-section h2 {
+      font-size: 32px;
+      color: #f1f5f9;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+    .endpoint-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .endpoint-card:last-child {
+      margin-bottom: 0;
+    }
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .http-method {
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .http-method.get {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+    .http-method.post {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+    .http-method.put {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.4);
+    }
+    .http-method.delete {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .endpoint-path {
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      flex: 1;
+    }
+    .endpoint-description {
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .param-table th {
+      background: rgba(30, 41, 59, 0.8);
+      color: #f1f5f9;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .param-table td {
+      color: #cbd5e1;
+      padding: 12px 16px;
+      border-top: 1px solid rgba(71, 85, 105, 0.3);
+      font-size: 14px;
+    }
+    .param-table code {
+      background: rgba(30, 41, 59, 0.8);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #22c55e;
+    }
+    .required-badge {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .code-example {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .code-example pre {
+      margin: 0;
+      color: #e2e8f0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .code-label {
+      background: rgba(30, 41, 59, 0.9);
+      color: #94a3b8;
+      padding: 8px 16px;
+      border-radius: 6px 6px 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: -1px;
+      display: inline-block;
+    }
+    .response-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 41, 59, 0.6);
+      padding: 8px 14px;
+      border-radius: 6px;
+      margin: 12px 0;
+    }
+    .status-code {
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+    }
+    .status-code.success {
+      color: #22c55e;
+    }
+    .status-code.error {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height: 40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html" style="color: #3b82f6;">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<div class="api-container">
+  <div class="api-header">
+    <div class="api-version">API Version 1.0</div>
+    <h1 class="api-title">KIKI™ REST API Reference</h1>
+    <p class="api-subtitle">Complete API documentation with authentication, endpoints, parameters, and response formats. Built on OpenAPI 3.0 specification.</p>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>🔐 Authentication</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/auth/login</span>
+      </div>
+      <p class="endpoint-description">Authenticate user and obtain JWT access token. Token expires in 1 hour by default.</p>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Request Body</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>email</code><span class="required-badge">required</span></td>
+            <td>string</td>
+            <td>User email address</td>
+          </tr>
+          <tr>
+            <td><code>password</code><span class="required-badge">required</span></td>
+            <td>string</td>
+            <td>User password (min 8 characters)</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="code-label">Request Example (cURL)</div>
+      <div class="code-example">
+        <pre>curl -X POST https://api.kiki.example.com/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@example.com",
+    "password": "SecureP@ssw0rd"
+  }'</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">200 OK</span>
+        <span style="color: #94a3b8;">Success</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh_token": "8f7a9c2b-4e1d-4a5b-9c2f-3e4d5a6b7c8d",
+  "expires_in": 3600,
+  "token_type": "Bearer",
+  "user": {
+    "id": "usr_abc123",
+    "email": "admin@example.com",
+    "role": "admin"
+  }
+}</pre>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/auth/refresh</span>
+      </div>
+      <p class="endpoint-description">Refresh an expired access token using a refresh token.</p>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Request Body</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>refresh_token</code><span class="required-badge">required</span></td>
+            <td>string</td>
+            <td>Valid refresh token from login response</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>🧠 SyncValue™ AI - Predictive LTV</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncvalue/predict</span>
+      </div>
+      <p class="endpoint-description">Predict customer lifetime value using multi-modal ML model. Returns LTV prediction with 94.7% accuracy and confidence score.</p>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Headers</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Header</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Authorization</code></td>
+            <td>Bearer {access_token}</td>
+          </tr>
+          <tr>
+            <td><code>Content-Type</code></td>
+            <td>application/json</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Request Body</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>customer_id</code><span class="required-badge">required</span></td>
+            <td>string</td>
+            <td>Unique customer identifier</td>
+          </tr>
+          <tr>
+            <td><code>features</code><span class="required-badge">required</span></td>
+            <td>object</td>
+            <td>Feature vector for prediction (see below)</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Feature Parameters</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>days_since_signup</code></td>
+            <td>integer</td>
+            <td>Days since customer registration</td>
+          </tr>
+          <tr>
+            <td><code>total_orders</code></td>
+            <td>integer</td>
+            <td>Total number of orders placed</td>
+          </tr>
+          <tr>
+            <td><code>avg_order_value</code></td>
+            <td>float</td>
+            <td>Average order value in USD</td>
+          </tr>
+          <tr>
+            <td><code>last_purchase_days</code></td>
+            <td>integer</td>
+            <td>Days since last purchase</td>
+          </tr>
+          <tr>
+            <td><code>email_open_rate</code></td>
+            <td>float</td>
+            <td>Email engagement rate (0.0-1.0)</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "customer_id": "cust_abc123",
+  "features": {
+    "days_since_signup": 45,
+    "total_orders": 8,
+    "avg_order_value": 125.50,
+    "last_purchase_days": 12,
+    "email_open_rate": 0.42,
+    "product_categories_browsed": 5,
+    "cart_abandonment_rate": 0.15
+  }
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">200 OK</span>
+        <span style="color: #94a3b8;">Prediction successful</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "customer_id": "cust_abc123",
+  "predicted_ltv": 2450.80,
+  "confidence": 0.947,
+  "segment": "high_value",
+  "prediction_timestamp": "2026-01-20T10:30:00Z",
+  "model_version": "1.0.0",
+  "inference_time_ms": 87
+}</pre>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncvalue/batch-predict</span>
+      </div>
+      <p class="endpoint-description">Batch predict LTV for multiple customers. Maximum 1000 customers per request.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "customers": [
+    {
+      "customer_id": "cust_001",
+      "features": { "days_since_signup": 30, "total_orders": 3, ... }
+    },
+    {
+      "customer_id": "cust_002",
+      "features": { "days_since_signup": 60, "total_orders": 12, ... }
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>🎯 SyncEngage™ - Retention Engine</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncengage/campaigns</span>
+      </div>
+      <p class="endpoint-description">Create a new retention campaign with audience targeting and multi-channel execution.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "name": "High-Risk Churn Recovery",
+  "description": "Win-back campaign for churned customers",
+  "audience": {
+    "segment": "churn_high_risk",
+    "filters": {
+      "ltv_min": 1000,
+      "days_since_last_purchase": { "min": 30, "max": 90 }
+    }
+  },
+  "channels": [
+    {
+      "type": "email",
+      "template_id": "tmpl_winback_001",
+      "send_delay_hours": 0
+    },
+    {
+      "type": "sms",
+      "template_id": "tmpl_sms_002",
+      "send_delay_hours": 24
+    }
+  ],
+  "schedule": {
+    "start_date": "2026-01-21T00:00:00Z",
+    "end_date": "2026-02-21T23:59:59Z"
+  }
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">201 Created</span>
+        <span style="color: #94a3b8;">Campaign created</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "campaign_id": "camp_xyz789",
+  "name": "High-Risk Churn Recovery",
+  "status": "scheduled",
+  "estimated_audience_size": 3547,
+  "created_at": "2026-01-20T10:35:00Z",
+  "start_date": "2026-01-21T00:00:00Z"
+}</pre>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method get">GET</span>
+        <span class="endpoint-path">/api/v1/syncengage/campaigns/{campaign_id}/stats</span>
+      </div>
+      <p class="endpoint-description">Get real-time campaign performance statistics.</p>
+      
+      <div class="response-status">
+        <span class="status-code success">200 OK</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "campaign_id": "camp_xyz789",
+  "status": "active",
+  "stats": {
+    "sent": 3547,
+    "delivered": 3512,
+    "opened": 1456,
+    "clicked": 487,
+    "converted": 142,
+    "revenue_generated": 18750.40,
+    "open_rate": 0.415,
+    "click_rate": 0.334,
+    "conversion_rate": 0.040
+  },
+  "last_updated": "2026-01-20T11:00:00Z"
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>🛡️ SyncShield™ - Compliance & Governance</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncshield/consent</span>
+      </div>
+      <p class="endpoint-description">Record user consent for GDPR Article 7 compliance. All consent events are immutably logged.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "user_id": "user_xyz789",
+  "consent_type": "marketing",
+  "granted": true,
+  "consent_method": "web_form",
+  "consent_text": "I agree to receive marketing communications",
+  "ip_address": "203.0.113.42",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)..."
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">201 Created</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "consent_id": "consent_abc456",
+  "user_id": "user_xyz789",
+  "consent_type": "marketing",
+  "granted": true,
+  "recorded_at": "2026-01-20T10:40:00Z",
+  "hash": "sha256:8f7e9c2b4a5d1e3f..."
+}</pre>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncshield/dsr/create</span>
+      </div>
+      <p class="endpoint-description">Submit a Data Subject Request (DSR) for GDPR/CCPA compliance. Automated processing with <30min SLA.</p>
+      
+      <h4 style="color: #f1f5f9; font-size: 16px; margin-top: 20px;">Request Body</h4>
+      <table class="param-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>user_email</code><span class="required-badge">required</span></td>
+            <td>string</td>
+            <td>Email of data subject</td>
+          </tr>
+          <tr>
+            <td><code>request_type</code><span class="required-badge">required</span></td>
+            <td>enum</td>
+            <td>access | deletion | portability | rectification</td>
+          </tr>
+          <tr>
+            <td><code>regulation</code></td>
+            <td>enum</td>
+            <td>gdpr | ccpa (default: gdpr)</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "user_email": "customer@example.com",
+  "request_type": "access",
+  "regulation": "gdpr",
+  "requester_name": "Jane Doe",
+  "verification_method": "email_otp"
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">202 Accepted</span>
+        <span style="color: #94a3b8;">DSR processing initiated</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "dsr_id": "dsr_req123",
+  "status": "processing",
+  "estimated_completion": "2026-01-20T11:10:00Z",
+  "tracking_url": "https://kiki.example.com/dsr/track/dsr_req123"
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>⚡ SyncFlow™ - Execution Engine</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/syncflow/execute</span>
+      </div>
+      <p class="endpoint-description">Execute multi-channel campaign with budget controls and circuit breaker protection.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "campaign_id": "camp_xyz789",
+  "channels": ["email", "sms", "push"],
+  "budget": {
+    "max_spend": 5000.00,
+    "currency": "USD"
+  },
+  "execution_mode": "immediate",
+  "dry_run": false
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>🎨 SyncCreate™ - Creative Engine</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/synccreate/generate</span>
+      </div>
+      <p class="endpoint-description">Generate AI-powered creative assets with 5-variant strategy. Supports images and videos.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "prompt": "Summer sale promotion for fashion brand",
+  "asset_type": "video",
+  "format": "tiktok",
+  "variants": 5,
+  "brand_guidelines": {
+    "colors": ["#FF6B6B", "#4ECDC4"],
+    "logo_url": "https://cdn.example.com/logo.png"
+  }
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">200 OK</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "job_id": "create_job456",
+  "status": "completed",
+  "variants": [
+    {
+      "variant_id": 1,
+      "url": "https://cdn.kiki.example.com/videos/abc123_v1.mp4",
+      "thumbnail": "https://cdn.kiki.example.com/thumbs/abc123_v1.jpg",
+      "duration_seconds": 15
+    },
+    ...
+  ],
+  "processing_time_seconds": 87
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section">
+    <h2>💳 Billing OaaS™ - Usage-Based Billing</h2>
+    
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/billing/subscriptions</span>
+      </div>
+      <p class="endpoint-description">Create a new subscription with usage-based metering.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "customer_id": "cust_abc123",
+  "plan_id": "plan_growth",
+  "billing_cycle": "monthly",
+  "payment_method": "pm_card_visa",
+  "start_date": "2026-02-01"
+}</pre>
+      </div>
+      
+      <div class="response-status">
+        <span class="status-code success">201 Created</span>
+      </div>
+      <div class="code-example">
+        <pre>{
+  "subscription_id": "sub_xyz789",
+  "status": "active",
+  "current_period_start": "2026-02-01T00:00:00Z",
+  "current_period_end": "2026-03-01T00:00:00Z",
+  "next_invoice_date": "2026-03-01T00:00:00Z"
+}</pre>
+      </div>
+    </div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="http-method post">POST</span>
+        <span class="endpoint-path">/api/v1/billing/usage</span>
+      </div>
+      <p class="endpoint-description">Report usage events for metered billing.</p>
+      
+      <div class="code-label">Request Example</div>
+      <div class="code-example">
+        <pre>{
+  "subscription_id": "sub_xyz789",
+  "metric": "api_calls",
+  "quantity": 1000,
+  "timestamp": "2026-01-20T10:00:00Z"
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="endpoint-section" style="background: rgba(59, 130, 246, 0.05); border-color: rgba(59, 130, 246, 0.3);">
+    <h2>📚 Additional Resources</h2>
+    <div style="color: #cbd5e1; line-height: 1.8;">
+      <p><strong>Rate Limits:</strong> 1000 requests/minute per API key (contact sales for higher limits)</p>
+      <p><strong>Webhooks:</strong> Real-time event notifications available for all endpoints</p>
+      <p><strong>SDKs Available:</strong> Python, JavaScript/TypeScript, Go, Ruby, PHP</p>
+      <p><strong>OpenAPI Spec:</strong> <a href="https://api.kiki.example.com/openapi.json" style="color: #3b82f6;">Download OpenAPI 3.0 spec</a></p>
+      <p><strong>Postman Collection:</strong> <a href="https://api.kiki.example.com/postman.json" style="color: #3b82f6;">Import collection</a></p>
+      <p><strong>Support:</strong> <a href="/contact-sales.html" style="color: #3b82f6;">Contact our API support team</a></p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="/features.html">Features</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/docs.html">Documentation</a>
+        <a href="/api.html">API Reference</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="/resources.html">Learning Center</a>
+        <a href="/use-cases.html">Use Cases</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/case-studies.html">Case Studies</a>
+        <a href="/blog.html">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/careers.html">Careers</a>
+        <a href="/contact-sales.html">Contact Sales</a>
+        <a href="/trust.html">Trust Center</a>
+        <a href="/compliance.html">Compliance</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/dpa.html">DPA</a>
+        <a href="/cookie.html">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

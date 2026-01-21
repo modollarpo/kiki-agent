@@ -1,0 +1,41 @@
+// API definitions for inter-agent communication
+
+syntax = "proto3";
+
+package kiki;
+
+import "google/protobuf/timestamp.proto";
+
+message Event {
+  double purchase = 1;
+  int32 clicks = 2;
+  double time_on_site = 3;
+}
+
+message LTVRequest {
+  string customer_id = 1;
+  repeated Event events = 2;
+}
+
+message LTVResponse {
+  double predicted_ltv = 1;
+  double confidence_score = 2;
+}
+
+message ComplianceRequest {
+  string agent_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+}
+
+message ComplianceResponse {
+  bool compliant = 1;
+  string message = 2;
+}
+
+service SyncValue {
+  rpc GetLTVScore (LTVRequest) returns (LTVResponse);
+}
+
+service SyncShield {
+  rpc CheckCompliance (ComplianceRequest) returns (ComplianceResponse);
+}

@@ -1,0 +1,195 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "9.0.0" },
+    { "type": "panel", "id": "timeseries", "name": "Time series" },
+    { "type": "panel", "id": "stat", "name": "Stat" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0" }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Accuracy % (5m)",
+      "id": 1,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "rate(syncflow_circuit_breaker_requests_total{status=\"success\"}[5m]) / rate(syncflow_circuit_breaker_requests_total[5m]) * 100",
+          "refId": "A"
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "" }, "orientation": "horizontal" },
+      "fieldConfig": { "defaults": { "unit": "percent", "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 90 }, { "color": "green", "value": 94.7 } ] } } },
+      "alert": {
+        "name": "Accuracy below 90% (10m)",
+        "message": "Accuracy under 90% for 10m",
+        "conditions": [
+          {
+            "evaluator": { "type": "lt", "params": [90] },
+            "operator": { "type": "and" },
+            "query": { "params": ["A", "10m", "now"] },
+            "reducer": { "type": "avg" },
+            "type": "query"
+          }
+        ],
+        "frequency": "1m",
+        "for": "10m",
+        "handler": 1,
+        "noDataState": "no_data",
+        "executionErrorState": "alerting"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Error Rate % (5m)",
+      "id": 2,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "rate(syncflow_circuit_breaker_requests_total{status!~\"success|fallback\"}[5m]) / rate(syncflow_circuit_breaker_requests_total[5m]) * 100",
+          "refId": "A"
+        }
+      ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "" }, "orientation": "horizontal" },
+      "fieldConfig": { "defaults": { "unit": "percent", "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 5 } ] } } },
+      "alert": {
+        "name": "Error rate > 1% (5m)",
+        "message": "Error rate over 1% for 5m",
+        "conditions": [
+          {
+            "evaluator": { "type": "gt", "params": [1] },
+            "operator": { "type": "and" },
+            "query": { "params": ["A", "5m", "now"] },
+            "reducer": { "type": "avg" },
+            "type": "query"
+          }
+        ],
+        "frequency": "1m",
+        "for": "5m",
+        "handler": 1,
+        "noDataState": "no_data",
+        "executionErrorState": "alerting"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Requests/sec (1m)",
+      "id": 3,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [ { "expr": "rate(syncflow_circuit_breaker_requests_total[1m])", "refId": "A" } ],
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "" }, "orientation": "horizontal" }
+    },
+    {
+      "type": "stat",
+      "title": "Circuit State",
+      "id": 4,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [ { "expr": "syncflow_circuit_breaker_state_count", "refId": "A" } ],
+      "fieldConfig": { "defaults": { "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 1 }, { "color": "red", "value": 2 } ] } } },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "" }, "orientation": "horizontal" },
+      "alert": {
+        "name": "Circuit OPEN > 2m",
+        "message": "Circuit open for more than 2m",
+        "conditions": [
+          {
+            "evaluator": { "type": "gt", "params": [0] },
+            "operator": { "type": "and" },
+            "query": { "params": ["A", "2m", "now"] },
+            "reducer": { "type": "max" },
+            "type": "query"
+          }
+        ],
+        "frequency": "30s",
+        "for": "2m",
+        "handler": 1,
+        "noDataState": "no_data",
+        "executionErrorState": "alerting"
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Latency p50/p95/p99",
+      "id": 5,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [ { "expr": "syncflow_circuit_breaker_latency_ms{quantile=~\"0.5|0.95|0.99\"}", "refId": "A" } ],
+      "fieldConfig": { "defaults": { "unit": "ms" } }
+    },
+    {
+      "type": "timeseries",
+      "title": "RPS by Status",
+      "id": 6,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [ { "expr": "rate(syncflow_circuit_breaker_requests_total[1m])", "refId": "A" } ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Accuracy % per Platform",
+      "id": 7,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [
+        {
+          "expr": "rate(syncflow_circuit_breaker_requests_total{status=\"success\",platform=~\"$platform\"}[15m]) / rate(syncflow_circuit_breaker_requests_total{platform=~\"$platform\"}[15m]) * 100",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent" } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Fallback Rate",
+      "id": 8,
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "targets": [ { "expr": "rate(syncflow_circuit_breaker_requests_total{status=\"fallback\"}[5m])", "refId": "A" } ]
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["syncshield", "kiki"],
+  "templating": {
+    "list": [
+      {
+        "name": "platform",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+        "query": "label_values(syncflow_circuit_breaker_requests_total, platform)",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*",
+        "current": { "text": "All", "value": ".*" }
+      }
+    ]
+  },
+  "time": { "from": "now-6h", "to": "now" },
+  "timezone": "browser",
+  "title": "KIKI SyncShield Observability",
+  "version": 1
+}

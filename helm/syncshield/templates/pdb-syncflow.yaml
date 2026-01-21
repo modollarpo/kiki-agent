@@ -1,0 +1,14 @@
+{{- if .Values.syncflow.podDisruptionBudget.enabled }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "syncshield.syncflowFullname" . }}
+  labels: {{ include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncflow
+spec:
+  minAvailable: {{ .Values.syncflow.podDisruptionBudget.minAvailable }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "syncshield.name" . }}
+      app.kubernetes.io/component: syncflow
+{{- end }}

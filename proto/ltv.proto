@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ltv;
+
+option go_package = "KIKI/api/pb";
+
+service LTVService {
+    rpc PredictLTV (LTVRequest) returns (LTVResponse);
+}
+
+message LTVRequest {
+    string customer_id = 1;
+    double recent_spend = 2;
+    double engagement_score = 3;
+}
+
+message LTVResponse {
+    double predicted_ltv = 1;
+    double confidence_score = 2;
+    string explanation = 3;
+}

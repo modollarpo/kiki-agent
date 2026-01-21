@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  admin:
+    build: ./cmd/admin
+    ports:
+      - "8085:8085"
+    environment:
+      - ADMIN_DB_HOST=postgres
+      - ADMIN_DB_USER=admin
+      - ADMIN_DB_PASSWORD=adminpass
+      - ADMIN_DB_NAME=kiki
+    depends_on:
+      - postgres
+    restart: unless-stopped

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Archive - KIKI™ Engineering & Product</title>
+  <meta name="description" content="Browse all KIKI engineering, AI/ML, compliance, and product articles in one archive.">
+  <link rel="alternate" type="application/rss+xml" title="KIKI Engineering Blog RSS" href="/rss.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body { background: #0b1220; color: #e2e8f0; }
+    .hero { padding: 110px 0 50px; text-align: center; background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(15,23,42,0.7)); }
+    .hero h1 { font-size: 42px; margin-bottom: 12px; }
+    .hero p { color: #94a3b8; font-size: 18px; max-width: 720px; margin: 0 auto; line-height: 1.7; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+    .card { background: rgba(15,23,42,0.6); border: 1px solid rgba(71,85,105,0.4); border-radius: 12px; padding: 20px; transition: all 0.2s; }
+    .card:hover { border-color: rgba(59,130,246,0.5); transform: translateY(-3px); }
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; background: rgba(59,130,246,0.16); color: #3b82f6; }
+    h3 { margin: 12px 0 8px; font-size: 20px; }
+    p { color: #cbd5e1; line-height: 1.7; }
+    .meta { color: #94a3b8; font-size: 13px; margin-top: 8px; }
+    .back { text-align: center; margin: 30px 0; }
+    .back a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .back a:hover { text-decoration: underline; }
+    .rss-link { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; margin-top: 12px; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.4); color: #fb923c; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    .rss-link:hover { background: rgba(249,115,22,0.2); border-color: rgba(249,115,22,0.6); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height: 40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html" style="color:#3b82f6;">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Blog Archive</h1>
+    <p>Browse every KIKI article on AI/ML, engineering scalability, compliance, product updates, and customer stories.</p>
+    <div class="back"><a href="/blog.html">← Back to Blog</a></div>
+    <a class="rss-link" href="/rss.xml">Subscribe via RSS</a>
+  </div>
+</section>
+
+<section style="padding: 50px 0;">
+  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <span class="pill">AI & ML</span>
+        <h3><a href="/blog-ltv-prediction.html" style="color: inherit; text-decoration: none;">Building a 94.7% Accurate LTV Prediction Model</a></h3>
+        <p>TensorFlow + Feast + gRPC for sub-100ms inference and 94.7% weighted accuracy.</p>
+        <div class="meta">Jan 15, 2026 • 12 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">Engineering</span>
+        <h3><a href="/blog-microservices-scale.html" style="color: inherit; text-decoration: none;">Scaling to 10M Messages/Hour</a></h3>
+        <p>Go, Kafka, and idempotent workflows powering SyncEngage throughput.</p>
+        <div class="meta">Jan 10, 2026 • 8 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">Compliance</span>
+        <h3><a href="/blog-gdpr-consent.html" style="color: inherit; text-decoration: none;">GDPR Article 7 Consent</a></h3>
+        <p>Granular preferences, proofs, and revocation patterns for SaaS teams.</p>
+        <div class="meta">Jan 8, 2026 • 10 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">Product Updates</span>
+        <h3><a href="/blog-synccreate-multivariant.html" style="color: inherit; text-decoration: none;">Multi-Variant Creative Generation</a></h3>
+        <p>Scene-aware prompts, motion guardrails, and TTS alignment for paid social.</p>
+        <div class="meta">Jan 5, 2026 • 6 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">Engineering</span>
+        <h3><a href="/blog-zero-trust-soc2.html" style="color: inherit; text-decoration: none;">Zero-Trust & SOC 2 Type II</a></h3>
+        <p>mTLS everywhere, OPA sidecars, and audit readiness in 6 weeks.</p>
+        <div class="meta">Dec 28, 2025 • 14 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">AI & ML</span>
+        <h3><a href="/blog-feature-engineering-churn.html" style="color: inherit; text-decoration: none;">Feature Engineering for Churn Prediction</a></h3>
+        <p>50+ behavioral, financial, and adoption signals to maximize recall and lead time.</p>
+        <div class="meta">Dec 22, 2025 • 11 min</div>
+      </div>
+      <div class="card">
+        <span class="pill">Case Studies</span>
+        <h3><a href="/blog-fintech-churn-38.html" style="color: inherit; text-decoration: none;">FinTech: 38% Churn Reduction</a></h3>
+        <p>PayFlow Financial implementation: LTV scoring, risk alerts, multi-channel saves.</p>
+        <div class="meta">Dec 18, 2025 • 9 min</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

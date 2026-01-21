@@ -1,0 +1,56 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: ${SLACK_WEBHOOK_URL}
+
+route:
+  receiver: 'kiki-alerts'
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 12h
+  
+  routes:
+    - match:
+        severity: critical
+      receiver: 'pagerduty'
+      continue: true
+    
+    - match:
+        severity: warning
+      receiver: 'slack-warnings'
+      repeat_interval: 1h
+    
+    - match:
+        component: payment
+      receiver: 'payment-alerts'
+
+receivers:
+  - name: 'kiki-alerts'
+    slack_configs:
+      - channel: '#kiki-alerts'
+        title: 'KIKI Alert: {{ .GroupLabels.alertname }}'
+        text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+        send_resolved: true
+
+  - name: 'slack-warnings'
+    slack_configs:
+      - channel: '#kiki-warnings'
+        title: 'Warning: {{ .GroupLabels.alertname }}'
+        color: 'warning'
+
+  - name: 'payment-alerts'
+    slack_configs:
+      - channel: '#kiki-payment'
+        title: 'Payment Alert: {{ .GroupLabels.alertname }}'
+
+  - name: 'pagerduty'
+    pagerduty_configs:
+      - service_key: ${PAGERDUTY_SERVICE_KEY}
+        description: '{{ .GroupLabels.alertname }}: {{ .Alerts.Firing | len }} firing'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

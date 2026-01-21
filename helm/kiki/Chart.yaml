@@ -1,0 +1,6 @@
+apiVersion: v2
+name: kiki
+version: 0.1.0
+description: KIKI platform (SyncShield, SyncEngage, SyncValue, SyncFlow)
+type: application
+appVersion: "0.1.0"

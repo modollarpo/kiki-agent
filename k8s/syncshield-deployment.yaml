@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncshield
+  namespace: kiki
+  labels:
+    app: syncshield
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: syncshield
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: syncshield
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: syncshield
+          image: ghcr.io/your-org/kiki/syncshield:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: REDIS_ADDR
+              valueFrom:
+                configMapKeyRef:
+                  name: kiki-config
+                  key: REDIS_ADDR
+            - name: RETENTION_DAYS
+              valueFrom:
+                configMapKeyRef:
+                  name: kiki-config
+                  key: RETENTION_DAYS
+          resources:
+            requests:
+              cpu: 100m
+              memory: 300Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncshield
+  namespace: kiki
+spec:
+  selector:
+    app: syncshield
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8081
+  type: ClusterIP
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: syncshield-pdb
+  namespace: kiki
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: syncshield
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: syncshield-hpa
+  namespace: kiki
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: syncshield
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60

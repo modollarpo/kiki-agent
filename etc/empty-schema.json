@@ -1,0 +1,7 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Permissive schema for YAML editor",
+	"description": "Allows any content; used to disable strict YAML validation for Grafana provisioning files in VS Code.",
+	"type": ["object", "array", "string", "number", "boolean", "null"],
+	"additionalProperties": true
+}

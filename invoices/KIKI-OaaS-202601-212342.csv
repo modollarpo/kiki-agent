@@ -1,0 +1,5 @@
+campaign_id,client_name,period_start,period_end,baseline_roas,kiki_roas,margin_improvement_pct,margin_recovered,profit_share_percentage,kiki_invoice_amount,accuracy_rate,predictions_count,reliability_score
+campaign_001,Acme Corp - Meta Ads,2026-01-01T00:00:00,2026-01-31T23:59:59,3.0,3.46,15.32,1.56,10.0,0.16,94.7,9662,99.8
+campaign_002,TechStartup Inc - Google Ads,2026-01-01T00:00:00,2026-01-31T23:59:59,3.0,3.8,26.57,1.74,10.0,0.17,94.7,7296,99.8
+campaign_003,E-commerce Co - TikTok Ads,2026-01-01T00:00:00,2026-01-31T23:59:59,3.0,3.2,6.79,0.51,10.0,0.05,94.7,8938,99.8
+campaign_004,SaaS Platform - LinkedIn Ads,2026-01-01T00:00:00,2026-01-31T23:59:59,3.0,3.3,10.05,0.83,10.0,0.08,94.7,9203,99.8

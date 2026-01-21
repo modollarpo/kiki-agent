@@ -1,0 +1,79 @@
+name: CD
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment (staging, prod)'
+        required: true
+        default: 'staging'
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set image tags
+        id: vars
+        run: |
+          echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "ENV=${{ github.event.inputs.environment || 'prod' }}" >> $GITHUB_OUTPUT
+      - name: Build & Push Images
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/syncshield:${{ steps.vars.outputs.TAG }} ./cmd/syncshield
+          docker build -t ghcr.io/${{ github.repository }}/syncengage:${{ steps.vars.outputs.TAG }} ./cmd/syncengage
+          if [ -d "cmd/syncvalue" ]; then docker build -t ghcr.io/${{ github.repository }}/syncvalue:${{ steps.vars.outputs.TAG }} ./cmd/syncvalue; fi
+          if [ -d "cmd/syncflow" ]; then docker build -t ghcr.io/${{ github.repository }}/syncflow:${{ steps.vars.outputs.TAG }} ./cmd/syncflow; fi
+          echo $CR_PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          docker push ghcr.io/${{ github.repository }}/syncshield:${{ steps.vars.outputs.TAG }}
+          docker push ghcr.io/${{ github.repository }}/syncengage:${{ steps.vars.outputs.TAG }}
+          if [ -d "cmd/syncvalue" ]; then docker push ghcr.io/${{ github.repository }}/syncvalue:${{ steps.vars.outputs.TAG }}; fi
+          if [ -d "cmd/syncflow" ]; then docker push ghcr.io/${{ github.repository }}/syncflow:${{ steps.vars.outputs.TAG }}; fi
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'v1.29.0'
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${KUBECONFIG_BASE64}" | base64 -d > ~/.kube/config
+        env:
+          KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG_BASE64 }}
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0
+      - name: Add Helm repos
+        run: |
+          helm repo add stable https://charts.helm.sh/stable
+          helm repo add jetstack https://charts.jetstack.io
+          helm repo update
+      - name: Deploy via Helm
+        run: |
+          helm upgrade --install kiki ./helm/kiki \
+            --namespace kiki --create-namespace \
+            --set global.imageRegistry=ghcr.io/${{ github.repository }} \
+            --set syncshield.image=syncshield:${{ steps.vars.outputs.TAG }} \
+            --set syncengage.image=syncengage:${{ steps.vars.outputs.TAG }} \
+            --set syncvalue.image=syncvalue:${{ steps.vars.outputs.TAG }} \
+            --set syncflow.image=syncflow:${{ steps.vars.outputs.TAG }} \
+            --set global.domain.shield=shield-${{ steps.vars.outputs.ENV }}.kiki.io \
+            --set global.domain.engage=engage-${{ steps.vars.outputs.ENV }}.kiki.io \
+            -f ./helm/kiki/values-prod.yaml \
+            --timeout 10m --wait
+      - name: Verify deployment
+        run: |
+          kubectl -n kiki rollout status deployment/syncshield --timeout=5m
+          kubectl -n kiki rollout status deployment/syncengage --timeout=5m
+      - name: Log deployment
+        if: always()
+        run: |
+          echo "Deployment Status for KIKI v${{ steps.vars.outputs.TAG }} to ${{ steps.vars.outputs.ENV }}:"
+          kubectl -n kiki get pods -o wide
+          kubectl -n kiki get svc

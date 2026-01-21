@@ -1,0 +1,21 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon/Symbol -->
+  <circle cx="30" cy="30" r="24" fill="url(#logoGradient)" opacity="0.2"/>
+  <path d="M20 20 L30 30 L20 40" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M40 20 L30 30 L40 40" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <circle cx="30" cy="30" r="4" fill="url(#logoGradient)"/>
+  
+  <!-- KIKI Text -->
+  <text x="70" y="42" font-family="Arial, sans-serif" font-size="32" font-weight="800" fill="url(#logoGradient)">KIKI</text>
+  
+  <!-- Tagline -->
+  <text x="70" y="52" font-family="Arial, sans-serif" font-size="9" fill="#94a3b8" letter-spacing="1">AI-POWERED ENGAGEMENT PLATFORM</text>
+</svg>

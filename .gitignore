@@ -1,0 +1,12 @@
+# Python environment
+venv/
+__pycache__/
+*.pyc
+
+# Logs and local data
+*.log
+invoices/*.json
+reports/*.json
+
+# Security
+.env

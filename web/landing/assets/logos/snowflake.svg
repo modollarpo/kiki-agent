@@ -1,0 +1,6 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Snowflake Logo Inspired -->
+  <rect width="120" height="40" rx="6" fill="#29b5e8" opacity="0.1"/>
+  <text x="60" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#29b5e8" text-anchor="middle">Snowflake</text>
+  <path d="M20 20 L15 17 L20 14 L20 10 L24 12 L28 10 L28 14 L33 17 L28 20 L28 24 L24 22 L20 24 Z" fill="#29b5e8" opacity="0.8"/>
+</svg>

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncvalue
+  namespace: kiki
+  labels:
+    app: syncvalue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: syncvalue
+  template:
+    metadata:
+      labels:
+        app: syncvalue
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: syncvalue
+          image: ghcr.io/your-org/kiki/syncvalue:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 50051
+          readinessProbe:
+            tcpSocket:
+              port: 50051
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 50051
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncvalue
+  namespace: kiki
+spec:
+  selector:
+    app: syncvalue
+  ports:
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+  type: ClusterIP

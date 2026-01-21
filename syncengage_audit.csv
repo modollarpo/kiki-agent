@@ -1,0 +1,325 @@
+timestamp,customer_id,trigger_type,action,message,discount_pct,predicted_ltv
+2026-01-20T06:23:17+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:23:17+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:23:17+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:23:17+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:23:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:23:27+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:23:27+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:23:27+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:23:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:23:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:23:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:23:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:23:47+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:23:47+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:23:47+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:23:47+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:23:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:23:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:23:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:23:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:27+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:27+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:27+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:27+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:24:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:24:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:24:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:24:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:25:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:25:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:25:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:25:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:47+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:26:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:26:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:26:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:26:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:27:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:27:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:27:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:27:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:17+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:17+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:17+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:27+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:27+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:27+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:27+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:28:57+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:28:57+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:28:57+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:28:57+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:27+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:27+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:29:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:29:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:29:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:29:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:30:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:30:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:30:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:30:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:31:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:31:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:31:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:31:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:47+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:47+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:47+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:47+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:32:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:32:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:32:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:32:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:47+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:47+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:47+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:47+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:33:57+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:33:57+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:33:57+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:33:58+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:17+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:17+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:17+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:18+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:34:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:34:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:34:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:34:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:17+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:17+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:18+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:18+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:26+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:26+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:26+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:26+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:46+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:46+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:46+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:46+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:35:56+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:35:56+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:35:56+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:35:56+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:36:06+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:36:06+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:36:06+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:36:06+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:36:16+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:36:16+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:36:16+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:36:16+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:36:27+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:36:27+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:36:27+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:36:27+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00
+2026-01-20T06:36:36+01:00,cust_001,churn_risk_high_value,offer,We miss you! Here's 20% off your next order (LTV: $625),20.00,625.00
+2026-01-20T06:36:36+01:00,cust_002,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1112),15.00,1112.00
+2026-01-20T06:36:36+01:00,cust_003,dormant,email,Check out what's new! Exclusive updates just for you.,0.00,204.00
+2026-01-20T06:36:36+01:00,cust_004,high_value_check,offer,Thank you for being a VIP! Exclusive 15% off (LTV: $1538),15.00,1538.00

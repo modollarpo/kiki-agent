@@ -1,0 +1,6 @@
+apiVersion: v2
+name: syncshield
+version: 0.1.0
+appVersion: "1.0.0"
+description: Deploys SyncValue (AI) and SyncFlow (Execution) services.
+type: application

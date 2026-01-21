@@ -1,0 +1,142 @@
+{
+  "campaign_name": "enterprise_demo_q1_2026",
+  "generated_at": "2026-01-19T17:25:29.827233",
+  "variant_count": 5,
+  "variants": [
+    {
+      "variant_id": "variant_20260119172529_control_94326446_0",
+      "variant_type": "control",
+      "image_url": "creatives/variant_20260119172529_control_94326446_0.webp",
+      "headline_text": "KIKI Agent\u2122 Pro",
+      "body_copy": "3x ROAS improvement in 30 days with autonomous AI agents. Built for B2B SaaS companies and growth teams.",
+      "cta_button": "Shop Now",
+      "platform_format": "meta_1_1",
+      "sd_prompt": "KIKI Agent\u2122 Pro, product photography, studio lighting, rule of thirds, clear focal point, professional photography, clean white background, minimal clutter, soft natural lighting, 1:1 aspect ratio, square format, feed-optimized, high quality, 8k resolution, masterpiece",
+      "brand_compliant": true,
+      "safety_score": 1.0,
+      "violations": [],
+      "vision_validation": {
+        "contains_product": true,
+        "brand_safe": true,
+        "quality_score": 0.92,
+        "confidence": 0.89,
+        "detected_elements": [
+          "KIKI Agent\u2122 Pro",
+          "professional setting",
+          "clear branding"
+        ],
+        "safety_flags": []
+      },
+      "persona_match": "persona_high_value_churner",
+      "timestamp": "2026-01-19T17:25:29.810864"
+    },
+    {
+      "variant_id": "variant_20260119172529_lifestyle_94326446_1",
+      "variant_type": "lifestyle",
+      "image_url": "creatives/variant_20260119172529_lifestyle_94326446_1.webp",
+      "headline_text": "Transform Your Marketing Automation",
+      "body_copy": "See how KIKI Agent\u2122 fits your lifestyle. Win-back campaign: Show immediate value to prevent churn.",
+      "cta_button": "See It in Action",
+      "platform_format": "meta_1_1",
+      "sd_prompt": "person using KIKI Agent\u2122 Pro, lifestyle photography, authentic moment, rule of thirds, clear focal point, professional photography, clean white background, minimal clutter, soft natural lighting, 1:1 aspect ratio, square format, feed-optimized, high quality, 8k resolution, masterpiece",
+      "brand_compliant": true,
+      "safety_score": 1.0,
+      "violations": [],
+      "vision_validation": {
+        "contains_product": true,
+        "brand_safe": true,
+        "quality_score": 0.92,
+        "confidence": 0.89,
+        "detected_elements": [
+          "KIKI Agent\u2122 Pro",
+          "professional setting",
+          "clear branding"
+        ],
+        "safety_flags": []
+      },
+      "persona_match": "persona_high_value_churner",
+      "timestamp": "2026-01-19T17:25:29.810864"
+    },
+    {
+      "variant_id": "variant_20260119172529_abstract_94326446_2",
+      "variant_type": "abstract",
+      "image_url": "creatives/variant_20260119172529_abstract_94326446_2.webp",
+      "headline_text": "Unlock Your Efficiency",
+      "body_copy": "KIKI Agent\u2122 - 3x ROAS improvement in 30 days with autonomous AI agents. Win-back campaign: Show immediate value to prevent ch",
+      "cta_button": "Discover How",
+      "platform_format": "meta_1_1",
+      "sd_prompt": "visualizing efficiency, abstract concept, Marketing Automation industry, rule of thirds, clear focal point, professional photography, clean white background, minimal clutter, soft natural lighting, 1:1 aspect ratio, square format, feed-optimized, high quality, 8k resolution, masterpiece",
+      "brand_compliant": true,
+      "safety_score": 1.0,
+      "violations": [],
+      "vision_validation": {
+        "contains_product": true,
+        "brand_safe": true,
+        "quality_score": 0.92,
+        "confidence": 0.89,
+        "detected_elements": [
+          "KIKI Agent\u2122 Pro",
+          "professional setting",
+          "clear branding"
+        ],
+        "safety_flags": []
+      },
+      "persona_match": "persona_high_value_churner",
+      "timestamp": "2026-01-19T17:25:29.810864"
+    },
+    {
+      "variant_id": "variant_20260119172529_high_contrast_94326446_3",
+      "variant_type": "high_contrast",
+      "image_url": "creatives/variant_20260119172529_high_contrast_94326446_3.webp",
+      "headline_text": "Stop Scrolling. Start efficiency.",
+      "body_copy": "KIKI Agent\u2122 Pro: 3x ROAS improvement in 30 days with autonomous AI agents",
+      "cta_button": "Learn More",
+      "platform_format": "meta_1_1",
+      "sd_prompt": "KIKI Agent\u2122 Pro, bold color theory, eye-catching design, scroll-stopping, rule of thirds, clear focal point, professional photography, clean white background, minimal clutter, soft natural lighting, 1:1 aspect ratio, square format, feed-optimized, high quality, 8k resolution, masterpiece",
+      "brand_compliant": true,
+      "safety_score": 1.0,
+      "violations": [],
+      "vision_validation": {
+        "contains_product": true,
+        "brand_safe": true,
+        "quality_score": 0.92,
+        "confidence": 0.89,
+        "detected_elements": [
+          "KIKI Agent\u2122 Pro",
+          "professional setting",
+          "clear branding"
+        ],
+        "safety_flags": []
+      },
+      "persona_match": "persona_high_value_churner",
+      "timestamp": "2026-01-19T17:25:29.818860"
+    },
+    {
+      "variant_id": "variant_20260119172529_data_led_94326446_4",
+      "variant_type": "data_led",
+      "image_url": "creatives/variant_20260119172529_data_led_94326446_4.webp",
+      "headline_text": "3x ROAS improvement in 30 days with auto",
+      "body_copy": "KIKI Agent\u2122 delivers results. AI-powered bidding optimization, Real-time performance tracking.",
+      "cta_button": "See Proof",
+      "platform_format": "meta_1_1",
+      "sd_prompt": "KIKI Agent\u2122 Pro highlighting 3x ROAS improvement in 30 days with autonomous AI agents, infographic style, rule of thirds, clear focal point, professional photography, clean white background, minimal clutter, soft natural lighting, 1:1 aspect ratio, square format, feed-optimized, high quality, 8k resolution, masterpiece",
+      "brand_compliant": true,
+      "safety_score": 1.0,
+      "violations": [],
+      "vision_validation": {
+        "contains_product": true,
+        "brand_safe": true,
+        "quality_score": 0.92,
+        "confidence": 0.89,
+        "detected_elements": [
+          "KIKI Agent\u2122 Pro",
+          "professional setting",
+          "clear branding"
+        ],
+        "safety_flags": []
+      },
+      "persona_match": "persona_high_value_churner",
+      "timestamp": "2026-01-19T17:25:29.818860"
+    }
+  ]
+}

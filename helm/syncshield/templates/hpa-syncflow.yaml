@@ -1,0 +1,25 @@
+{{- if .Values.syncflow.hpa.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "syncshield.syncflowFullname" . }}
+  labels: {{ include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncflow
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "syncshield.syncflowFullname" . }}
+  minReplicas: {{ .Values.syncflow.hpa.minReplicas }}
+  maxReplicas: {{ .Values.syncflow.hpa.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.syncflow.hpa.targetCPUUtilizationPercentage }}
+    {{- range .Values.syncflow.hpa.customMetrics }}
+    - {{ toYaml . | nindent 6 | trim }}
+    {{- end }}
+{{- end }}

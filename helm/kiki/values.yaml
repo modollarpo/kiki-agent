@@ -1,0 +1,58 @@
+global:
+  imageRegistry: "ghcr.io/your-org/kiki"
+  namespace: kiki
+  ingressClass: nginx
+  tlsSecretName: kiki-tls
+  domain:
+    shield: shield.example.com
+    engage: engage.example.com
+
+redis:
+  address: "redis:6379"
+
+syncshield:
+  enabled: true
+  image: "syncshield:latest"
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 300Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+syncengage:
+  enabled: true
+  image: "syncengage:latest"
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 300Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+syncvalue:
+  enabled: true
+  image: "syncvalue:latest"
+  replicaCount: 2
+
+syncflow:
+  enabled: true
+  image: "syncflow:latest"
+  replicaCount: 2
+
+ingress:
+  enabled: true
+  rateLimitRps: 10
+  burstMultiplier: 3
+
+externalSecrets:
+  enabled: false
+  provider: aws
+  region: us-east-1
+
+otel:
+  enabled: false

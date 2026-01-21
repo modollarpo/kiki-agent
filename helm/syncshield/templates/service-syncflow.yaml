@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "syncshield.syncflowFullname" . }}
+  labels: {{ include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncflow
+spec:
+  type: {{ .Values.syncflow.service.type }}
+  selector:
+    app.kubernetes.io/name: {{ include "syncshield.name" . }}
+    app.kubernetes.io/component: syncflow
+  ports:
+    - name: grpc
+      port: {{ .Values.syncflow.service.grpcPort }}
+      targetPort: grpc
+    - name: metrics
+      port: {{ .Values.syncflow.service.metricsPort }}
+      targetPort: metrics

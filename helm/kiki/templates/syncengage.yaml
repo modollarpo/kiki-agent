@@ -1,0 +1,44 @@
+{{- if .Values.syncengage.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncengage
+  namespace: {{ .Values.global.namespace }}
+  labels: { app: syncengage }
+spec:
+  replicas: {{ .Values.syncengage.replicaCount }}
+  selector: { matchLabels: { app: syncengage } }
+  template:
+    metadata:
+      labels: { app: syncengage }
+    spec:
+      securityContext: { runAsNonRoot: true, runAsUser: 10001 }
+      containers:
+        - name: syncengage
+          image: {{ printf "%s/%s" .Values.global.imageRegistry .Values.syncengage.image | quote }}
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8083 }]
+          env:
+            - name: SHIELD_URL
+              value: "http://syncshield.{{ .Values.global.namespace }}.svc.cluster.local/check"
+            - name: LTV_GRPC_ADDR
+              value: "syncvalue.{{ .Values.global.namespace }}.svc.cluster.local:50051"
+          readinessProbe: { httpGet: { path: /health, port: 8083 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { httpGet: { path: /health, port: 8083 }, initialDelaySeconds: 10, periodSeconds: 10 }
+          securityContext: { readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+          resources:
+            requests: { cpu: {{ .Values.syncengage.resources.requests.cpu | quote }}, memory: {{ .Values.syncengage.resources.requests.memory | quote }} }
+            limits:   { cpu: {{ .Values.syncengage.resources.limits.cpu   | quote }}, memory: {{ .Values.syncengage.resources.limits.memory   | quote }} }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncengage
+  namespace: {{ .Values.global.namespace }}
+spec:
+  selector: { app: syncengage }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8083
+{{- end }}

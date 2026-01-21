@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature Engineering for Churn Prediction | KIKI Engineering</title>
+  <meta name="description" content="50+ behavioral, financial, and product signals KIKI uses to predict churn with high recall and lead time across SaaS and consumer apps.">
+    <link rel="alternate" type="application/rss+xml" title="KIKI Engineering Blog RSS" href="/rss.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body { background: #0b1220; color: #e2e8f0; }
+    .hero { padding: 120px 0 60px; text-align: center; background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(148,163,184,0.06)); }
+    .hero h1 { font-size: 42px; margin-bottom: 16px; }
+    .meta { color: #94a3b8; margin-bottom: 24px; }
+    .pill { display: inline-block; padding: 6px 12px; background: rgba(59,130,246,0.15); color: #3b82f6; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 48px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.12); }
+    h2 { font-size: 28px; margin-bottom: 16px; }
+    p { color: #cbd5e1; line-height: 1.8; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: rgba(15,23,42,0.6); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 12px; padding: 20px; }
+    ul { color: #cbd5e1; line-height: 1.8; }
+    .cta { text-align: center; padding: 48px 0; }
+    .cta a { margin: 0 10px; }
+    .post-nav { margin: 40px 0 16px; padding: 20px; background: rgba(15,23,42,0.6); border: 1px solid rgba(148,163,184,0.14); border-radius: 12px; }
+    .post-links { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .post-links a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .post-links a:hover { text-decoration: underline; }
+    .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .sidebar a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+    .sidebar a:hover { color: #3b82f6; }
+    @media(max-width: 768px){ .hero h1 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html" style="color:#3b82f6;">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="pill">AI & ML</div>
+    <h1>Feature Engineering for Churn Prediction: 50+ Behavioral Signals</h1>
+    <div class="meta">December 22, 2025 • 11 min read • By Alex Lee, Principal ML Engineer</div>
+    <p>Our canonical churn feature set spans engagement, payments, product adoption, support signals, and social proof to maximize lead time and recall.</p>
+    <div class="back" style="margin-top:16px;"><a href="/blog.html" style="color:#3b82f6; font-weight:700; text-decoration:none;">← Back to Blog</a></div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="section">
+    <h2>Signal Families</h2>
+    <div class="grid">
+      <div class="card"><strong>Engagement</strong><p>DAU/WAU/MAU ratios, session depth, dwell time, scroll velocity, recency decay.</p></div>
+      <div class="card"><strong>Product Adoption</strong><p>Feature coverage, module activation velocity, time-to-first-value, seat activation.</p></div>
+      <div class="card"><strong>Financial</strong><p>Invoice timeliness, failed charge streaks, discount dependency, ARPU delta.</p></div>
+      <div class="card"><strong>Support</strong><p>Ticket sentiment, reopen rate, SLA breaches, escalation frequency.</p></div>
+      <div class="card"><strong>Social Proof</strong><p>Referrals, NPS trend, review velocity, workspace invites.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Example Features</h2>
+    <ul>
+      <li>Engagement momentum: rolling 7/30-day activity ratio with exponential decay.</li>
+      <li>Adoption depth: % of key features used at least twice in last 14 days.</li>
+      <li>Payment health: days since last failed payment; dunning outcome streaks.</li>
+      <li>Collaboration: invites sent/accepted, shared artifacts, shared dashboards.</li>
+      <li>Support friction: avg. first-response time vs. SLA; negative sentiment count.</li>
+      <li>Value realization: time-to-first-key-event and time-to-second-key-event.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Normalization & Leakage Guardrails</h2>
+    <ul>
+      <li>Per-cohort normalization (plan, geo, device) to prevent bias.</li>
+      <li>Drop leakage features (future-looking flags, cancellations) during training.</li>
+      <li>Clip extreme monetary values; log-scale monetary features.</li>
+      <li>Impute with cohort medians; track null rates for drift.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Operationalization</h2>
+    <ul>
+      <li>Feast feature store with offline (BigQuery) + online (Redis) parity.</li>
+      <li>Feature freshness SLA: 15 minutes for hot signals, 24h for cold.</li>
+      <li>Automated validation: null checks, range checks, PSI drift alerts.</li>
+      <li>Versioned feature views; backward-compatible schemas.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Results</h2>
+    <p>This feature set improved recall by 17 points at the same precision, increased churn lead time by 9 days, and reduced incentive spend by targeting only high-risk, high-LTV cohorts.</p>
+  </section>
+
+  <div class="cta">
+    <a class="btn primary" href="/resources.html">Download Feature Checklist</a>
+    <a class="btn secondary" href="/api.html">Score via API</a>
+  </div>
+
+  <div class="post-nav">
+    <div class="post-links">
+      <a href="/blog-zero-trust-soc2.html">← Previous: Zero-Trust & SOC 2</a>
+      <a href="/blog-fintech-churn-38.html">Next: FinTech Churn Case Study →</a>
+    </div>
+    <div class="sidebar">
+      <a href="/docs.html">Documentation</a>
+      <a href="/api.html">API Reference</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/contact-sales.html">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{
+  "campaign_name": "Q1_2026_Campaign",
+  "generated_at": "2026-01-19T16:55:56.352033",
+  "variant_count": 4,
+  "variants": [
+    {
+      "variant_id": "variant_20260119165554_3c53ddb4_0",
+      "prompt": "Marketing automation that drives revenue growth\n\nBrand context:\n\nStyle: professional\nBrand: KIKI Agent\u2122\nColors: #6366f1, #8b5cf6, #ec4899\nTarget: B2B SaaS companies and growth teams\n",
+      "image_path": "creatives/variant_20260119165554_3c53ddb4_0.png",
+      "headline": "Transform Your Marketing with KIKI Agent\u2122",
+      "body_text": "Discover how KIKI Agent\u2122 revolutionizes Marketing. Built for B2B SaaS companies and growth teams.",
+      "cta": "Get Started Today",
+      "brand_compliance": true,
+      "safety_check": {
+        "is_safe": true,
+        "safety_score": 1.0,
+        "violations": [],
+        "warnings": [],
+        "filters_triggered": []
+      },
+      "generated_at": "2026-01-19T16:55:54.744990",
+      "metadata": {
+        "variant_index": 0,
+        "total_variants": 4,
+        "brand_name": "KIKI Agent\u2122",
+        "tone": "professional"
+      }
+    },
+    {
+      "variant_id": "variant_20260119165554_3c53ddb4_1",
+      "prompt": "Marketing automation that drives revenue growth\n\nBrand context:\n\nStyle: professional\nBrand: KIKI Agent\u2122\nColors: #6366f1, #8b5cf6, #ec4899\nTarget: B2B SaaS companies and growth teams\n",
+      "image_path": "creatives/variant_20260119165554_3c53ddb4_1.png",
+      "headline": "The Future of Marketing is Here",
+      "body_text": "KIKI Agent\u2122 brings you next-generation Marketing solutions.",
+      "cta": "Learn More",
+      "brand_compliance": true,
+      "safety_check": {
+        "is_safe": true,
+        "safety_score": 1.0,
+        "violations": [],
+        "warnings": [],
+        "filters_triggered": []
+      },
+      "generated_at": "2026-01-19T16:55:54.745218",
+      "metadata": {
+        "variant_index": 1,
+        "total_variants": 4,
+        "brand_name": "KIKI Agent\u2122",
+        "tone": "professional"
+      }
+    },
+    {
+      "variant_id": "variant_20260119165554_3c53ddb4_2",
+      "prompt": "Marketing automation that drives revenue growth\n\nBrand context:\n\nStyle: professional\nBrand: KIKI Agent\u2122\nColors: #6366f1, #8b5cf6, #ec4899\nTarget: B2B SaaS companies and growth teams\n",
+      "image_path": "creatives/variant_20260119165554_3c53ddb4_2.png",
+      "headline": "Unlock Your Marketing Potential",
+      "body_text": "Join thousands who trust KIKI Agent\u2122 for their Marketing needs.",
+      "cta": "Try Free",
+      "brand_compliance": true,
+      "safety_check": {
+        "is_safe": true,
+        "safety_score": 1.0,
+        "violations": [],
+        "warnings": [],
+        "filters_triggered": []
+      },
+      "generated_at": "2026-01-19T16:55:54.745377",
+      "metadata": {
+        "variant_index": 2,
+        "total_variants": 4,
+        "brand_name": "KIKI Agent\u2122",
+        "tone": "professional"
+      }
+    },
+    {
+      "variant_id": "variant_20260119165554_3c53ddb4_3",
+      "prompt": "Marketing automation that drives revenue growth\n\nBrand context:\n\nStyle: professional\nBrand: KIKI Agent\u2122\nColors: #6366f1, #8b5cf6, #ec4899\nTarget: B2B SaaS companies and growth teams\n",
+      "image_path": "creatives/variant_20260119165554_3c53ddb4_3.png",
+      "headline": "Marketing Made Simple",
+      "body_text": "KIKI Agent\u2122 makes Marketing effortless. Start seeing results today.",
+      "cta": "See How",
+      "brand_compliance": true,
+      "safety_check": {
+        "is_safe": true,
+        "safety_score": 1.0,
+        "violations": [],
+        "warnings": [],
+        "filters_triggered": []
+      },
+      "generated_at": "2026-01-19T16:55:54.745527",
+      "metadata": {
+        "variant_index": 3,
+        "total_variants": 4,
+        "brand_name": "KIKI Agent\u2122",
+        "tone": "professional"
+      }
+    }
+  ]
+}

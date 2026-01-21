@@ -1,0 +1,455 @@
+syntax = "proto3";
+
+package variantstrategy;
+
+option go_package = "KIKI/api/pb";
+option java_package = "com.kiki.variantstrategy";
+option java_outer_classname = "VariantStrategyProto";
+
+// ============================================================================
+// VARIANT STRATEGY SERVICE
+// ============================================================================
+
+service VariantStrategyService {
+  // Portfolio Management
+  rpc CreatePortfolio (CreatePortfolioRequest) returns (PortfolioResponse);
+  rpc GetPortfolio (GetPortfolioRequest) returns (PortfolioResponse);
+  rpc ListPortfolios (ListPortfoliosRequest) returns (ListPortfoliosResponse);
+  rpc UpdatePortfolio (UpdatePortfolioRequest) returns (PortfolioResponse);
+  
+  // Variant Operations
+  rpc GetVariantLibrary (GetVariantLibraryRequest) returns (VariantLibraryResponse);
+  rpc GetVariantRecommendation (GetVariantRecommendationRequest) returns (VariantRecommendationResponse);
+  rpc AddVariantToPortfolio (AddVariantRequest) returns (PortfolioResponse);
+  rpc RemoveVariantFromPortfolio (RemoveVariantRequest) returns (PortfolioResponse);
+  
+  // Testing & Optimization
+  rpc CalculateSampleSize (SampleSizeRequest) returns (SampleSizeResponse);
+  rpc CreateExperiment (CreateExperimentRequest) returns (ExperimentResponse);
+  rpc AnalyzeExperiment (AnalyzeExperimentRequest) returns (ExperimentAnalysisResponse);
+  rpc GetOptimizationRecommendations (OptimizationRequest) returns (OptimizationResponse);
+  
+  // Learning & Insights
+  rpc CaptureInsight (CaptureInsightRequest) returns (InsightResponse);
+  rpc GetInsights (GetInsightsRequest) returns (GetInsightsResponse);
+  rpc LearnFromCampaign (LearnFromCampaignRequest) returns (LearningResponse);
+  
+  // Portfolio Optimization
+  rpc OptimizePortfolio (OptimizePortfolioRequest) returns (OptimizationResponse);
+  rpc GetDeploymentStrategy (DeploymentStrategyRequest) returns (DeploymentStrategyResponse);
+  rpc GetBudgetAllocation (BudgetAllocationRequest) returns (BudgetAllocationResponse);
+}
+
+// ============================================================================
+// VARIANT GUARD SERVICE
+// ============================================================================
+
+service VariantGuardService {
+  rpc ValidateImage (ImageValidationRequest) returns (ImageValidationResponse);
+  rpc ValidatePortfolioImages (PortfolioValidationRequest) returns (PortfolioValidationResponse);
+  rpc GetQualityReport (QualityReportRequest) returns (QualityReportResponse);
+  rpc GetDeploymentRecommendations (DeploymentRecommendationRequest) returns (DeploymentRecommendationResponse);
+}
+
+// ============================================================================
+// MESSAGES - VARIANTS & PORTFOLIOS
+// ============================================================================
+
+message VariantCharacteristics {
+  string name = 1;
+  string description = 2;
+  string visual_focus = 3;
+  string messaging_style = 4;
+  repeated string best_for = 5;
+  repeated string platform_fit = 6;
+  float ctr_lift_potential = 7;
+  float conversion_lift = 8;
+  float engagement_lift = 9;
+  string average_cpv = 10;
+  int32 optimal_duration_seconds = 11;
+  string color_intensity = 12;
+  string design_complexity = 13;
+}
+
+message VariantInPortfolio {
+  string variant_id = 1;
+  string variant_type = 2;
+  string name = 3;
+  double budget_allocation = 4;
+  double current_performance = 5;
+  int32 impressions = 6;
+  int32 clicks = 7;
+  double ctr = 8;
+  int32 conversions = 9;
+  double conversion_rate = 10;
+  string status = 11; // active, paused, ended
+  string created_at = 12;
+  string updated_at = 13;
+}
+
+message Portfolio {
+  string portfolio_id = 1;
+  string name = 2;
+  string brand = 3;
+  string product = 4;
+  double total_budget = 5;
+  repeated VariantInPortfolio variants = 6;
+  string status = 7; // active, paused, ended
+  double total_impressions = 8;
+  double total_clicks = 9;
+  double portfolio_ctr = 10;
+  double total_conversions = 11;
+  double portfolio_conversion_rate = 12;
+  string created_at = 13;
+  string updated_at = 14;
+  map<string, double> performance_metrics = 15;
+}
+
+// ============================================================================
+// MESSAGES - REQUESTS & RESPONSES
+// ============================================================================
+
+message CreatePortfolioRequest {
+  string name = 1;
+  string brand = 2;
+  string product = 3;
+  double total_budget = 4;
+  repeated string variant_types = 5; // control, lifestyle, abstract, high_contrast, data_led
+  map<string, double> variant_budgets = 6; // budget per variant
+}
+
+message GetPortfolioRequest {
+  string portfolio_id = 1;
+}
+
+message ListPortfoliosRequest {
+  string brand = 1; // optional filter
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+message ListPortfoliosResponse {
+  repeated Portfolio portfolios = 1;
+  int32 total = 2;
+}
+
+message UpdatePortfolioRequest {
+  string portfolio_id = 1;
+  string name = 2;
+  double total_budget = 3;
+  string status = 4;
+  map<string, double> variant_budgets = 5;
+}
+
+message PortfolioResponse {
+  bool success = 1;
+  string message = 2;
+  Portfolio portfolio = 3;
+}
+
+message GetVariantLibraryRequest {
+  string variant_type = 1; // optional - get specific variant
+}
+
+message VariantLibraryResponse {
+  map<string, VariantCharacteristics> variants = 1;
+}
+
+message GetVariantRecommendationRequest {
+  string campaign_type = 1; // awareness, consideration, conversion, retention
+  string target_audience = 2;
+  string platform = 3;
+  string goal = 4;
+}
+
+message VariantRecommendation {
+  string variant_type = 1;
+  string variant_name = 2;
+  float recommendation_score = 3;
+  string reasoning = 4;
+  VariantCharacteristics characteristics = 5;
+}
+
+message VariantRecommendationResponse {
+  repeated VariantRecommendation recommendations = 1;
+  string explanation = 2;
+}
+
+message AddVariantRequest {
+  string portfolio_id = 1;
+  string variant_type = 2;
+  double budget_allocation = 3;
+  map<string, string> custom_props = 4;
+}
+
+message RemoveVariantRequest {
+  string portfolio_id = 1;
+  string variant_id = 2;
+}
+
+// ============================================================================
+// MESSAGES - TESTING & EXPERIMENT
+// ============================================================================
+
+message SampleSizeRequest {
+  double baseline_rate = 1;
+  double minimum_detectable_effect = 2;
+  float alpha = 3;
+  float power = 4;
+}
+
+message SampleSizeResponse {
+  int32 sample_size_per_variant = 1;
+  int32 total_sample_size = 2;
+  string explanation = 3;
+}
+
+message CreateExperimentRequest {
+  string portfolio_id = 1;
+  string experiment_name = 2;
+  string variant_control = 3;
+  repeated string variant_test = 4;
+  int32 duration_days = 5;
+  double significance_level = 6;
+}
+
+message Experiment {
+  string experiment_id = 1;
+  string portfolio_id = 2;
+  string name = 3;
+  string control_variant = 4;
+  repeated string test_variants = 5;
+  string status = 6;
+  string created_at = 7;
+  string started_at = 8;
+  string ended_at = 9;
+  int32 duration_days = 10;
+}
+
+message ExperimentResponse {
+  bool success = 1;
+  string message = 2;
+  Experiment experiment = 3;
+}
+
+message AnalyzeExperimentRequest {
+  string experiment_id = 1;
+  map<string, int32> variant_conversions = 2;
+  map<string, int32> variant_exposures = 3;
+}
+
+message ExperimentAnalysis {
+  string variant = 1;
+  double conversion_rate = 2;
+  double lift = 3;
+  double confidence_interval_lower = 4;
+  double confidence_interval_upper = 5;
+  double p_value = 6;
+  bool is_significant = 7;
+  string recommendation = 8;
+}
+
+message ExperimentAnalysisResponse {
+  repeated ExperimentAnalysis analysis = 1;
+  string winner = 2;
+  double winner_confidence = 3;
+  string summary = 4;
+}
+
+message OptimizationRequest {
+  string portfolio_id = 1;
+}
+
+message OptimizationResponse {
+  bool success = 1;
+  string message = 2;
+  repeated OptimizationRecommendation recommendations = 3;
+}
+
+message OptimizationRecommendation {
+  string variant = 1;
+  string action = 2; // increase_budget, pause, expand, etc
+  double recommended_allocation = 3;
+  string reasoning = 4;
+  float expected_impact = 5;
+}
+
+// ============================================================================
+// MESSAGES - LEARNING & INSIGHTS
+// ============================================================================
+
+message CaptureInsightRequest {
+  string portfolio_id = 1;
+  string insight_type = 2; // performance, trend, issue, opportunity
+  string variant = 3;
+  string description = 4;
+  map<string, string> metadata = 5;
+}
+
+message InsightResponse {
+  bool success = 1;
+  string insight_id = 2;
+  string message = 3;
+}
+
+message GetInsightsRequest {
+  string portfolio_id = 1;
+  string variant = 2; // optional
+  int32 limit = 3;
+}
+
+message Insight {
+  string insight_id = 1;
+  string portfolio_id = 2;
+  string variant = 3;
+  string type = 4;
+  string description = 5;
+  string created_at = 6;
+  map<string, string> metadata = 7;
+}
+
+message GetInsightsResponse {
+  repeated Insight insights = 1;
+}
+
+message LearnFromCampaignRequest {
+  string portfolio_id = 1;
+  map<string, double> final_metrics = 2;
+  string outcome = 3; // success, mixed, failure
+}
+
+message LearningResponse {
+  bool success = 1;
+  string message = 2;
+  repeated string key_learnings = 3;
+  repeated string recommendations_for_next = 4;
+}
+
+// ============================================================================
+// MESSAGES - BUDGET & DEPLOYMENT
+// ============================================================================
+
+message OptimizePortfolioRequest {
+  string portfolio_id = 1;
+  string optimization_goal = 2; // maximize_performance, minimize_risk, balance
+  repeated string constraints = 3;
+}
+
+message BudgetAllocationRequest {
+  string portfolio_id = 1;
+  double total_budget = 2;
+  string allocation_strategy = 3; // equal, performance_based, risk_adjusted
+}
+
+message BudgetAllocation {
+  string variant = 1;
+  double allocated_budget = 2;
+  float allocation_percentage = 3;
+  string reasoning = 4;
+}
+
+message BudgetAllocationResponse {
+  repeated BudgetAllocation allocations = 1;
+  double total_budget = 2;
+  string strategy = 3;
+}
+
+message DeploymentStrategyRequest {
+  string portfolio_id = 1;
+  int32 total_duration_days = 2;
+  int32 initial_percent = 3;
+}
+
+message DeploymentPhase {
+  int32 phase_number = 1;
+  string name = 2;
+  int32 start_day = 3;
+  int32 end_day = 4;
+  repeated string active_variants = 5;
+  map<string, double> variant_budgets = 6;
+  string description = 7;
+}
+
+message DeploymentStrategyResponse {
+  repeated DeploymentPhase phases = 1;
+  string overall_strategy = 2;
+  repeated string key_milestones = 3;
+}
+
+// ============================================================================
+// MESSAGES - VISION GUARD VALIDATION
+// ============================================================================
+
+message ImageValidationRequest {
+  string portfolio_id = 1;
+  string variant_type = 2;
+  string image_path = 3;
+  bool use_mock = 4; // use mock embeddings for testing
+}
+
+message CLIPValidationResult {
+  float product_confidence = 1;
+  float safety_score = 2;
+  float quality_score = 3;
+  float brand_fit = 4;
+  float composition = 5;
+  float overall_score = 6;
+  bool is_approved = 7;
+  repeated string recommendations = 8;
+  map<string, bool> variant_checks = 9; // variant-specific checks
+  repeated string detected_objects = 10;
+  repeated string detected_concepts = 11;
+  repeated string safety_flags = 12;
+}
+
+message ImageValidationResponse {
+  bool success = 1;
+  string message = 2;
+  CLIPValidationResult validation = 3;
+}
+
+message PortfolioValidationRequest {
+  string portfolio_id = 1;
+  map<string, string> variant_image_paths = 2; // variant -> image_path
+  bool use_mock = 3;
+}
+
+message VariantImageQualityResult {
+  string variant = 1;
+  CLIPValidationResult validation = 2;
+  string quality_tier = 3; // Production Ready, Approved, Needs Revision, Rejected
+}
+
+message PortfolioValidationResponse {
+  bool success = 1;
+  string message = 2;
+  repeated VariantImageQualityResult variant_results = 3;
+  map<string, double> quality_scores = 4;
+}
+
+message QualityReportRequest {
+  string portfolio_id = 1;
+}
+
+message QualityReportResponse {
+  string report = 1;
+  map<string, string> quality_tiers = 2;
+  map<string, double> quality_scores = 3;
+}
+
+message DeploymentRecommendationRequest {
+  string portfolio_id = 1;
+  map<string, double> quality_scores = 2;
+}
+
+message DeploymentRecommendation {
+  string variant = 1;
+  string status = 2; // approved, needs_revision, rejected
+  double recommended_budget = 3;
+  repeated string improvement_steps = 4;
+}
+
+message DeploymentRecommendationResponse {
+  repeated DeploymentRecommendation recommendations = 1;
+  string summary = 2;
+}

@@ -1,0 +1,19 @@
+global:
+  imageRegistry: "ghcr.io/your-org/kiki"
+  domain:
+    shield: shield.dev.example.com
+    engage: engage.dev.example.com
+redis:
+  address: "redis:6379"
+syncshield:
+  image: "syncshield:dev"
+syncengage:
+  image: "syncengage:dev"
+syncvalue:
+  image: "syncvalue:dev"
+syncflow:
+  image: "syncflow:dev"
+externalSecrets:
+  enabled: false
+otel:
+  enabled: false

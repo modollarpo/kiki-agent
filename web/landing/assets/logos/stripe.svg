@@ -1,0 +1,6 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stripe Logo Inspired -->
+  <rect width="120" height="40" rx="6" fill="#635bff" opacity="0.1"/>
+  <text x="60" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#635bff" text-anchor="middle">Stripe</text>
+  <rect x="12" y="17" width="16" height="6" rx="3" fill="#635bff"/>
+</svg>

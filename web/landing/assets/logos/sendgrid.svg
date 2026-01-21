@@ -1,0 +1,8 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SendGrid Logo Inspired -->
+  <rect width="120" height="40" rx="6" fill="#1a82e2" opacity="0.1"/>
+  <text x="60" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#1a82e2" text-anchor="middle">SendGrid</text>
+  <rect x="12" y="15" width="8" height="10" fill="#1a82e2" opacity="0.4"/>
+  <rect x="22" y="15" width="8" height="10" fill="#1a82e2" opacity="0.7"/>
+  <rect x="32" y="15" width="8" height="10" fill="#1a82e2"/>
+</svg>

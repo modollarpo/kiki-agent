@@ -1,0 +1,10 @@
+{
+  "yaml.schemas": {
+    "./etc/empty-schema.json": [
+      "grafana/provisioning/datasources/*.yml",
+      "grafana/provisioning/datasets/*.yaml",
+      "grafana/provisioning/dashboards/*.yml",
+      "grafana/provisioning/dashboards/*.yaml"
+    ]
+  }
+}

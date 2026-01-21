@@ -1,0 +1,8 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- HubSpot Logo Inspired -->
+  <rect width="120" height="40" rx="6" fill="#ff7a59" opacity="0.1"/>
+  <text x="60" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#ff7a59" text-anchor="middle">HubSpot</text>
+  <circle cx="15" cy="20" r="4" fill="#ff7a59"/>
+  <circle cx="25" cy="20" r="4" fill="#ff7a59" opacity="0.6"/>
+  <circle cx="35" cy="20" r="4" fill="#ff7a59" opacity="0.3"/>
+</svg>

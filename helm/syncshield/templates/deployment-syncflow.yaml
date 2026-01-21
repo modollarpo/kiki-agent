@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "syncshield.syncflowFullname" . }}
+  labels: {{ include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncflow
+spec:
+  replicas: {{ .Values.syncflow.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "syncshield.name" . }}
+      app.kubernetes.io/component: syncflow
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "syncshield.name" . }}
+        app.kubernetes.io/component: syncflow
+        {{- with .Values.syncflow.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.syncflow.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      imagePullSecrets:
+        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
+      containers:
+        - name: syncflow
+          image: "{{ .Values.syncflow.image.repository }}:{{ .Values.syncflow.image.tag }}"
+          imagePullPolicy: {{ .Values.syncflow.image.pullPolicy }}
+          {{- if .Values.syncflow.extraArgs }}
+          args:
+            {{- toYaml .Values.syncflow.extraArgs | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: grpc
+              containerPort: {{ .Values.syncflow.service.grpcPort }}
+            - name: metrics
+              containerPort: {{ .Values.syncflow.service.metricsPort }}
+          {{- if .Values.syncflow.env }}
+          env:
+            {{- toYaml .Values.syncflow.env | nindent 12 }}
+          {{- end }}
+          livenessProbe: {{- toYaml .Values.syncflow.livenessProbe | nindent 12 }}
+          readinessProbe: {{- toYaml .Values.syncflow.readinessProbe | nindent 12 }}
+          resources: {{- toYaml .Values.syncflow.resources | nindent 12 }}
+      {{- with .Values.syncflow.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      nodeSelector: {{- toYaml .Values.global.nodeSelector | nindent 8 }}
+      tolerations: {{- toYaml .Values.global.tolerations | nindent 8 }}
+      affinity: {{- toYaml .Values.global.affinity | nindent 8 }}

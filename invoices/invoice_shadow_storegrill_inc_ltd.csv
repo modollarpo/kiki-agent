@@ -1,0 +1,2 @@
+invoice_id,client,date,currency,recoverable_margin_gbp,fee_rate,amount_due,description,source_report
+shadow-storegrill-inc-ltd-20260119,Storegrill Inc Ltd,2026-01-19,GBP,980.94,0.15,147.14,Performance fee (15%) from Shadow Mode Report recoverable margin,C:\Users\USER\Documents\KIKI\reports\shadow_mode_storegrill_inc_ltd.json

@@ -1,0 +1,41 @@
+{{- if .Values.syncflow.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncflow
+  namespace: {{ .Values.global.namespace }}
+  labels: { app: syncflow }
+spec:
+  replicas: {{ .Values.syncflow.replicaCount }}
+  selector: { matchLabels: { app: syncflow } }
+  template:
+    metadata:
+      labels: { app: syncflow }
+    spec:
+      securityContext: { runAsNonRoot: true, runAsUser: 10001 }
+      containers:
+        - name: syncflow
+          image: {{ printf "%s/%s" .Values.global.imageRegistry .Values.syncflow.image | quote }}
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8082 }]
+          env:
+            - name: SHIELD_URL
+              value: "http://syncshield.{{ .Values.global.namespace }}.svc.cluster.local/check"
+            - name: LTV_HOST
+              value: "syncvalue.{{ .Values.global.namespace }}.svc.cluster.local:50051"
+          readinessProbe: { httpGet: { path: /health, port: 8082 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { httpGet: { path: /health, port: 8082 }, initialDelaySeconds: 10, periodSeconds: 10 }
+          securityContext: { readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncflow
+  namespace: {{ .Values.global.namespace }}
+spec:
+  selector: { app: syncflow }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8082
+{{- end }}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package ltv;
+
+// Request message for LTV calculation
+message LTVRequest {
+  string customer_id = 1;
+  float recent_spend = 2;
+  float engagement_score = 3;
+}
+
+// Response message
+message LTVResponse {
+  float predicted_ltv = 1;
+}
+
+// gRPC service (single definition)
+service LTVService {
+  rpc PredictLTV(LTVRequest) returns (LTVResponse);
+}
+

@@ -1,0 +1,128 @@
+global:
+  imagePullSecrets: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  mtlsAnnotations: {}
+
+syncvalue:
+  image:
+    repository: ghcr.io/kiki/syncvalue
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    grpcPort: 50051
+    metricsPort: 9090
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env: []
+  extraArgs: []
+  podAnnotations: {}
+  podLabels: {}
+  livenessProbe:
+    tcpSocket:
+      port: grpc
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: grpc
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: syncvalue
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  hpa:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+    customMetrics: []
+    # Example custom metric for latency via Prometheus Adapter
+    # customMetrics:
+    #   - type: Pods
+    #     metric:
+    #       name: syncvalue_inference_latency_ms_p95
+    #     target:
+    #       type: AverageValue
+    #       averageValue: 2m
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    scrapeTimeout: 10s
+    additionalLabels: {}
+
+syncflow:
+  image:
+    repository: ghcr.io/kiki/syncflow
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    grpcPort: 50052
+    metricsPort: 9090
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env: []
+  extraArgs: []
+  podAnnotations: {}
+  podLabels: {}
+  livenessProbe:
+    tcpSocket:
+      port: grpc
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readinessProbe:
+    tcpSocket:
+      port: grpc
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/component: syncflow
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+  hpa:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+    customMetrics: []
+    # Example custom metric for latency via Prometheus Adapter
+    # customMetrics:
+    #   - type: Pods
+    #     metric:
+    #       name: syncflow_latency_ms_p95
+    #     target:
+    #       type: AverageValue
+    #       averageValue: 2m
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    scrapeTimeout: 10s
+    additionalLabels: {}

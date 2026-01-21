@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncengage
+  namespace: kiki
+  labels:
+    app: syncengage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: syncengage
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: syncengage
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: syncengage
+          image: ghcr.io/your-org/kiki/syncengage:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8083
+          env:
+            - name: LTV_HOST
+              value: "syncvalue:50051"
+            - name: SHIELD_URL
+              value: "http://syncshield.kiki.svc.cluster.local/check"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 300Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8083
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8083
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncengage
+  namespace: kiki
+spec:
+  selector:
+    app: syncengage
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8083
+  type: ClusterIP
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: syncengage-pdb
+  namespace: kiki
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: syncengage
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: syncengage-hpa
+  namespace: kiki
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: syncengage
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60

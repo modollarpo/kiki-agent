@@ -1,0 +1,91 @@
+groups:
+  - name: kiki-syncbrain-alerts
+    interval: 30s
+    rules:
+      # Integration Health Alerts
+      - alert: IntegrationUnhealthy
+        expr: integration_health_status == 0
+        for: 5m
+        labels:
+          severity: critical
+          component: integration
+        annotations:
+          summary: "{{ $labels.adapter_name }} integration is unhealthy"
+          description: "{{ $labels.adapter_name }} has been unavailable for 5 minutes"
+      
+      # Payment Processing Issues
+      - alert: PaymentSuccessRateLow
+        expr: payment_success_rate < 0.90
+        for: 5m
+        labels:
+          severity: warning
+          component: payment
+        annotations:
+          summary: "{{ $labels.provider }} success rate below 90%"
+          description: "Payment success rate for {{ $labels.provider }} is {{ $value | humanizePercentage }}"
+      
+      # LTV Prediction Confidence Low
+      - alert: LowPredictionConfidence
+        expr: ltv_prediction_confidence_score < 0.80
+        for: 2m
+        labels:
+          severity: warning
+          component: ai-brain
+        annotations:
+          summary: "LTV prediction confidence is below 80%"
+          description: "Current confidence score: {{ $value | humanizePercentage }}"
+      
+      # High API Latency
+      - alert: HighAPILatency
+        expr: histogram_quantile(0.95, api_latency_milliseconds_bucket) > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "{{ $labels.endpoint }} API latency is high"
+          description: "P95 latency for {{ $labels.endpoint }} is {{ $value | humanize }}ms"
+      
+      # Circuit Breaker Activated
+      - alert: CircuitBreakerTripped
+        expr: increase(circuit_breaker_trips_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: resilience
+        annotations:
+          summary: "Circuit breaker tripped for {{ $labels.service }}"
+          description: "{{ $labels.service }} circuit breaker has been activated"
+      
+      # Low Active Customers
+      - alert: LowActiveCustomers
+        expr: active_customers < 10
+        for: 5m
+        labels:
+          severity: warning
+          component: business
+        annotations:
+          summary: "Active customers dropped below 10"
+          description: "Current active customers: {{ $value }}"
+      
+      # Audit Trail Growing
+      - alert: AuditTrailSize
+        expr: audit_trail_records_total > 10000
+        for: 10m
+        labels:
+          severity: info
+          component: audit
+        annotations:
+          summary: "Audit trail has exceeded 10,000 records"
+          description: "Total audit trail records: {{ $value }}"
+      
+      # Margin Improvement Tracking
+      - alert: LowMarginImprovement
+        expr: margin_improvement_percentage < 5
+        for: 5m
+        labels:
+          severity: warning
+          component: billing
+        annotations:
+          summary: "Low margin improvement for {{ $labels.client_id }}"
+          description: "Client {{ $labels.client_id }} margin improvement: {{ $value }}%"

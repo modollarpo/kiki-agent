@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kiki-ingress
+  namespace: kiki
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "3"
+    nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header X-Frame-Options "DENY" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header Referrer-Policy "no-referrer-when-downgrade" always;
+      add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" always;
+spec:
+  tls:
+    - hosts:
+        - shield.example.com
+        - engage.example.com
+      secretName: kiki-tls
+  rules:
+    - host: shield.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncshield
+                port:
+                  number: 80
+    - host: engage.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncengage
+                port:
+                  number: 80

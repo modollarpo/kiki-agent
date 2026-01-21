@@ -1,0 +1,49 @@
+{{- if or .Values.syncvalue.serviceMonitor.enabled .Values.syncflow.serviceMonitor.enabled }}
+{{- if .Capabilities.APIVersions.Has "monitoring.coreos.com/v1" }}
+{{- if .Values.syncvalue.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "syncshield.syncvalueFullname" . }}
+  labels:
+    release: prometheus
+    {{- include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncvalue
+    {{- with .Values.syncvalue.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "syncshield.name" . }}
+      app.kubernetes.io/component: syncvalue
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.syncvalue.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.syncvalue.serviceMonitor.scrapeTimeout }}
+---
+{{- end }}
+{{- if .Values.syncflow.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "syncshield.syncflowFullname" . }}
+  labels:
+    release: prometheus
+    {{- include "syncshield.labels" . | nindent 4 }}
+    app.kubernetes.io/component: syncflow
+    {{- with .Values.syncflow.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "syncshield.name" . }}
+      app.kubernetes.io/component: syncflow
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.syncflow.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.syncflow.serviceMonitor.scrapeTimeout }}
+{{- end }}
+{{- end }}
+{{- end }}

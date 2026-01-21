@@ -1,0 +1,45 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kiki-ingress
+  namespace: {{ .Values.global.namespace }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.global.ingressClass }}
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/limit-rps: "{{ .Values.ingress.rateLimitRps }}"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "{{ .Values.ingress.burstMultiplier }}"
+    nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header X-Frame-Options "DENY" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header Referrer-Policy "no-referrer-when-downgrade" always;
+      add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" always;
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.global.domain.shield | quote }}
+        - {{ .Values.global.domain.engage | quote }}
+      secretName: {{ .Values.global.tlsSecretName }}
+  rules:
+    - host: {{ .Values.global.domain.shield | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncshield
+                port:
+                  number: 80
+    - host: {{ .Values.global.domain.engage | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: syncengage
+                port:
+                  number: 80
+{{- end }}

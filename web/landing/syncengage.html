@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SyncEngage™ Retention Engine | Enterprise Spec</title>
+  <meta name="description" content="Enterprise profile for SyncEngage: SSO/SAML, RBAC, audit exports, SLIs/SLOs, DR, data residency, integrations, and API links." />
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body{background:#0b1220;color:#e2e8f0;}
+    .hero{padding:120px 0 60px;text-align:center;background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(15,23,42,0.8));}
+    .hero h1{font-size:40px;margin-bottom:12px;}
+    .meta{color:#94a3b8;margin-bottom:10px;}
+    .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(16,185,129,0.15);color:#10b981;font-weight:700;letter-spacing:.03em;font-size:12px;}
+    .section{padding:50px 0;border-bottom:1px solid rgba(148,163,184,0.12);}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+    .card{background:rgba(15,23,42,0.7);border:1px solid rgba(16,185,129,0.25);border-radius:12px;padding:18px;}
+    .card h3{margin-bottom:8px;font-size:18px;}
+    .card p, .card ul{color:#cbd5e1;font-size:14px;line-height:1.7;}
+    .badge{display:inline-block;padding:6px 10px;border-radius:10px;font-size:12px;font-weight:700;background:rgba(16,185,129,0.14);color:#10b981;border:1px solid rgba(16,185,129,0.35);}
+    .link-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;}
+    .link-row a{color:#3b82f6;text-decoration:none;font-weight:700;}
+    .link-row a:hover{text-decoration:underline;}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:60px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="pill">SyncEngage™ Retention Engine</div>
+    <h1>Enterprise Readiness Profile</h1>
+    <div class="meta">Journey orchestration with SSO/SAML, RBAC, audit logs, SLAs, and replayable workflows.</div>
+    <div class="link-row">
+      <a href="/api.html#syncengage">API endpoints</a>
+      <a href="#dashboards">Live dashboards</a>
+      <a href="/docs.html#syncengage">Docs</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="section">
+    <div class="grid">
+      <div class="card"><h3>Identity & Access</h3><ul><li>SSO: SAML/OIDC with SCIM</li><li>RBAC: Viewer, Operator, Admin + approval gates</li><li>Per-tenant rate limits and API keys scoped by role</li></ul></div>
+      <div class="card"><h3>Audit & Compliance</h3><ul><li>Immutable audit exports (syslog/SIEM)</li><li>Journey change logs with approver and reason</li><li>Consent + DSR passthrough from SyncShield</li></ul></div>
+      <div class="card"><h3>SLIs / SLOs</h3><ul><li>Availability: <span class="badge">99.99%</span></li><li>Latency: p95 &lt; 450ms delivery</li><li>Delivery success: 99.98% per channel</li></ul></div>
+      <div class="card"><h3>DR & Resilience</h3><ul><li>Active/active dispatch clusters</li><li>RPO 15m, RTO 1h</li><li>Idempotent execution with replay</li></ul></div>
+      <div class="card"><h3>Data Residency</h3><ul><li>Regional dispatch by tenant policy</li><li>Channel tokens KMS-encrypted per region</li><li>Isolated queues per tenant</li></ul></div>
+      <div class="card"><h3>Integrations</h3><ul><li>Channels: Email, SMS, Push, Webhooks</li><li>CRMs: Salesforce, HubSpot</li><li>Data: Snowflake, BigQuery, S3</li></ul></div>
+    </div>
+  </section>
+
+  <section class="section" id="dashboards">
+    <h2>Dashboards & Operations</h2>
+    <div class="grid">
+      <div class="card"><h3>Journey Health</h3><p>Per-node latency, retries, DLQs, and circuit-breaker activations with replay links.</p><div class="badge">Traceable runs</div></div>
+      <div class="card"><h3>Channel Delivery</h3><p>Delivery/opens/clicks, bounce codes, suppression, and provider failover status.</p><div class="badge">99.98% success</div></div>
+      <div class="card"><h3>Change Control</h3><p>Versioned playbooks with approvals, diff views, and rollback buttons.</p><div class="badge">SOX-ready</div></div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

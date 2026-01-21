@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kiki-config
+  namespace: kiki
+data:
+  LOG_LEVEL: info
+  RETENTION_DAYS: "2555"
+  REDIS_ADDR: "redis:6379"

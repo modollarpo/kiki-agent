@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Studies - KIKI™ Enterprise Platform</title>
+  <meta name="description" content="Real success stories from Fortune 500 companies using KIKI to increase customer lifetime value, reduce churn, and achieve compliance excellence.">
+  <link rel="canonical" href="https://kiki.example.com/case-studies">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .case-studies-hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(37, 99, 235, 0.05), rgba(15, 23, 42, 0.8));
+    }
+    .case-studies-hero h1 {
+      font-size: 48px;
+      color: #f8fafc;
+      margin-bottom: 20px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+    .case-studies-hero p {
+      font-size: 20px;
+      color: #94a3b8;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    .filter-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+    .filter-tab {
+      padding: 10px 24px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 8px;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.5);
+      color: #3b82f6;
+    }
+    .case-study-featured {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 41, 59, 0.6));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 16px;
+      padding: 48px;
+      margin-bottom: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .case-featured-content h2 {
+      font-size: 36px;
+      color: #f1f5f9;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .case-featured-content .industry {
+      color: #3b82f6;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .case-featured-content p {
+      color: #cbd5e1;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    .case-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .stat-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-box .number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #22c55e;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-box .label {
+      color: #94a3b8;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .case-study-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 16px;
+      padding: 40px;
+      transition: all 0.3s;
+      height: 100%;
+    }
+    .case-study-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+    .case-company-logo {
+      width: 80px;
+      height: 80px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .case-company-name {
+      font-size: 24px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .case-industry {
+      color: #3b82f6;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .case-challenge {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 3px solid #fbbf24;
+      padding: 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .case-challenge h4 {
+      color: #fbbf24;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .case-challenge p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .case-solution {
+      background: rgba(30, 41, 59, 0.6);
+      border-left: 3px solid #3b82f6;
+      padding: 16px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+    .case-solution h4 {
+      color: #3b82f6;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .case-solution p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .case-results {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .result-metric {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(51, 65, 85, 0.5);
+    }
+    .result-metric .value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #22c55e;
+      display: block;
+    }
+    .result-metric .metric-label {
+      color: #94a3b8;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .case-quote {
+      background: rgba(59, 130, 246, 0.05);
+      border-left: 4px solid #3b82f6;
+      padding: 24px;
+      margin: 24px 0;
+      border-radius: 8px;
+      font-style: italic;
+    }
+    .case-quote p {
+      color: #e2e8f0;
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .case-quote .author {
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 600;
+      font-style: normal;
+    }
+    @media(max-width: 968px) {
+      .case-study-featured {
+        grid-template-columns: 1fr;
+      }
+      .case-stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height: 40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html" style="color: #3b82f6;">Case Studies</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="case-studies-hero">
+  <div class="container">
+    <h1>Proven Results Across Industries</h1>
+    <p>See how Fortune 500 companies and high-growth startups achieve measurable retention improvements with KIKI's AI-powered platform.</p>
+    
+    <div class="filter-tabs">
+      <button class="filter-tab active">All Industries</button>
+      <button class="filter-tab">E-Commerce</button>
+      <button class="filter-tab">FinTech</button>
+      <button class="filter-tab">SaaS</button>
+      <button class="filter-tab">Gaming</button>
+      <button class="filter-tab">Healthcare</button>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 60px 0;">
+  <div class="container">
+    <!-- Featured Case Study -->
+    <div class="case-study-featured">
+      <div class="case-featured-content">
+        <div class="industry">E-COMMERCE • FORTUNE 500</div>
+        <h2>Global Retailer Achieves +42% LTV Increase in 90 Days</h2>
+        <p>A leading fashion e-commerce platform with 12M active customers implemented KIKI to combat rising churn rates across 27 EU markets while maintaining GDPR compliance.</p>
+        <a href="#" class="btn primary">Read Full Story</a>
+      </div>
+      <div class="case-stats-grid">
+        <div class="stat-box">
+          <span class="number">+42%</span>
+          <span class="label">LTV Increase</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">-28%</span>
+          <span class="label">Churn Reduction</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">$2.3M</span>
+          <span class="label">Revenue Recovered</span>
+        </div>
+        <div class="stat-box">
+          <span class="number">72hrs</span>
+          <span class="label">Time to Deploy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study Grid -->
+    <div class="case-grid">
+      <!-- FinTech Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">💳</div>
+        <h3 class="case-company-name">PayFlow Financial</h3>
+        <div class="case-industry">FinTech • Series B</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>Needed SOC 2 Type II certification to close enterprise deals, but manual compliance processes were taking 6+ months and delaying sales cycles.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Deployed KIKI's SyncShield™ compliance engine with automated audit logging, DSR automation, and real-time security monitoring across all customer touchpoints.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">6 weeks</span>
+            <span class="metric-label">SOC 2 Cert Time</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">+38%</span>
+            <span class="metric-label">Retention Up</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">99.9%</span>
+            <span class="metric-label">Compliance</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"KIKI enabled us to achieve SOC 2 certification in 6 weeks instead of 6 months. The automated compliance framework is a game-changer."</p>
+          <div class="author">— Sarah Chen, Chief Compliance Officer</div>
+        </div>
+      </div>
+
+      <!-- Mobile Gaming Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">🎮</div>
+        <h3 class="case-company-name">Nexus Gaming Studios</h3>
+        <div class="case-industry">Mobile Gaming • Top 10 Publisher</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>High-value players ("whales") were churning 14 days earlier than legacy analytics could detect, resulting in $890K quarterly revenue loss.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Implemented SyncValue™ predictive AI to identify at-risk whales 14 days earlier, combined with SyncEngage™ personalized retention campaigns across push notifications and in-game offers.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">+156%</span>
+            <span class="metric-label">ROI</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">14 days</span>
+            <span class="metric-label">Earlier Detection</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">$890K</span>
+            <span class="metric-label">Revenue Saved</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"KIKI's predictive churn model gave us a 14-day head start to re-engage at-risk whales. We deployed in 72 hours with zero downtime."</p>
+          <div class="author">— Marcus Kim, Head of Analytics</div>
+        </div>
+      </div>
+
+      <!-- SaaS Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">☁️</div>
+        <h3 class="case-company-name">CloudOps Enterprise</h3>
+        <div class="case-industry">B2B SaaS • Enterprise</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>$450K ARR account churning at contract renewal due to low product engagement. Needed to identify and rescue at-risk enterprise customers before churn.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Deployed SyncValue™ to score enterprise account health based on 30+ engagement signals, triggering automated CSM alerts and personalized playbooks via SyncEngage™.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">+52%</span>
+            <span class="metric-label">Net Retention</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">-34%</span>
+            <span class="metric-label">Enterprise Churn</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">$1.8M</span>
+            <span class="metric-label">ARR Protected</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"KIKI identified 3 at-risk $450K+ accounts before renewal season. Our CSM team saved all three with targeted interventions."</p>
+          <div class="author">— Rachel Torres, VP of Customer Success</div>
+        </div>
+      </div>
+
+      <!-- Healthcare Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">🏥</div>
+        <h3 class="case-company-name">MedTech Solutions</h3>
+        <div class="case-industry">Healthcare SaaS • HIPAA Compliant</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>Required HIPAA-compliant retention automation while maintaining strict patient data privacy. Legacy marketing tools couldn't meet regulatory requirements.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Implemented SyncShield™ for HIPAA compliance with encrypted PHI handling, combined with SyncEngage™ for HIPAA-compliant patient engagement campaigns.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">100%</span>
+            <span class="metric-label">HIPAA Compliance</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">+31%</span>
+            <span class="metric-label">Patient Retention</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">Zero</span>
+            <span class="metric-label">Breach Incidents</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"First retention platform we've found that handles PHI properly. KIKI's compliance-first architecture gives us confidence."</p>
+          <div class="author">— Dr. James Wilson, Chief Medical Officer</div>
+        </div>
+      </div>
+
+      <!-- Subscription Box Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">📦</div>
+        <h3 class="case-company-name">BeautyBox Monthly</h3>
+        <div class="case-industry">Subscription E-Commerce • DTC</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>45% monthly churn rate driven by subscription fatigue. Needed to predict churn risk and intervene before cancellation with personalized offers.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Deployed SyncValue™ churn prediction scoring every customer daily, triggering SyncEngage™ win-back campaigns with personalized discounts and product customization options.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">-19%</span>
+            <span class="metric-label">Churn Reduction</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">+67%</span>
+            <span class="metric-label">Win-back Rate</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">$420K</span>
+            <span class="metric-label">MRR Saved</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"KIKI reduced our churn from 45% to 26% in just 3 months. The AI predictions are eerily accurate—94.7% precision."</p>
+          <div class="author">— Emma Rodriguez, Head of Growth</div>
+        </div>
+      </div>
+
+      <!-- Travel Case Study -->
+      <div class="case-study-card">
+        <div class="case-company-logo">✈️</div>
+        <h3 class="case-company-name">WanderLux Travel</h3>
+        <div class="case-industry">Travel & Hospitality • Online Travel Agency</div>
+        
+        <div class="case-challenge">
+          <h4>Challenge</h4>
+          <p>One-time bookers dominated customer base (78%). Needed to convert transactional customers into loyal repeat travelers with personalized campaigns.</p>
+        </div>
+        
+        <div class="case-solution">
+          <h4>Solution</h4>
+          <p>Used SyncValue™ to identify high-LTV first-time bookers, then deployed SyncCreate™ to generate personalized video ads showcasing destinations based on browsing history, delivered via SyncFlow™.</p>
+        </div>
+        
+        <div class="case-results">
+          <div class="result-metric">
+            <span class="value">+83%</span>
+            <span class="metric-label">Repeat Bookings</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">+$185</span>
+            <span class="metric-label">Avg LTV</span>
+          </div>
+          <div class="result-metric">
+            <span class="value">2.4x</span>
+            <span class="metric-label">ROAS</span>
+          </div>
+        </div>
+        
+        <div class="case-quote">
+          <p>"SyncCreate's AI-generated video ads converted 2.4x better than our generic campaigns. Personalization at this scale was impossible before KIKI."</p>
+          <div class="author">— David Park, Director of Marketing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.02)); padding: 80px 0;">
+  <div class="container" style="text-align: center;">
+    <h2 class="section-title">Ready to Join These Success Stories?</h2>
+    <p class="section-subtitle">Schedule a personalized demo to see how KIKI can transform your customer retention strategy.</p>
+    <div style="margin-top: 32px;">
+      <a href="/contact-sales.html" class="btn primary large">Schedule Enterprise Demo</a>
+      <a href="/pricing.html" class="btn secondary large">View Pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="/features.html">Features</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/docs.html">Documentation</a>
+        <a href="/api.html">API Reference</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="/resources.html">Learning Center</a>
+        <a href="/use-cases.html">Use Cases</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/case-studies.html">Case Studies</a>
+        <a href="/blog.html">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/careers.html">Careers</a>
+        <a href="/contact-sales.html">Contact Sales</a>
+        <a href="/trust.html">Trust Center</a>
+        <a href="/compliance.html">Compliance</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/dpa.html">DPA</a>
+        <a href="/cookie.html">Cookie Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

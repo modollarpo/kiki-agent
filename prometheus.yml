@@ -1,0 +1,59 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'KIKI-SyncBrain'
+    environment: 'production'
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+
+  # KIKI Prometheus Exporter (metrics from Python)
+  - job_name: 'kiki-metrics'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'kiki-syncbrain'
+          component: 'prometheus-exporter'
+
+  # SyncValue AI Brain (gRPC metrics)
+  - job_name: 'syncvalue-brain'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:50051']
+        labels:
+          service: 'ai-brain'
+          component: 'ltv-prediction'
+
+  # SyncFlow Execution Layer
+  - job_name: 'syncflow-execution'
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['localhost:9091']
+        labels:
+          service: 'execution-layer'
+
+  # SyncShield Audit Trail
+  - job_name: 'syncshield-audit'
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['localhost:9092']
+        labels:
+          service: 'audit-trail'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - localhost:9093
+
+rule_files:
+  - 'kiki-alerts.yml'

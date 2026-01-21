@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Trust Center - KIKI | SOC 2 & ISO 27001 Certified</title>
+  <meta name="description" content="KIKI's Security Trust Center - comprehensive information about our security practices, certifications, compliance, and infrastructure protection.">
+  <link rel="canonical" href="https://kiki.example.com/trust">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .trust-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .trust-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+    .trust-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    }
+    .trust-card h3 {
+      color: #f1f5f9;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .trust-card p {
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .trust-card ul {
+      color: #cbd5e1;
+      line-height: 1.7;
+      padding-left: 1.5rem;
+    }
+    .trust-card li {
+      margin-bottom: 0.5rem;
+    }
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      margin: 0.5rem;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      transition: all 0.2s;
+    }
+    .cert-badge:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .cert-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      margin: 2rem 0;
+    }
+    .metric-card {
+      text-align: center;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .metric-value {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #3b82f6;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .metric-label {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+    }
+    .section-header {
+      color: #f1f5f9;
+      font-size: 2.5rem;
+      margin: 4rem 0 2rem 0;
+      text-align: center;
+    }
+    .section-subtitle {
+      color: #cbd5e1;
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .info-box {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid #3b82f6;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 8px;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(59, 130, 246, 0.3);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 0.25rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3b82f6;
+      border: 2px solid #0f172a;
+    }
+    .timeline-date {
+      color: #3b82f6;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+    .timeline-title {
+      color: #f1f5f9;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-desc {
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th {
+      background: rgba(30, 41, 59, 0.8);
+      color: #f1f5f9;
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    td {
+      color: #cbd5e1;
+      padding: 1rem;
+      border-top: 1px solid rgba(71, 85, 105, 0.3);
+    }
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    .status-operational {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+    .contact-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .contact-card h3 {
+      color: #f1f5f9;
+      margin-bottom: 1rem;
+    }
+    .contact-card p {
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 0.5rem;
+    }
+    .contact-card a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    .contact-card a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">🛡️ <strong>KIKI</strong></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="trust.html" class="active">Trust Center</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Enterprise-Grade Security • SOC 2 Type II • ISO 27001 Certified</div>
+      <h1 class="hero-title">Security Trust Center</h1>
+      <p class="hero-subtitle">
+        Transparency, security, and compliance are foundational to everything we do. Explore our security practices,
+        certifications, infrastructure, and commitment to protecting your data.
+      </p>
+      <div class="trust-bar">
+        <span class="trust-item"><span class="status-indicator status-operational"></span>All Systems Operational</span>
+        <span class="trust-item">🔒 SOC 2 Type II</span>
+        <span class="trust-item">✓ ISO 27001</span>
+        <span class="trust-item">🛡️ GDPR Ready</span>
+        <span class="trust-item">⚡ 99.99% Uptime</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-banner">
+    <div class="container">
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-number">99.99%</div>
+          <div class="stat-label">Uptime (Last 12 Months)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Data Breaches (All Time)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><4hrs</div>
+          <div class="stat-label">Critical Incident Response</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Security Monitoring</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="platform-overview">
+    <div class="container trust-content">
+      
+      <h2 class="section-header">Certifications & Compliance</h2>
+      <p class="section-subtitle">
+        KIKI maintains the highest industry standards and certifications to ensure your data is protected and compliant
+        with global regulations.
+      </p>
+
+      <div class="cert-grid">
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">🔒</span>
+          <div>
+            <strong>SOC 2 Type II</strong><br>
+            <small>Annual Audit • Last: Dec 2025</small>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">✓</span>
+          <div>
+            <strong>ISO 27001:2022</strong><br>
+            <small>Certified • Valid until Jan 2027</small>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">🇪🇺</span>
+          <div>
+            <strong>GDPR Compliant</strong><br>
+            <small>EU Data Protection Regulation</small>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">🇺🇸</span>
+          <div>
+            <strong>CCPA Compliant</strong><br>
+            <small>California Consumer Privacy Act</small>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">🏥</span>
+          <div>
+            <strong>HIPAA Ready</strong><br>
+            <small>BAA Available (Enterprise)</small>
+          </div>
+        </div>
+        <div class="cert-badge">
+          <span style="font-size: 1.5rem;">💳</span>
+          <div>
+            <strong>PCI DSS</strong><br>
+            <small>Level 1 (via Stripe)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <p><strong>📄 Download Compliance Reports</strong></p>
+        <p>
+          SOC 2 Type II reports and ISO 27001 certificates are available to customers under NDA.
+          Email <a href="mailto:compliance@kiki.com" style="color: #60a5fa;">compliance@kiki.com</a> to request access.
+        </p>
+      </div>
+
+      <h2 class="section-header">Infrastructure Security</h2>
+      <p class="section-subtitle">
+        Our platform is built on enterprise-grade infrastructure with multiple layers of security controls.
+      </p>
+
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3>🌐 Cloud Infrastructure</h3>
+          <p><strong>Primary Providers:</strong></p>
+          <ul>
+            <li>Amazon Web Services (AWS) - SOC 2, ISO 27001</li>
+            <li>Google Cloud Platform (GCP) - SOC 2, ISO 27001</li>
+            <li>Multi-region deployment for high availability</li>
+            <li>Data residency options (US, EU, UK, CA, AU, JP)</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>🔐 Encryption Standards</h3>
+          <p><strong>Data Protection:</strong></p>
+          <ul>
+            <li><strong>At Rest:</strong> AES-256 encryption for all data</li>
+            <li><strong>In Transit:</strong> TLS 1.3 with perfect forward secrecy</li>
+            <li><strong>Database:</strong> Encrypted connections and field-level encryption</li>
+            <li><strong>Backups:</strong> Encrypted with separate keys</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>🔄 Backup & Recovery</h3>
+          <p><strong>Business Continuity:</strong></p>
+          <ul>
+            <li>Automated daily backups with 90-day retention</li>
+            <li>Point-in-time recovery (PITR) capability</li>
+            <li>Geo-redundant backup storage</li>
+            <li>RTO: 4 hours | RPO: 1 hour</li>
+            <li>Quarterly disaster recovery testing</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>🛡️ Network Security</h3>
+          <p><strong>Perimeter Defense:</strong></p>
+          <ul>
+            <li>Web Application Firewall (WAF) - AWS WAF</li>
+            <li>DDoS protection - AWS Shield Advanced</li>
+            <li>Intrusion Detection/Prevention (IDS/IPS)</li>
+            <li>Network segmentation and micro-segmentation</li>
+            <li>VPC isolation with private subnets</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>👥 Access Controls</h3>
+          <p><strong>Identity & Authorization:</strong></p>
+          <ul>
+            <li>Role-Based Access Control (RBAC)</li>
+            <li>Multi-Factor Authentication (MFA) mandatory</li>
+            <li>Single Sign-On (SSO) via SAML 2.0 (Enterprise)</li>
+            <li>Principle of least privilege enforcement</li>
+            <li>Automated access reviews quarterly</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>📊 Monitoring & Logging</h3>
+          <p><strong>24/7 Vigilance:</strong></p>
+          <ul>
+            <li>Security Information & Event Management (SIEM)</li>
+            <li>Real-time threat detection and alerting</li>
+            <li>Centralized log aggregation and analysis</li>
+            <li>Audit trails for all data access and changes</li>
+            <li>Log retention: 1 year for security logs</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="section-header">Application Security</h2>
+      <p class="section-subtitle">
+        We employ comprehensive security practices throughout the software development lifecycle.
+      </p>
+
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3>🔍 Security Testing</h3>
+          <ul>
+            <li><strong>Annual:</strong> Third-party penetration testing</li>
+            <li><strong>Quarterly:</strong> Vulnerability assessments</li>
+            <li><strong>Continuous:</strong> Automated SAST/DAST scanning</li>
+            <li><strong>Pre-release:</strong> Security code reviews</li>
+            <li><strong>Dependency:</strong> Automated vulnerability monitoring (Snyk, Dependabot)</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>⚙️ Secure Development</h3>
+          <ul>
+            <li>Secure Development Lifecycle (SDL) framework</li>
+            <li>Mandatory security training for developers</li>
+            <li>Peer code review requirements</li>
+            <li>Secrets management (HashiCorp Vault)</li>
+            <li>Container security scanning</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>🚀 Deployment Security</h3>
+          <ul>
+            <li>Infrastructure as Code (IaC) with security scanning</li>
+            <li>Automated CI/CD pipeline security gates</li>
+            <li>Blue-green deployments for zero downtime</li>
+            <li>Automated rollback capabilities</li>
+            <li>Change management approval process</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="section-header">Incident Response</h2>
+      <p class="section-subtitle">
+        We maintain a comprehensive incident response program to quickly detect, respond to, and recover from security events.
+      </p>
+
+      <div class="trust-card" style="max-width: 100%;">
+        <h3>🚨 Incident Response Process</h3>
+        
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 1: Detection (0-15 minutes)</div>
+            <div class="timeline-title">Automated Alert & Triage</div>
+            <div class="timeline-desc">
+              Security monitoring systems detect anomalies. Automated alerts sent to on-call security team.
+              Initial severity assessment and incident categorization.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 2: Response (15 minutes - 4 hours)</div>
+            <div class="timeline-title">Containment & Investigation</div>
+            <div class="timeline-desc">
+              Incident response team assembled. Affected systems isolated to prevent spread.
+              Forensic investigation initiated. Stakeholders notified based on severity.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 3: Remediation (4-24 hours)</div>
+            <div class="timeline-title">Eradication & Recovery</div>
+            <div class="timeline-desc">
+              Root cause identified and eliminated. Systems restored from clean backups if needed.
+              Security controls strengthened. Affected customers notified per legal requirements.
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-date">Phase 4: Post-Incident (24-72 hours)</div>
+            <div class="timeline-title">Analysis & Improvement</div>
+            <div class="timeline-desc">
+              Post-incident review conducted. Lessons learned documented.
+              Security controls updated. Process improvements implemented.
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p><strong>Data Breach Notification</strong></p>
+          <p>
+            In the event of a data breach affecting personal data, we will notify affected customers within <strong>72 hours</strong>
+            of discovery (GDPR Article 33 requirement). Notifications include incident details, affected data, impact assessment,
+            and remediation steps. We maintain cyber insurance coverage for breach-related costs.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="section-header">Personnel Security</h2>
+      <p class="section-subtitle">
+        Our people are our first line of defense. We invest heavily in security awareness and training.
+      </p>
+
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3>👔 Employee Screening</h3>
+          <ul>
+            <li>Background checks for all employees with data access</li>
+            <li>Reference verification for all hires</li>
+            <li>Confidentiality and NDA agreements required</li>
+            <li>Annual background check renewals</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>📚 Security Training</h3>
+          <ul>
+            <li>Mandatory security awareness training (annual)</li>
+            <li>Phishing simulation exercises (quarterly)</li>
+            <li>Role-specific security training (developers, support)</li>
+            <li>Incident response drills (semi-annual)</li>
+            <li>GDPR and privacy law training</li>
+          </ul>
+        </div>
+
+        <div class="trust-card">
+          <h3>🔑 Access Management</h3>
+          <ul>
+            <li>Automated onboarding/offboarding workflows</li>
+            <li>Immediate access revocation upon termination</li>
+            <li>Quarterly access reviews and certifications</li>
+            <li>Privileged access management (PAM) for admins</li>
+            <li>Session recording for production access</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 class="section-header">Service Reliability</h2>
+      <p class="section-subtitle">
+        We maintain industry-leading uptime through redundancy, monitoring, and proactive maintenance.
+      </p>
+
+      <div class="trust-grid">
+        <div class="metric-card">
+          <span class="metric-value">99.99%</span>
+          <div class="metric-label">Uptime (Last 12 Months)</div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">52 min</span>
+          <div class="metric-label">Total Downtime (2025)</div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">0</span>
+          <div class="metric-label">Major Incidents (2025)</div>
+        </div>
+      </div>
+
+      <h3 style="color: #f1f5f9; margin-top: 3rem; margin-bottom: 1.5rem;">Recent Uptime History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Uptime %</th>
+            <th>Downtime</th>
+            <th>Incidents</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>January 2026</td>
+            <td>99.99%</td>
+            <td>4 min</td>
+            <td>0</td>
+            <td>Scheduled maintenance window</td>
+          </tr>
+          <tr>
+            <td>December 2025</td>
+            <td>100.00%</td>
+            <td>0 min</td>
+            <td>0</td>
+            <td>Perfect uptime</td>
+          </tr>
+          <tr>
+            <td>November 2025</td>
+            <td>99.98%</td>
+            <td>8 min</td>
+            <td>0</td>
+            <td>Database failover (automated recovery)</td>
+          </tr>
+          <tr>
+            <td>October 2025</td>
+            <td>100.00%</td>
+            <td>0 min</td>
+            <td>0</td>
+            <td>Perfect uptime</td>
+          </tr>
+          <tr>
+            <td>September 2025</td>
+            <td>99.99%</td>
+            <td>5 min</td>
+            <td>0</td>
+            <td>Scheduled maintenance window</td>
+          </tr>
+          <tr>
+            <td>August 2025</td>
+            <td>100.00%</td>
+            <td>0 min</td>
+            <td>0</td>
+            <td>Perfect uptime</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <p><strong>📊 Real-Time Status</strong></p>
+        <p>
+          Monitor our system status in real-time: <a href="https://status.kiki.com" style="color: #60a5fa;" target="_blank" rel="noopener">status.kiki.com</a><br>
+          Subscribe to incident notifications and maintenance schedules.
+        </p>
+      </div>
+
+      <h2 class="section-header">Sub-Processors & Vendors</h2>
+      <p class="section-subtitle">
+        We carefully vet all third-party service providers and require them to meet our security standards.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Sub-Processor</th>
+            <th>Service</th>
+            <th>Data Access</th>
+            <th>Location</th>
+            <th>Certifications</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Amazon Web Services</td>
+            <td>Cloud infrastructure</td>
+            <td>All service data</td>
+            <td>US, EU (customer choice)</td>
+            <td>SOC 2, ISO 27001, PCI DSS</td>
+          </tr>
+          <tr>
+            <td>Google Cloud Platform</td>
+            <td>AI/ML, analytics</td>
+            <td>Anonymized data only</td>
+            <td>US, EU</td>
+            <td>SOC 2, ISO 27001</td>
+          </tr>
+          <tr>
+            <td>Stripe</td>
+            <td>Payment processing</td>
+            <td>Payment data (tokenized)</td>
+            <td>US</td>
+            <td>PCI DSS Level 1, SOC 2</td>
+          </tr>
+          <tr>
+            <td>SendGrid (Twilio)</td>
+            <td>Email delivery</td>
+            <td>Email addresses, content</td>
+            <td>US</td>
+            <td>SOC 2, ISO 27001</td>
+          </tr>
+          <tr>
+            <td>Intercom</td>
+            <td>Customer support</td>
+            <td>Support messages, contact info</td>
+            <td>US</td>
+            <td>SOC 2</td>
+          </tr>
+          <tr>
+            <td>Datadog</td>
+            <td>Monitoring</td>
+            <td>System logs, metrics</td>
+            <td>US</td>
+            <td>SOC 2, ISO 27001</td>
+          </tr>
+          <tr>
+            <td>Auth0 (Okta)</td>
+            <td>Authentication</td>
+            <td>Login credentials, MFA</td>
+            <td>US, EU</td>
+            <td>SOC 2, ISO 27001</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="color: #cbd5e1; margin-top: 1rem;">
+        All sub-processors are bound by Data Processing Agreements (DPAs) requiring GDPR compliance, appropriate security measures,
+        and breach notification within 24 hours. We notify customers 30 days in advance of adding new sub-processors.
+      </p>
+
+      <h2 class="section-header">Vulnerability Disclosure</h2>
+      <p class="section-subtitle">
+        We welcome responsible disclosure of security vulnerabilities from the security research community.
+      </p>
+
+      <div class="trust-card" style="max-width: 100%;">
+        <h3>🔐 Responsible Disclosure Program</h3>
+        <p>
+          If you discover a security vulnerability in KIKI's systems, we encourage you to report it responsibly.
+          We commit to working with security researchers to verify and address legitimate vulnerabilities.
+        </p>
+
+        <h4 style="margin-top: 1.5rem;">How to Report:</h4>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:security@kiki.com" style="color: #60a5fa;">security@kiki.com</a> (PGP key available)</li>
+          <li><strong>PGP Fingerprint:</strong> <code style="color: #94a3b8;">4A3E 8B2C 9D1F 7E5A 6C8B 3F2E 1D9A 5C7B 8E4F 2A1C</code></li>
+          <li><strong>Bug Bounty:</strong> We offer rewards for qualifying vulnerabilities (details upon contact)</li>
+        </ul>
+
+        <h4 style="margin-top: 1.5rem;">What to Include:</h4>
+        <ul>
+          <li>Detailed description of the vulnerability</li>
+          <li>Steps to reproduce the issue</li>
+          <li>Potential impact and exploit scenario</li>
+          <li>Your contact information for follow-up</li>
+        </ul>
+
+        <h4 style="margin-top: 1.5rem;">Our Commitment:</h4>
+        <ul>
+          <li>Acknowledge receipt within 24 hours</li>
+          <li>Provide regular updates on remediation progress</li>
+          <li>Credit researchers who wish to be acknowledged (with permission)</li>
+          <li>Never pursue legal action against good-faith researchers</li>
+        </ul>
+
+        <h4 style="margin-top: 1.5rem;">Out of Scope:</h4>
+        <ul>
+          <li>Denial of Service (DoS) attacks</li>
+          <li>Social engineering attacks against employees</li>
+          <li>Physical attacks against our facilities</li>
+          <li>Vulnerabilities in third-party services we use (report to them directly)</li>
+        </ul>
+      </div>
+
+      <h2 class="section-header">Security Resources</h2>
+      <p class="section-subtitle">
+        Access security documentation, compliance reports, and contact our security team.
+      </p>
+
+      <div class="trust-grid">
+        <div class="contact-card">
+          <h3>📄 Compliance Documents</h3>
+          <p>Available to customers under NDA:</p>
+          <ul style="margin-top: 1rem;">
+            <li>SOC 2 Type II Report (annual)</li>
+            <li>ISO 27001 Certificate</li>
+            <li>Penetration Test Summary</li>
+            <li>Security Questionnaires (CAIQ, SIG, etc.)</li>
+          </ul>
+          <p style="margin-top: 1rem;">
+            <strong>Request:</strong> <a href="mailto:compliance@kiki.com">compliance@kiki.com</a>
+          </p>
+        </div>
+
+        <div class="contact-card">
+          <h3>🛡️ Security Team</h3>
+          <p><strong>Report Security Issues:</strong></p>
+          <p>Email: <a href="mailto:security@kiki.com">security@kiki.com</a></p>
+          <p>PGP: Available on request</p>
+          <p style="margin-top: 1rem;"><strong>General Inquiries:</strong></p>
+          <p>Email: <a href="mailto:trust@kiki.com">trust@kiki.com</a></p>
+          <p>Phone: +1 (555) 123-4567</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>📋 Privacy & Data Protection</h3>
+          <p><strong>Data Protection Officer:</strong></p>
+          <p>Email: <a href="mailto:dpo@kiki.com">dpo@kiki.com</a></p>
+          <p>Phone: +1 (555) 123-4567</p>
+          <p style="margin-top: 1rem;"><strong>Privacy Resources:</strong></p>
+          <ul style="margin-top: 0.5rem;">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="dpa.html">Data Processing Agreement</a></li>
+            <li><a href="cookie.html">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top: 3rem;">
+        <p><strong>🔔 Stay Updated on Security</strong></p>
+        <p>
+          Subscribe to our security bulletins and maintenance notifications:<br>
+          <a href="https://status.kiki.com" style="color: #60a5fa;" target="_blank" rel="noopener">status.kiki.com</a> | 
+          <a href="mailto:security-updates@kiki.com" style="color: #60a5fa;">security-updates@kiki.com</a>
+        </p>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid rgba(59, 130, 246, 0.2); margin: 3rem 0;">
+
+      <p style="text-align: center; color: #94a3b8; font-size: 0.9rem;">
+        Security Trust Center last updated: January 15, 2026<br>
+        © 2026 KIKI, Inc. All rights reserved. SOC 2 Type II Certified.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-column">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="trust.html">Trust Center</a></li>
+          <li><a href="compliance.html">Compliance</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Status Page</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="dpa.html">Data Processing Agreement</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> KIKI. All rights reserved. SOC 2 Type II Certified.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

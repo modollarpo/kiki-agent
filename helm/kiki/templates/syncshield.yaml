@@ -1,0 +1,44 @@
+{{- if .Values.syncshield.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncshield
+  namespace: {{ .Values.global.namespace }}
+  labels: { app: syncshield }
+spec:
+  replicas: {{ .Values.syncshield.replicaCount }}
+  selector: { matchLabels: { app: syncshield } }
+  template:
+    metadata:
+      labels: { app: syncshield }
+    spec:
+      securityContext: { runAsNonRoot: true, runAsUser: 10001 }
+      containers:
+        - name: syncshield
+          image: {{ printf "%s/%s" .Values.global.imageRegistry .Values.syncshield.image | quote }}
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 8081 }]
+          env:
+            - name: REDIS_ADDR
+              valueFrom: { configMapKeyRef: { name: kiki-config, key: REDIS_ADDR } }
+            - name: RETENTION_DAYS
+              valueFrom: { configMapKeyRef: { name: kiki-config, key: RETENTION_DAYS } }
+          readinessProbe: { httpGet: { path: /health, port: 8081 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { httpGet: { path: /health, port: 8081 }, initialDelaySeconds: 10, periodSeconds: 10 }
+          securityContext: { readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+          resources:
+            requests: { cpu: {{ .Values.syncshield.resources.requests.cpu | quote }}, memory: {{ .Values.syncshield.resources.requests.memory | quote }} }
+            limits:   { cpu: {{ .Values.syncshield.resources.limits.cpu   | quote }}, memory: {{ .Values.syncshield.resources.limits.memory   | quote }} }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncshield
+  namespace: {{ .Values.global.namespace }}
+spec:
+  selector: { app: syncshield }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8081
+{{- end }}

@@ -1,0 +1,150 @@
+version: '3.8'
+services:
+  # PostgreSQL + TimescaleDB for audit trail and analytics
+  postgres:
+    image: timescale/timescaledb:latest-pg15
+    container_name: kiki-postgres
+    environment:
+      - POSTGRES_DB=kiki_platform
+      - POSTGRES_USER=kiki_admin
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-kiki_dev_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/schema:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kiki_admin -d kiki_platform"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:alpine
+    container_name: kiki-redis
+    ports:
+      - "6379:6379"
+
+  syncvalue:
+    build: ./ai-models
+    container_name: syncvalue
+    ports:
+      - "50051:50051"
+
+  syncshield:
+    build: ./cmd/syncshield
+    container_name: syncshield
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_ADDR=redis:6379
+      - RETENTION_DAYS=2555
+    depends_on:
+      - redis
+
+  syncflow:
+    build: ./cmd/syncflow
+    container_name: syncflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+      syncvalue:
+        condition: service_started
+      syncshield:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      - SHIELD_URL=http://syncshield:8081/check
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=kiki_platform
+      - DB_USER=kiki_admin
+      - DB_PASSWORD=${DB_PASSWORD:-kiki_dev_password}
+    volumes:
+      - .:/app/data
+
+  syncengage:
+    build: ./cmd/syncengage
+    container_name: syncengage
+    ports:
+      - "8083:8083"
+    environment:
+      - SHIELD_URL=http://syncshield:8081/check
+      - LTV_GRPC_ADDR=syncvalue:50051
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=kiki_platform
+      - DB_USER=kiki_admin
+      - DB_PASSWORD=${DB_PASSWORD:-kiki_dev_password}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      syncshield:
+        condition: service_started
+
+  synccreate:
+    build: ./cmd/creative
+    container_name: synccreate
+    ports:
+      - "8084:8084"
+    environment:
+      - PORT=8084
+      - SHIELD_URL=http://syncshield:8081/check
+      - OUTPUT_DIR=/app/output
+      - CACHE_DIR=/app/cache
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=kiki_platform
+      - DB_USER=kiki_admin
+      - DB_PASSWORD=${DB_PASSWORD:-kiki_dev_password}
+    volumes:
+      - ./output:/app/output
+      - ./cache:/app/cache
+    depends_on:
+      postgres:
+        condition: service_healthy
+      syncshield:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Super-Admin Dashboard API
+  admin-api:
+    build: ./cmd/admin
+    container_name: kiki-admin-api
+    ports:
+      - "8085:8085"
+    environment:
+      - PORT=8085
+      - PROMETHEUS_URL=http://prometheus:9090
+      - SYNCSHIELD_URL=http://syncshield:8081/health
+      - SYNCENGAGE_URL=http://syncengage:8083/health
+      - SYNCFLOW_URL=http://syncflow:8082/health
+      - SYNCCREATE_URL=http://synccreate:8084/health
+      - SYNCVALUE_URL=http://syncvalue:50051/health
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=kiki_platform
+      - DB_USER=kiki_admin
+      - DB_PASSWORD=${DB_PASSWORD:-kiki_dev_password}
+    volumes:
+      - ./web/admin:/app/web/admin
+    depends_on:
+      - postgres
+      - syncshield
+      - syncengage
+      - syncflow
+      - synccreate
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  postgres_data:

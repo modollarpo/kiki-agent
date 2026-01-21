@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Variant Creative Generation with SyncCreate | KIKI Engineering</title>
+  <meta name="description" content="How SyncCreate generates multiple TikTok and paid-social creative variants in under 2 minutes using temporal consistency and scene-aware prompts.">
+  <link rel="alternate" type="application/rss+xml" title="KIKI Engineering Blog RSS" href="/rss.xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body { background: #0b1220; color: #e2e8f0; }
+    .hero { padding: 120px 0 60px; text-align: center; background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.08)); }
+    .hero h1 { font-size: 42px; margin-bottom: 16px; }
+    .meta { color: #94a3b8; margin-bottom: 24px; }
+    .pill { display: inline-block; padding: 6px 12px; background: rgba(139,92,246,0.18); color: #8b5cf6; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .03em; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 48px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.12); }
+    h2 { font-size: 28px; margin-bottom: 16px; }
+    p { color: #cbd5e1; line-height: 1.8; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: rgba(15,23,42,0.6); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 12px; padding: 20px; }
+    .badge { display: inline-block; padding: 4px 10px; background: rgba(59,130,246,0.14); color: #3b82f6; border-radius: 8px; font-size: 12px; font-weight: 700; }
+    ul { color: #cbd5e1; line-height: 1.8; }
+    .cta { text-align: center; padding: 48px 0; }
+    .cta a { margin: 0 10px; }
+    .post-nav { margin: 40px 0 16px; padding: 20px; background: rgba(15,23,42,0.6); border: 1px solid rgba(148,163,184,0.14); border-radius: 12px; }
+    .post-links { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .post-links a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    .post-links a:hover { text-decoration: underline; }
+    .sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 16px; }
+    .sidebar a { color: #cbd5e1; text-decoration: none; font-size: 14px; }
+    .sidebar a:hover { color: #3b82f6; }
+    @media(max-width: 768px){ .hero h1 { font-size: 32px; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height:40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html" style="color:#3b82f6;">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="pill">Product Updates</div>
+    <h1>Introducing Multi-Variant Creative Generation with SyncCreate</h1>
+    <div class="meta">January 5, 2026 • 6 min read • By Maria Kim, Head of Product</div>
+    <p>Generate five paid-social video variants in under two minutes using scene-aware prompts, motion stabilization, and brand-safe templates.</p>
+    <div class="back" style="margin-top:16px;"><a href="/blog.html" style="color:#3b82f6; font-weight:700; text-decoration:none;">← Back to Blog</a></div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="section">
+    <h2>Why We Built This</h2>
+    <p>Performance teams need rapid creative iteration without sacrificing brand safety. SyncCreate automates ideation, scripting, and rendering across TikTok, Reels, and Shorts while preserving temporal consistency and audio alignment.</p>
+  </section>
+
+  <section class="section">
+    <h2>Pipeline Overview</h2>
+    <div class="grid">
+      <div class="card"><div class="badge">Prompt graph</div><p>Scene-aware prompts generated from product highlights and audience persona.</p></div>
+      <div class="card"><div class="badge">Motion guardrails</div><p>Optical flow checks and stabilization to avoid jitter between frames.</p></div>
+      <div class="card"><div class="badge">Voice & captions</div><p>TTS selection with phoneme alignment and burned-in captions for accessibility.</p></div>
+      <div class="card"><div class="badge">Brand safety</div><p>Policy filters, banned term checks, and visual logo placement validation.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Key Techniques</h2>
+    <ul>
+      <li>Temporal consistency using reference frame anchoring every N frames.</li>
+      <li>Shot selection with CLIP-based semantic scoring per scene.</li>
+      <li>Audio sync using viseme-aware TTS and forced alignment.</li>
+      <li>Variant diversity via prompt mutation: tone, CTA, value prop, hook.</li>
+      <li>Auto-cropping and safe zones for TikTok/IG/YT aspect ratios.</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Performance</h2>
+    <ul>
+      <li>Render time: ~110 seconds for 5 x 15s clips on A10G GPU.</li>
+      <li>Lift: +23% CTR and -18% CPA vs. manually edited baselines.</li>
+      <li>Rejection rate: &lt;0.7% flagged by platform policies after guardrails.</li>
+    </ul>
+  </section>
+
+  <div class="cta">
+    <a class="btn primary" href="/contact-sales.html">Book a Creative Demo</a>
+    <a class="btn secondary" href="/resources.html">Download Creative Playbook</a>
+  </div>
+
+  <div class="post-nav">
+    <div class="post-links">
+      <a href="/blog-gdpr-consent.html">← Previous: GDPR Article 7 Consent</a>
+      <a href="/blog-zero-trust-soc2.html">Next: Zero-Trust & SOC 2 →</a>
+    </div>
+    <div class="sidebar">
+      <a href="/docs.html">Documentation</a>
+      <a href="/api.html">API Reference</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/contact-sales.html">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/integrations.html">Integrations</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Security & Compliance</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a><a href="/rss.xml">RSS Feed</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom"><small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small></div>
+  </div>
+</footer>
+</body>
+</html>

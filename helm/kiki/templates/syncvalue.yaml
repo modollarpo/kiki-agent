@@ -1,0 +1,36 @@
+{{- if .Values.syncvalue.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncvalue
+  namespace: {{ .Values.global.namespace }}
+  labels: { app: syncvalue }
+spec:
+  replicas: {{ .Values.syncvalue.replicaCount }}
+  selector: { matchLabels: { app: syncvalue } }
+  template:
+    metadata:
+      labels: { app: syncvalue }
+    spec:
+      securityContext: { runAsNonRoot: true, runAsUser: 10001 }
+      containers:
+        - name: syncvalue
+          image: {{ printf "%s/%s" .Values.global.imageRegistry .Values.syncvalue.image | quote }}
+          imagePullPolicy: IfNotPresent
+          ports: [{ containerPort: 50051 }]
+          readinessProbe: { tcpSocket: { port: 50051 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { tcpSocket: { port: 50051 }, initialDelaySeconds: 10, periodSeconds: 10 }
+          securityContext: { readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: { drop: ["ALL"] } }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: syncvalue
+  namespace: {{ .Values.global.namespace }}
+spec:
+  selector: { app: syncvalue }
+  ports:
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+{{- end }}

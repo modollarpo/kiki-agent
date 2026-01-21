@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>KIKI Engineering Blog</title>
+    <link>https://kiki.example.com/blog</link>
+    <description>AI, ML, compliance, and product engineering insights from KIKI.</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <ttl>720</ttl>
+
+    <item>
+      <title>Building a 94.7% Accurate LTV Prediction Model with TensorFlow and gRPC</title>
+      <link>https://kiki.example.com/blog-ltv-prediction.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-ltv-prediction.html</guid>
+      <pubDate>Thu, 15 Jan 2026 00:00:00 +0000</pubDate>
+      <description>How we engineered SyncValue's lifetime value model for sub-100ms latency and 94.7% accuracy using TensorFlow, Feast, and gRPC.</description>
+    </item>
+
+    <item>
+      <title>Scaling to 10M Messages/Hour: Our Go Microservices Architecture</title>
+      <link>https://kiki.example.com/blog-microservices-scale.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-microservices-scale.html</guid>
+      <pubDate>Sat, 10 Jan 2026 00:00:00 +0000</pubDate>
+      <description>How SyncEngage processes 10M+ retention messages per hour with Go, Kafka, and Kubernetes autoscaling.</description>
+    </item>
+
+    <item>
+      <title>GDPR Article 7 Consent: Implementation Guide for SaaS Platforms</title>
+      <link>https://kiki.example.com/blog-gdpr-consent.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-gdpr-consent.html</guid>
+      <pubDate>Thu, 08 Jan 2026 00:00:00 +0000</pubDate>
+      <description>Practical patterns for consent capture, proofs, and revocation backed by blockchain-grade audit trails.</description>
+    </item>
+
+    <item>
+      <title>Introducing Multi-Variant Creative Generation with SyncCreate</title>
+      <link>https://kiki.example.com/blog-synccreate-multivariant.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-synccreate-multivariant.html</guid>
+      <pubDate>Mon, 05 Jan 2026 00:00:00 +0000</pubDate>
+      <description>Generate five TikTok-ready video variants in minutes using scene-aware prompts, motion guardrails, and TTS alignment.</description>
+    </item>
+
+    <item>
+      <title>Zero-Trust Security Architecture: Our Journey to SOC 2 Type II</title>
+      <link>https://kiki.example.com/blog-zero-trust-soc2.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-zero-trust-soc2.html</guid>
+      <pubDate>Sun, 28 Dec 2025 00:00:00 +0000</pubDate>
+      <description>Lessons from achieving SOC 2 Type II: mTLS everywhere, OPA sidecars, audit logging, and incident response.</description>
+    </item>
+
+    <item>
+      <title>Feature Engineering for Churn Prediction: 50+ Behavioral Signals</title>
+      <link>https://kiki.example.com/blog-feature-engineering-churn.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-feature-engineering-churn.html</guid>
+      <pubDate>Mon, 22 Dec 2025 00:00:00 +0000</pubDate>
+      <description>Behavioral, financial, and adoption signals that improve churn prediction recall and lead time.</description>
+    </item>
+
+    <item>
+      <title>How We Helped a FinTech Reduce Churn by 38% in 90 Days</title>
+      <link>https://kiki.example.com/blog-fintech-churn-38.html</link>
+      <guid isPermaLink="true">https://kiki.example.com/blog-fintech-churn-38.html</guid>
+      <pubDate>Thu, 18 Dec 2025 00:00:00 +0000</pubDate>
+      <description>PayFlow Financial case study: LTV scoring, risk alerts, and multi-channel retention plays that cut churn by 38%.</description>
+    </item>
+  </channel>
+</rss>

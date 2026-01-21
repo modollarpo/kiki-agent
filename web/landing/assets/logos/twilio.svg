@@ -1,0 +1,8 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Twilio Logo Inspired -->
+  <rect width="120" height="40" rx="6" fill="#f22f46" opacity="0.1"/>
+  <text x="60" y="25" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#f22f46" text-anchor="middle">Twilio</text>
+  <circle cx="15" cy="20" r="8" stroke="#f22f46" stroke-width="2" fill="none"/>
+  <circle cx="18" cy="17" r="2" fill="#f22f46"/>
+  <circle cx="12" cy="23" r="2" fill="#f22f46"/>
+</svg>

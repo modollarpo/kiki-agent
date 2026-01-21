@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore 50+ seamless integrations with KIKI's Customer Intelligence Platform. Connect with CRM, CDP, payment, messaging, analytics, and data warehouse tools.">
+  <title>Integrations Marketplace - KIKI™ Enterprise Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #0a0f1e 0%, #1a2332 100%);
+      padding: 120px 0 80px;
+      text-align: center;
+      color: white;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: #94a3b8;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .search-bar {
+      max-width: 600px;
+      margin: 2rem auto 0;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 1rem 3rem 1rem 1.5rem;
+      font-size: 1rem;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .search-bar input:focus {
+      border-color: #3b82f6;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .search-bar input::placeholder {
+      color: #64748b;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 3rem 0;
+    }
+    .filter-tab {
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 8px;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      color: white;
+    }
+    .integrations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .integration-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .integration-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #22c55e);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .integration-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    }
+    .integration-card:hover::before {
+      transform: scaleX(1);
+    }
+    .integration-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .integration-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .integration-category {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .integration-description {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .integration-badges {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .badge {
+      padding: 0.25rem 0.5rem;
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+    .stats-section {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+      padding: 3rem 0;
+      margin: 4rem 0;
+      border-radius: 16px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-size: 2.5rem;
+      color: #3b82f6;
+      margin-bottom: 0.5rem;
+    }
+    .stat-item p {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+    .cta-section {
+      text-align: center;
+      padding: 4rem 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+      border-radius: 16px;
+      margin: 4rem 0;
+    }
+    .cta-section h2 {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    footer {
+      background: #0a0f1e;
+      color: white;
+      padding: 3rem 0 1rem;
+      margin-top: 4rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .footer-col h4 {
+      margin-bottom: 1rem;
+      color: #3b82f6;
+    }
+    .footer-col a {
+      display: block;
+      color: #94a3b8;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s;
+    }
+    .footer-col a:hover {
+      color: white;
+    }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #64748b;
+    }
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .integrations-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo"><img src="assets/logos/kiki-logo.svg" alt="KIKI" style="height: 40px;" /></div>
+    <nav>
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/api.html">API</a>
+      <a href="/case-studies.html">Case Studies</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/about.html">About</a>
+      <a href="/contact-sales.html" class="btn-nav">Contact Sales</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>🔌 Integrations Marketplace</h1>
+    <p>Connect KIKI with 50+ platforms across CRM, analytics, messaging, payments, and data warehouses. Seamless setup in minutes with pre-built connectors and real-time sync.</p>
+    
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search integrations (e.g., Salesforce, Stripe, BigQuery)..." onkeyup="filterIntegrations()">
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterByCategory('all')">All (50+)</button>
+    <button class="filter-tab" onclick="filterByCategory('crm')">CRM & Sales (8)</button>
+    <button class="filter-tab" onclick="filterByCategory('cdp')">CDP & Analytics (7)</button>
+    <button class="filter-tab" onclick="filterByCategory('messaging')">Messaging (9)</button>
+    <button class="filter-tab" onclick="filterByCategory('payments')">Payments (6)</button>
+    <button class="filter-tab" onclick="filterByCategory('data')">Data Warehouses (5)</button>
+    <button class="filter-tab" onclick="filterByCategory('ecommerce')">E-Commerce (6)</button>
+    <button class="filter-tab" onclick="filterByCategory('marketing')">Marketing (9)</button>
+  </div>
+
+  <!-- CRM & Sales Integrations -->
+  <div class="integrations-grid">
+    <div class="integration-card" data-category="crm" data-name="Salesforce">
+      <div class="integration-icon">☁️</div>
+      <div class="integration-name">Salesforce</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Sync customer data, opportunities, and accounts in real-time. Trigger workflows based on Salesforce events.</p>
+      <div class="integration-badges">
+        <span class="badge">Bi-directional Sync</span>
+        <span class="badge">Real-time</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="HubSpot">
+      <div class="integration-icon">🧲</div>
+      <div class="integration-name">HubSpot</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Connect contacts, deals, and marketing campaigns. Enrich HubSpot with KIKI's churn predictions.</p>
+      <div class="integration-badges">
+        <span class="badge">Bi-directional</span>
+        <span class="badge">Custom Fields</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Pipedrive">
+      <div class="integration-icon">📊</div>
+      <div class="integration-name">Pipedrive</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Automate sales workflows with churn risk alerts. Sync deals and customer health scores.</p>
+      <div class="integration-badges">
+        <span class="badge">Webhooks</span>
+        <span class="badge">Auto-sync</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Zendesk">
+      <div class="integration-icon">🎫</div>
+      <div class="integration-name">Zendesk</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Integrate support tickets with customer retention insights. Flag high-risk accounts.</p>
+      <div class="integration-badges">
+        <span class="badge">Ticket Sync</span>
+        <span class="badge">Risk Alerts</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Intercom">
+      <div class="integration-icon">💬</div>
+      <div class="integration-name">Intercom</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Send targeted messages based on churn risk. Sync customer conversations and events.</p>
+      <div class="integration-badges">
+        <span class="badge">Messaging</span>
+        <span class="badge">Events</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Microsoft Dynamics">
+      <div class="integration-icon">🔷</div>
+      <div class="integration-name">Microsoft Dynamics</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Enterprise CRM integration with Azure AD authentication. Sync accounts and opportunities.</p>
+      <div class="integration-badges">
+        <span class="badge">SSO</span>
+        <span class="badge">Enterprise</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Zoho CRM">
+      <div class="integration-icon">📋</div>
+      <div class="integration-name">Zoho CRM</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Connect Zoho contacts, leads, and deals with KIKI's retention platform.</p>
+      <div class="integration-badges">
+        <span class="badge">API Sync</span>
+        <span class="badge">Custom Modules</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="crm" data-name="Freshsales">
+      <div class="integration-icon">🍃</div>
+      <div class="integration-name">Freshsales</div>
+      <span class="integration-category">CRM & Sales</span>
+      <p class="integration-description">Automate retention campaigns using Freshsales contact data and lifecycle stages.</p>
+      <div class="integration-badges">
+        <span class="badge">Lifecycle</span>
+        <span class="badge">Webhooks</span>
+      </div>
+    </div>
+
+    <!-- CDP & Analytics -->
+    <div class="integration-card" data-category="cdp" data-name="Segment">
+      <div class="integration-icon">📡</div>
+      <div class="integration-name">Segment</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Send events from Segment to KIKI for churn prediction. Enrich customer profiles with AI insights.</p>
+      <div class="integration-badges">
+        <span class="badge">Source</span>
+        <span class="badge">Destination</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="mParticle">
+      <div class="integration-icon">🔀</div>
+      <div class="integration-name">mParticle</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Enterprise CDP integration for multi-channel customer data orchestration.</p>
+      <div class="integration-badges">
+        <span class="badge">Enterprise</span>
+        <span class="badge">Multi-channel</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="RudderStack">
+      <div class="integration-icon">🚢</div>
+      <div class="integration-name">RudderStack</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Open-source CDP integration with warehouse-first architecture support.</p>
+      <div class="integration-badges">
+        <span class="badge">Open Source</span>
+        <span class="badge">Warehouse</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="Google Analytics">
+      <div class="integration-icon">📈</div>
+      <div class="integration-name">Google Analytics</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Import web analytics events and user behavior data for churn modeling.</p>
+      <div class="integration-badges">
+        <span class="badge">GA4</span>
+        <span class="badge">Universal</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="Mixpanel">
+      <div class="integration-icon">📊</div>
+      <div class="integration-name">Mixpanel</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Sync product analytics events and cohorts for advanced retention modeling.</p>
+      <div class="integration-badges">
+        <span class="badge">Cohorts</span>
+        <span class="badge">Events</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="Amplitude">
+      <div class="integration-icon">📉</div>
+      <div class="integration-name">Amplitude</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Product analytics integration with behavioral cohort syncing.</p>
+      <div class="integration-badges">
+        <span class="badge">Behavioral</span>
+        <span class="badge">Cohorts</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="cdp" data-name="Heap">
+      <div class="integration-icon">🔍</div>
+      <div class="integration-name">Heap</div>
+      <span class="integration-category">CDP & Analytics</span>
+      <p class="integration-description">Auto-capture analytics integration for complete user journey tracking.</p>
+      <div class="integration-badges">
+        <span class="badge">Auto-capture</span>
+        <span class="badge">Retroactive</span>
+      </div>
+    </div>
+
+    <!-- Messaging Platforms -->
+    <div class="integration-card" data-category="messaging" data-name="SendGrid">
+      <div class="integration-icon">✉️</div>
+      <div class="integration-name">SendGrid</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Trigger email campaigns based on churn risk. Track email engagement for retention models.</p>
+      <div class="integration-badges">
+        <span class="badge">Transactional</span>
+        <span class="badge">Templates</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Twilio">
+      <div class="integration-icon">📞</div>
+      <div class="integration-name">Twilio</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Send SMS/WhatsApp messages to at-risk customers. Multi-channel communication.</p>
+      <div class="integration-badges">
+        <span class="badge">SMS</span>
+        <span class="badge">WhatsApp</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Mailgun">
+      <div class="integration-icon">📬</div>
+      <div class="integration-name">Mailgun</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Developer-friendly email API for automated retention campaigns.</p>
+      <div class="integration-badges">
+        <span class="badge">API-first</span>
+        <span class="badge">Webhooks</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Customer.io">
+      <div class="integration-icon">🎯</div>
+      <div class="integration-name">Customer.io</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Behavioral messaging platform integration for lifecycle campaigns.</p>
+      <div class="integration-badges">
+        <span class="badge">Lifecycle</span>
+        <span class="badge">Multi-channel</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Braze">
+      <div class="integration-icon">🔥</div>
+      <div class="integration-name">Braze</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Enterprise customer engagement platform with AI-powered messaging.</p>
+      <div class="integration-badges">
+        <span class="badge">Enterprise</span>
+        <span class="badge">Mobile</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Klaviyo">
+      <div class="integration-icon">📧</div>
+      <div class="integration-name">Klaviyo</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">E-commerce marketing automation with SMS and email campaigns.</p>
+      <div class="integration-badges">
+        <span class="badge">E-commerce</span>
+        <span class="badge">Automation</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Postmark">
+      <div class="integration-icon">📮</div>
+      <div class="integration-name">Postmark</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Fast, reliable transactional email delivery for time-sensitive retention messages.</p>
+      <div class="integration-badges">
+        <span class="badge">Transactional</span>
+        <span class="badge">Fast</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="OneSignal">
+      <div class="integration-icon">🔔</div>
+      <div class="integration-name">OneSignal</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Push notifications and in-app messaging for mobile retention.</p>
+      <div class="integration-badges">
+        <span class="badge">Push</span>
+        <span class="badge">Mobile</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="messaging" data-name="Iterable">
+      <div class="integration-icon">🔁</div>
+      <div class="integration-name">Iterable</div>
+      <span class="integration-category">Messaging</span>
+      <p class="integration-description">Cross-channel marketing automation with journey builder.</p>
+      <div class="integration-badges">
+        <span class="badge">Journeys</span>
+        <span class="badge">Cross-channel</span>
+      </div>
+    </div>
+
+    <!-- Payment Platforms -->
+    <div class="integration-card" data-category="payments" data-name="Stripe">
+      <div class="integration-icon">💳</div>
+      <div class="integration-name">Stripe</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">Sync subscription data, payment events, and failed transactions for churn modeling.</p>
+      <div class="integration-badges">
+        <span class="badge">Subscriptions</span>
+        <span class="badge">Webhooks</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="payments" data-name="Chargebee">
+      <div class="integration-icon">💰</div>
+      <div class="integration-name">Chargebee</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">Subscription billing integration with dunning management and revenue analytics.</p>
+      <div class="integration-badges">
+        <span class="badge">Billing</span>
+        <span class="badge">Dunning</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="payments" data-name="Recurly">
+      <div class="integration-icon">🔄</div>
+      <div class="integration-name">Recurly</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">Subscription management platform with churn analytics and revenue recovery.</p>
+      <div class="integration-badges">
+        <span class="badge">Subscriptions</span>
+        <span class="badge">Recovery</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="payments" data-name="PayPal">
+      <div class="integration-icon">🅿️</div>
+      <div class="integration-name">PayPal</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">Payment gateway integration for transaction tracking and customer behavior.</p>
+      <div class="integration-badges">
+        <span class="badge">Transactions</span>
+        <span class="badge">Global</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="payments" data-name="Paddle">
+      <div class="integration-icon">🏓</div>
+      <div class="integration-name">Paddle</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">Merchant of record for SaaS with subscription and revenue analytics.</p>
+      <div class="integration-badges">
+        <span class="badge">MoR</span>
+        <span class="badge">SaaS</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="payments" data-name="Braintree">
+      <div class="integration-icon">🌳</div>
+      <div class="integration-name">Braintree</div>
+      <span class="integration-category">Payments</span>
+      <p class="integration-description">PayPal-owned payment platform with advanced fraud protection.</p>
+      <div class="integration-badges">
+        <span class="badge">Fraud Protection</span>
+        <span class="badge">PayPal</span>
+      </div>
+    </div>
+
+    <!-- Data Warehouses -->
+    <div class="integration-card" data-category="data" data-name="Snowflake">
+      <div class="integration-icon">❄️</div>
+      <div class="integration-name">Snowflake</div>
+      <span class="integration-category">Data Warehouse</span>
+      <p class="integration-description">Cloud data warehouse integration with bi-directional sync for ML model training.</p>
+      <div class="integration-badges">
+        <span class="badge">Cloud</span>
+        <span class="badge">ML-ready</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="data" data-name="BigQuery">
+      <div class="integration-icon">🔷</div>
+      <div class="integration-name">BigQuery</div>
+      <span class="integration-category">Data Warehouse</span>
+      <p class="integration-description">Google Cloud data warehouse with petabyte-scale analytics and ML integration.</p>
+      <div class="integration-badges">
+        <span class="badge">GCP</span>
+        <span class="badge">BigQuery ML</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="data" data-name="Redshift">
+      <div class="integration-icon">🔴</div>
+      <div class="integration-name">Redshift</div>
+      <span class="integration-category">Data Warehouse</span>
+      <p class="integration-description">AWS data warehouse integration with S3 and Glue for data pipeline automation.</p>
+      <div class="integration-badges">
+        <span class="badge">AWS</span>
+        <span class="badge">S3</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="data" data-name="Databricks">
+      <div class="integration-icon">🧱</div>
+      <div class="integration-name">Databricks</div>
+      <span class="integration-category">Data Warehouse</span>
+      <p class="integration-description">Unified analytics platform with Delta Lake and MLflow integration.</p>
+      <div class="integration-badges">
+        <span class="badge">Delta Lake</span>
+        <span class="badge">MLflow</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="data" data-name="PostgreSQL">
+      <div class="integration-icon">🐘</div>
+      <div class="integration-name">PostgreSQL</div>
+      <span class="integration-category">Data Warehouse</span>
+      <p class="integration-description">Open-source relational database with custom SQL query support.</p>
+      <div class="integration-badges">
+        <span class="badge">Open Source</span>
+        <span class="badge">SQL</span>
+      </div>
+    </div>
+
+    <!-- E-Commerce Platforms -->
+    <div class="integration-card" data-category="ecommerce" data-name="Shopify">
+      <div class="integration-icon">🛍️</div>
+      <div class="integration-name">Shopify</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">E-commerce platform integration with order, customer, and product sync.</p>
+      <div class="integration-badges">
+        <span class="badge">Orders</span>
+        <span class="badge">Customers</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="ecommerce" data-name="WooCommerce">
+      <div class="integration-icon">🛒</div>
+      <div class="integration-name">WooCommerce</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">WordPress e-commerce plugin integration for SMB retailers.</p>
+      <div class="integration-badges">
+        <span class="badge">WordPress</span>
+        <span class="badge">SMB</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="ecommerce" data-name="Magento">
+      <div class="integration-icon">🔶</div>
+      <div class="integration-name">Magento</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">Enterprise e-commerce platform with advanced catalog management.</p>
+      <div class="integration-badges">
+        <span class="badge">Enterprise</span>
+        <span class="badge">Adobe</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="ecommerce" data-name="BigCommerce">
+      <div class="integration-icon">🛍️</div>
+      <div class="integration-name">BigCommerce</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">Cloud e-commerce platform with headless architecture support.</p>
+      <div class="integration-badges">
+        <span class="badge">Headless</span>
+        <span class="badge">Cloud</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="ecommerce" data-name="Wix">
+      <div class="integration-icon">🌐</div>
+      <div class="integration-name">Wix</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">Website builder with e-commerce functionality for small businesses.</p>
+      <div class="integration-badges">
+        <span class="badge">SMB</span>
+        <span class="badge">No-code</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="ecommerce" data-name="Square">
+      <div class="integration-icon">⬛</div>
+      <div class="integration-name">Square</div>
+      <span class="integration-category">E-Commerce</span>
+      <p class="integration-description">Point-of-sale and e-commerce integration for omnichannel retail.</p>
+      <div class="integration-badges">
+        <span class="badge">POS</span>
+        <span class="badge">Omnichannel</span>
+      </div>
+    </div>
+
+    <!-- Marketing Platforms -->
+    <div class="integration-card" data-category="marketing" data-name="Marketo">
+      <div class="integration-icon">Ⓜ️</div>
+      <div class="integration-name">Marketo</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Adobe's marketing automation platform with lead scoring and nurture campaigns.</p>
+      <div class="integration-badges">
+        <span class="badge">Adobe</span>
+        <span class="badge">Automation</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Pardot">
+      <div class="integration-icon">☁️</div>
+      <div class="integration-name">Pardot</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Salesforce B2B marketing automation with lead management.</p>
+      <div class="integration-badges">
+        <span class="badge">B2B</span>
+        <span class="badge">Salesforce</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="ActiveCampaign">
+      <div class="integration-icon">⚡</div>
+      <div class="integration-name">ActiveCampaign</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Marketing automation with CRM and email marketing features.</p>
+      <div class="integration-badges">
+        <span class="badge">CRM</span>
+        <span class="badge">Email</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Mailchimp">
+      <div class="integration-icon">🐒</div>
+      <div class="integration-name">Mailchimp</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Email marketing platform with audience segmentation and automation.</p>
+      <div class="integration-badges">
+        <span class="badge">Email</span>
+        <span class="badge">Segmentation</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Drift">
+      <div class="integration-icon">💬</div>
+      <div class="integration-name">Drift</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Conversational marketing platform with chatbots and live chat.</p>
+      <div class="integration-badges">
+        <span class="badge">Chatbot</span>
+        <span class="badge">Live Chat</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Optimizely">
+      <div class="integration-icon">🧪</div>
+      <div class="integration-name">Optimizely</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Experimentation platform with A/B testing and personalization.</p>
+      <div class="integration-badges">
+        <span class="badge">A/B Testing</span>
+        <span class="badge">Personalization</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Google Ads">
+      <div class="integration-icon">📣</div>
+      <div class="integration-name">Google Ads</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">PPC advertising platform with audience sync and conversion tracking.</p>
+      <div class="integration-badges">
+        <span class="badge">PPC</span>
+        <span class="badge">Audiences</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="Facebook Ads">
+      <div class="integration-icon">📘</div>
+      <div class="integration-name">Facebook Ads</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">Social advertising with custom audiences and lookalike modeling.</p>
+      <div class="integration-badges">
+        <span class="badge">Social</span>
+        <span class="badge">Lookalikes</span>
+      </div>
+    </div>
+
+    <div class="integration-card" data-category="marketing" data-name="LinkedIn Ads">
+      <div class="integration-icon">💼</div>
+      <div class="integration-name">LinkedIn Ads</div>
+      <span class="integration-category">Marketing</span>
+      <p class="integration-description">B2B advertising platform with professional targeting.</p>
+      <div class="integration-badges">
+        <span class="badge">B2B</span>
+        <span class="badge">Professional</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>50+</h3>
+        <p>Pre-built Integrations</p>
+      </div>
+      <div class="stat-item">
+        <h3>5 min</h3>
+        <p>Average Setup Time</p>
+      </div>
+      <div class="stat-item">
+        <h3>99.9%</h3>
+        <p>Data Sync Reliability</p>
+      </div>
+      <div class="stat-item">
+        <h3>Real-time</h3>
+        <p>Bi-directional Sync</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="cta-section">
+    <h2>Need a Custom Integration?</h2>
+    <p>Our REST API and webhooks make it easy to build custom integrations. Enterprise customers get white-glove integration support.</p>
+    <div class="cta-buttons">
+      <a href="/api.html" class="btn btn-primary">Explore API Docs</a>
+      <a href="/contact-sales.html" class="btn btn-secondary">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Platform</h4><a href="/features.html">Features</a><a href="/pricing.html">Pricing</a><a href="/docs.html">Documentation</a><a href="/api.html">API Reference</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="/resources.html">Learning Center</a><a href="/use-cases.html">Use Cases</a><a href="/faq.html">FAQ</a><a href="/case-studies.html">Case Studies</a><a href="/blog.html">Blog</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/careers.html">Careers</a><a href="/contact-sales.html">Contact Sales</a><a href="/trust.html">Trust Center</a><a href="/compliance.html">Compliance</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a><a href="/dpa.html">DPA</a><a href="/cookie.html">Cookie Policy</a></div>
+    </div>
+    <div class="footer-bottom">
+      <small>© 2026 KIKI™ Enterprise Platform. All rights reserved. SOC 2 Type II Certified | ISO 27001 Compliant</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+function filterByCategory(category) {
+  const cards = document.querySelectorAll('.integration-card');
+  const tabs = document.querySelectorAll('.filter-tab');
+  
+  // Update active tab
+  tabs.forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Filter cards
+  cards.forEach(card => {
+    if (category === 'all' || card.getAttribute('data-category') === category) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterIntegrations() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.integration-card');
+  
+  cards.forEach(card => {
+    const name = card.getAttribute('data-name').toLowerCase();
+    const description = card.querySelector('.integration-description').textContent.toLowerCase();
+    const category = card.getAttribute('data-category').toLowerCase();
+    
+    if (name.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>

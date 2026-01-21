@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KIKI Admin Login</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <style>
+    .login-container { max-width: 400px; margin: 100px auto; background: #232b3e; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px #0003; }
+    .login-container h2 { text-align: center; color: #cbd5e1; }
+    .login-container label { color: #cbd5e1; }
+    .login-container input { width: 100%; padding: 0.75rem; margin: 0.5rem 0; border-radius: 4px; border: none; background: #181f2a; color: #cbd5e1; }
+    .login-container button { width: 100%; padding: 0.75rem; background: #3b82f6; color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    .login-container button:hover { background: #2563eb; }
+    .login-error { color: #f87171; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Super Admin Login</h2>
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Login</button>
+      <div class="login-error" id="login-error"></div>
+    </form>
+  </div>
+  <script src="js/login.js"></script>
+</body>
+</html>

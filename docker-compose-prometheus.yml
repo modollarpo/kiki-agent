@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # Prometheus - Metrics database
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-kiki
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./kiki-alerts.yml:/etc/prometheus/kiki-alerts.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - kiki-network
+    restart: unless-stopped
+
+  # AlertManager - Alert routing and grouping
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: alertmanager-kiki
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - alertmanager_data:/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    networks:
+      - kiki-network
+    restart: unless-stopped
+
+  # Grafana - Visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-kiki
+    ports:
+      - "8502:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=kiki-admin
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana_data:/var/lib/grafana
+    networks:
+      - kiki-network
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+
+  # Node Exporter - System metrics (optional)
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter-kiki
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - kiki-network
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+    driver: local
+  alertmanager_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  kiki-network:
+    driver: bridge

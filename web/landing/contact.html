@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - KIKI | Schedule Enterprise Demo</title>
+  <meta name="description" content="Contact KIKI for enterprise demos, technical support, and partnership inquiries. 24/7 support with <4h response time.">
+  <link rel="canonical" href="https://kiki.example.com/contact">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+    .contact-form {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 2.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      color: #f1f5f9;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 14px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 8px;
+      color: #f1f5f9;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .form-submit {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .info-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .info-card h3 {
+      color: #f1f5f9;
+      font-size: 20px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .info-card p {
+      color: #cbd5e1;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+    .info-card a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    .info-card a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+    .success-message {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+    @media (max-width: 968px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">🤖 <strong>KIKI</strong></div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/docs.html">Docs</a>
+        <a href="/api.html">API</a>
+        <a href="/integrations.html">Integrations</a>
+        <a href="/case-studies.html">Case Studies</a>
+        <a href="/blog.html">Blog</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html" style="color: #3b82f6;">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">⚡ Enterprise Support • <15min Response Time • 99.99% SLA</div>
+      <h1 class="hero-title">Contact KIKI Enterprise</h1>
+      <p class="hero-subtitle">
+        Schedule a technical deep-dive, speak with our solutions architects, or connect with our security team.
+        Purpose-built AI agents for customer retention at enterprise scale.
+      </p>
+    </div>
+  </section>
+
+  <section class="platform-overview">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <h2 style="color: #f1f5f9; font-size: 2rem; margin-bottom: 1rem;">Schedule Technical Deep-Dive</h2>
+          <p style="color: #cbd5e1; margin-bottom: 2rem;">Fill out the form below. Our solutions architects respond within 15 minutes during business hours (6am-6pm PST), or within 4 hours outside business hours.</p>
+          
+          <div class="contact-form">
+            <div id="successMessage" class="success-message">
+              ✓ Thank you! Your inquiry has been received. A solutions architect will reach out within 15 minutes (business hours) or 4 hours (after hours).
+            </div>
+            
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" id="fullName" name="fullName" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Business Email *</label>
+                <input type="email" id="email" name="email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="company">Company Name *</label>
+                <input type="text" id="company" name="company" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+              </div>
+
+              <div class="form-group">
+                <label for="companySize">Company Size *</label>
+                <select id="companySize" name="companySize" required>
+                  <option value="">Select company size</option>
+                  <option value="1-50">1-50 employees</option>
+                  <option value="51-200">51-200 employees</option>
+                  <option value="201-1000">201-1,000 employees</option>
+                  <option value="1001-5000">1,001-5,000 employees</option>
+                  <option value="5001+">5,001+ employees (Enterprise)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="inquiryType">Inquiry Type *</label>
+                <select id="inquiryType" name="inquiryType" required>
+                  <option value="">Select inquiry type</option>
+                  <option value="demo">Technical Deep-Dive (90min)</option>
+                  <option value="shadow-pilot">Shadow Mode Pilot (30-day POC)</option>
+                  <option value="enterprise-pricing">Enterprise Pricing & Licensing</option>
+                  <option value="technical">Technical Integration Support</option>
+                  <option value="security">Security & Compliance Review</option>
+                  <option value="partnership">Strategic Partnership</option>
+                  <option value="escalation">Critical System Escalation</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" required placeholder="Describe your customer retention challenges, technical requirements, and integration constraints. Include current stack (e.g., Salesforce, Segment, Braze) and scale (e.g., 10M users, 500K events/day)."></textarea>
+              </div>
+
+              <button type="submit" class="form-submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <div class="info-card">
+            <h3>🏢 Headquarters</h3>
+            <p><strong>KIKI Technologies, Inc.</strong></p>
+            <p>535 Mission Street, 14th Floor<br>
+            San Francisco, CA 94105<br>
+            United States</p>
+            <p>Tel: <a href="tel:+14155551234">+1 (415) 555-1234</a></p>
+          </div>
+
+          <div class="info-card">
+            <h3>🌍 Global Offices</h3>
+            <p><strong>London (EMEA)</strong><br>
+            1 Canada Square, Canary Wharf<br>
+            London E14 5AB, United Kingdom</p>
+            
+            <p style="margin-top: 1rem;"><strong>Singapore (APAC)</strong><br>
+            1 Marina Boulevard, #20-01<br>
+            Singapore 018989</p>
+          </div>
+
+          <div class="info-card">
+            <h3>💬 Enterprise Support Channels</h3>
+            <p><strong>Solutions Architects (Pre-Sales):</strong><br>
+            <a href="mailto:solutions@kiki.ai">solutions@kiki.ai</a><br>
+            <15min response (business hours)</p>
+            
+            <p style="margin-top: 1rem;"><strong>Technical Support (Post-Sales):</strong><br>
+            <a href="mailto:support@kiki.ai">support@kiki.ai</a><br>
+            24/7 • <15min P0 • <4h P1 • 99.99% SLA</p>
+            
+            <p style="margin-top: 1rem;"><strong>Security & Compliance:</strong><br>
+            <a href="mailto:security@kiki.ai">security@kiki.ai</a><br>
+            SOC 2 Type II • ISO 27001 • GDPR/CCPA</p>
+            
+            <p style="margin-top: 1rem;"><strong>Account Management:</strong><br>
+            <a href="mailto:accounts@kiki.ai">accounts@kiki.ai</a></p>
+          </div>
+
+          <div class="info-card">
+            <h3>📞 Critical Escalation Hotlines</h3>
+            <p><strong>P0 Security Incidents:</strong><br>
+            <a href="tel:+14155559999">+1 (415) 555-9999</a> (24/7)<br>
+            <a href="mailto:security@kiki.ai">security@kiki.ai</a><br>
+            Response: <15min • Breach protocol active</p>
+            
+            <p style="margin-top: 1rem;"><strong>P0 System Outages:</strong><br>
+            <a href="tel:+14155558888">+1 (415) 555-8888</a> (24/7)<br>
+            <a href="mailto:oncall@kiki.ai">oncall@kiki.ai</a><br>
+            Response: <15min • War room protocol</p>
+            
+            <p style="margin-top: 1rem;"><strong>Status Dashboard:</strong><br>
+            <a href="https://status.kiki.ai" target="_blank">status.kiki.ai</a><br>
+            Real-time SLIs/SLOs • Incident history</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Enterprise Engagement Options</h2>
+      <div class="feature-detail-grid">
+        <div class="feature-detail">
+          <div class="feature-icon">🎯</div>
+          <h3>Technical Deep-Dive (90min)</h3>
+          <p style="color: #cbd5e1;">Architecture walkthrough with your DevOps and ML teams. Review API specs, data pipelines, model inference, shadow mode deployment, and ROI forecasting with your actual usage patterns.</p>
+        </div>
+
+        <div class="feature-detail">
+          <div class="feature-icon">🔬</div>
+          <h3>Shadow Mode Pilot (30 days)</h3>
+          <p style="color: #cbd5e1;">Risk-free POC running KIKI agents in parallel with your production systems. No user-facing changes. Compare predictions against actuals. Measure lift in retention, LTV, and engagement metrics.</p>
+        </div>
+
+        <div class="feature-detail">
+          <div class="feature-icon">🛡️</div>
+          <h3>Security & Compliance Review</h3>
+          <p style="color: #cbd5e1;">Access SOC 2 Type II audit reports, ISO 27001 certification, penetration test results, infrastructure architecture diagrams, and DPA templates under NDA. Security questionnaire support included.</p>
+        </div>
+
+        <div class="feature-detail">
+          <div class="feature-icon">💰</div>
+          <h3>Enterprise Pricing & Licensing</h3>
+          <p style="color: #cbd5e1;">Volume discounts starting at 100M events/month. Multi-year contracts with annual prepay discounts. Flexible billing (usage-based, user-based, or flat-rate). Custom SLAs and dedicated Slack channels available.</p>
+        </div>
+
+        <div class="feature-detail">
+          <div class="feature-icon">🔌</div>
+          <h3>Technical Integration Support</h3>
+          <p style="color: #cbd5e1;">Hands-on assistance from KIKI engineers for Segment, Salesforce, Braze, mParticle, and custom webhook integrations. Feature engineering consultation for your specific retention use cases.</p>
+        </div>
+
+        <div class="feature-detail">
+          <div class="feature-icon">🤝</div>
+          <h3>Strategic Partnerships</h3>
+          <p style="color: #cbd5e1;">Technology partnerships (CDP, CRM, marketing automation platforms), reseller programs, and co-marketing opportunities. White-label and OEM licensing available for qualifying partners.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-column">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/index.html">Platform Overview</a></li>
+          <li><a href="/syncvalue.html">SyncValue (LTV)</a></li>
+          <li><a href="/syncengage.html">SyncEngage (Messaging)</a></li>
+          <li><a href="/syncshield.html">SyncShield (Fraud)</a></li>
+          <li><a href="/integrations.html">Integrations</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/docs.html">Documentation</a></li>
+          <li><a href="/api.html">API Reference</a></li>
+          <li><a href="/case-studies.html">Case Studies</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about.html">About KIKI</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+          <li><a href="https://status.kiki.ai">System Status</a></li>
+          <li><a href="mailto:security@kiki.ai">Security</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Service</a></li>
+          <li><a href="/dpa.html">Data Processing Agreement</a></li>
+          <li><a href="/cookie.html">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> KIKI. All rights reserved. SOC 2 Type II Certified • ISO 27001 Certified • GDPR Compliant</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Form submission handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = {
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        company: document.getElementById('company').value,
+        phone: document.getElementById('phone').value,
+        companySize: document.getElementById('companySize').value,
+        inquiryType: document.getElementById('inquiryType').value,
+        message: document.getElementById('message').value,
+        timestamp: new Date().toISOString()
+      };
+
+      // In production, this would send to your backend
+      console.log('Form submitted:', formData);
+      
+      // Show success message
+      document.getElementById('successMessage').style.display = 'block';
+      
+      // Reset form
+      this.reset();
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        document.getElementById('successMessage').style.display = 'none';
+      }, 5000);
+
+      // Scroll to success message
+      document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>
