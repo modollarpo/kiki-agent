@@ -1,0 +1,37 @@
+/* Midnight Neon Tailwind Theme (customized for KIKI) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gradient-to-br from-gray-900 via-indigo-900 to-black text-neon-green min-h-screen;
+}
+
+.card {
+  @apply bg-gradient-to-br from-gray-800 via-indigo-800 to-gray-900 border border-neon-pink shadow-lg rounded-xl;
+}
+
+.navbar, .modal-content {
+  @apply bg-gradient-to-r from-black via-indigo-900 to-gray-900 border-b-2 border-neon-pink;
+}
+
+.text-neon-green {
+  color: #39ff14;
+}
+
+.border-neon-pink {
+  border-color: #ff00cc;
+}
+
+.bg-darker {
+  background: linear-gradient(135deg, #18181b 0%, #312e81 100%);
+}
+
+.pulse {
+  animation: pulse-neon 1.2s infinite;
+}
+
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 0 0 #ff00cc44; }
+  50% { box-shadow: 0 0 16px 8px #ff00cc99; }
+}

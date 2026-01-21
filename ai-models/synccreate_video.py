@@ -21,6 +21,7 @@ import base64
 import numpy as np
 from PIL import Image
 import cv2
+from moviepy.editor import ImageClip, CompositeVideoClip, TextClip
 
 # ============================================================================
 # VIDEO GENERATION CONFIGURATION
@@ -995,6 +996,36 @@ def example_video_generation():
     
     return payload
 
+def create_tiktok_video(image_path, output_path, overlay_text='KIKI', duration=5, fps=30):
+    """Create a TikTok-ready 5s video with neon KIKI overlay from a product image."""
+    from PIL import Image
+    import cv2
+    from pathlib import Path
+    # Load and resize image to 1080x1920 (TikTok 9:16)
+    img = cv2.imread(str(image_path))
+    if img is None:
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    target_width, target_height = 1080, 1920
+    img_resized = cv2.resize(img, (target_width, target_height))
+    temp_img_path = Path(output_path).parent / "_temp_sync_img.jpg"
+    cv2.imwrite(str(temp_img_path), img_resized)
+
+    img_clip = ImageClip(str(temp_img_path)).set_duration(duration)
+    txt_clip = TextClip(overlay_text,
+                        fontsize=120,
+                        font='Arial-Bold',
+                        color='#39ff14',
+                        stroke_color='#ff00cc',
+                        stroke_width=4,
+                        method='label') \
+        .set_position(('center', 'bottom')) \
+        .set_duration(duration) \
+        .margin(bottom=120)
+    video = CompositeVideoClip([img_clip, txt_clip])
+    video.write_videofile(str(output_path), fps=fps, codec='libx264', audio=False)
+    temp_img_path.unlink(missing_ok=True)
+    print(f"✓ TikTok-ready video saved: {output_path}")
+
 
 if __name__ == "__main__":
     # Run example
@@ -1002,3 +1033,9 @@ if __name__ == "__main__":
     
     print("\n✅ SyncCreate™ Video Module Ready")
     print("🎯 Next: Connect to SyncFlow™ for platform deployment")
+    
+    import sys
+    if len(sys.argv) >= 3:
+        create_tiktok_video(sys.argv[1], sys.argv[2])
+    else:
+        print("Usage: python synccreate_video.py <input_image> <output_video>")

@@ -121,6 +121,16 @@ function updateDashboard(metrics) {
     document.getElementById('revenue').textContent = formatCurrency(metrics.daily_revenue || 45320);
     document.getElementById('uptime').textContent = formatUptime(metrics.timestamp);
 
+    // Capital Leak metric
+    const capitalLeak = metrics.capital_leak ?? 0;
+    const capitalLeakElem = document.getElementById('capital-leak');
+    capitalLeakElem.textContent = `${capitalLeak.toFixed(2)}%`;
+    if (capitalLeak > 10) {
+        capitalLeakElem.classList.add('pulse', 'text-neon-green');
+    } else {
+        capitalLeakElem.classList.remove('pulse', 'text-neon-green');
+    }
+
     // Update service health table
     updateServiceHealth(metrics.services);
 
@@ -268,6 +278,300 @@ function displayActions() {
         `;
         container.appendChild(actionDiv);
     });
+}
+
+// --- Creative Gallery ---
+async function loadCreativeGallery() {
+    // Example: Fetch gallery data from API (replace with real endpoint)
+    const res = await fetch(`${API_BASE}/api/creative-gallery`);
+    let gallery = [];
+    if (res.ok) {
+        gallery = await res.json();
+    } else {
+        // Fallback: demo data
+        gallery = [
+            {
+                video_url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                ltv: 142.50,
+                title: 'Demo Creative 1'
+            },
+            {
+                video_url: 'https://www.w3schools.com/html/movie.mp4',
+                ltv: 98.75,
+                title: 'Demo Creative 2'
+            }
+        ];
+    }
+    renderCreativeGallery(gallery);
+}
+
+function renderCreativeGallery(gallery) {
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = '';
+    gallery.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+        col.innerHTML = `
+            <div class="card bg-dark border-neon-pink h-100">
+                <video src="${item.video_url}" controls class="w-100 rounded mb-2" style="max-height:340px;background:#000;"></video>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-neon-green">LTV: $${item.ltv.toFixed(2)}</span>
+                    <span class="text-muted small">${item.title || ''}</span>
+                </div>
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+}
+
+// Load gallery when tab is shown
+const creativeGalleryTab = document.querySelector('a[href="#creative-gallery"]');
+if (creativeGalleryTab) {
+    creativeGalleryTab.addEventListener('shown.bs.tab', loadCreativeGallery);
+}
+
+// --- Creative Gallery: Generate Button ---
+function showGenerateCreativeModal() {
+    const modalHtml = `
+    <div class="modal fade" id="generateCreativeModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-darker border-secondary">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title">Generate New Creative</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Background Image URL</label>
+              <input type="text" class="form-control bg-secondary border-secondary text-light" id="creative-bg-url" placeholder="https://...">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Product Hook Text</label>
+              <input type="text" class="form-control bg-secondary border-secondary text-light" id="creative-hook" placeholder="Your Next Best Seller">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Product ID</label>
+              <input type="text" class="form-control bg-secondary border-secondary text-light" id="creative-product-id" placeholder="sku1234">
+            </div>
+          </div>
+          <div class="modal-footer border-secondary">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="generateCreativeBtn">Generate</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    const modal = new bootstrap.Modal(document.getElementById('generateCreativeModal'));
+    modal.show();
+    document.getElementById('generateCreativeBtn').onclick = async function() {
+        const bg_image = document.getElementById('creative-bg-url').value;
+        const hook = document.getElementById('creative-hook').value;
+        const product_id = document.getElementById('creative-product-id').value;
+        if (!bg_image || !hook || !product_id) return alert('All fields required.');
+        const res = await fetch(`${API_BASE}/api/creative-gallery/generate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bg_image, product: { id: product_id, hook } })
+        });
+        if (res.ok) {
+            showNotification('Creative generated!');
+            loadCreativeGallery();
+            modal.hide();
+        } else {
+            showNotification('Failed to generate creative', 'error');
+        }
+    };
+    document.getElementById('generateCreativeModal').addEventListener('hidden.bs.modal', function() {
+        document.getElementById('generateCreativeModal').remove();
+    });
+}
+
+// Add button to Creative Gallery tab
+const creativeGalleryTabContent = document.getElementById('creative-gallery');
+if (creativeGalleryTabContent) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-neon mb-3';
+    btn.innerHTML = '<i class="fas fa-plus"></i> Generate Creative';
+    btn.onclick = showGenerateCreativeModal;
+    creativeGalleryTabContent.querySelector('.card-body').prepend(btn);
+}
+
+// --- Admin Approval UI ---
+async function loadAdminApprovals() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/pending-approvals`);
+    let approvals = [];
+    if (res.ok) {
+        approvals = await res.json();
+    }
+    renderAdminApprovals(approvals);
+}
+
+function renderAdminApprovals(approvals) {
+    const grid = document.getElementById('approvals-list');
+    grid.innerHTML = '';
+    if (!approvals.length) {
+        grid.innerHTML = '<p class="text-muted">No pending approvals</p>';
+        return;
+    }
+    approvals.forEach(item => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6';
+        col.innerHTML = `
+            <div class="card bg-dark border-neon-pink h-100">
+                <video src="${item.video_url}" controls class="w-100 rounded mb-2" style="max-height:340px;background:#000;"></video>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">${item.creative_id}</span>
+                    <div>
+                        <button class="btn btn-success btn-sm me-1" onclick="approveCreative('${item.creative_id}')"><i class="fas fa-check"></i> Approve</button>
+                        <button class="btn btn-danger btn-sm me-1" onclick="rejectCreative('${item.creative_id}')"><i class="fas fa-times"></i> Reject</button>
+                        <button class="btn btn-warning btn-sm" onclick="escalateCreative('${item.creative_id}')"><i class="fas fa-exclamation-triangle"></i> Escalate</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+}
+
+async function approveCreative(creative_id) {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_id })
+    });
+    if (res.ok) {
+        showNotification('Creative approved!');
+        loadAdminApprovals();
+        loadCreativeGallery();
+    } else {
+        showNotification('Approval failed', 'error');
+    }
+}
+
+// --- Anomaly Detection Visualization ---
+async function loadAnomalies() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/anomalies`);
+    let anomalies = [];
+    if (res.ok) {
+        anomalies = (await res.json()).anomalies;
+    }
+    renderAnomaliesOnTrendChart(anomalies);
+}
+
+function renderAnomaliesOnTrendChart(anomalies) {
+    if (!window.creativeTrendChart || !anomalies.length) return;
+    const chart = window.creativeTrendChart;
+    // Highlight anomaly points
+    chart.data.datasets.forEach(ds => {
+        if (!ds.pointBackgroundColor) ds.pointBackgroundColor = Array(ds.data.length).fill('#00ff88');
+    });
+    chart.data.labels.forEach((label, i) => {
+        if (anomalies.includes(label)) {
+            chart.data.datasets[0].pointBackgroundColor[i] = '#ff0000';
+        }
+    });
+    chart.update();
+}
+
+// --- Anomaly Explanations & Interactivity ---
+async function loadAnomalyExplanations() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/anomaly-explanations`);
+    let explanations = {};
+    if (res.ok) {
+        explanations = (await res.json()).explanations;
+    }
+    window.anomalyExplanations = explanations;
+}
+
+// Show explanation on anomaly click
+if (document.getElementById('creative-trend-chart')) {
+    document.getElementById('creative-trend-chart').onclick = function(evt) {
+        if (!window.creativeTrendChart) return;
+        const points = window.creativeTrendChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        if (points.length) {
+            const idx = points[0].index;
+            const label = window.creativeTrendChart.data.labels[idx];
+            if (window.anomalyExplanations && window.anomalyExplanations[label]) {
+                const exp = window.anomalyExplanations[label];
+                showNotification(`Anomaly: ${label}\nCount: ${exp.count}\nTop Creatives: ${exp.top_creatives.join(', ')}\nNote: ${exp.note}`);
+            } else {
+                showNotification('Date: ' + label + ', Approvals: ' + window.creativeTrendChart.data.datasets[0].data[idx]);
+            }
+        }
+    };
+}
+
+// Load anomaly explanations after anomalies
+if (creativeAnalyticsTab) {
+    creativeAnalyticsTab.addEventListener('shown.bs.tab', () => {
+        setTimeout(loadAnomalyExplanations, 1300);
+    });
+}
+
+// --- Anomaly Root-Cause Analysis ---
+async function loadAnomalyRootCauses() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/anomaly-root-cause`);
+    let rootCauses = {};
+    if (res.ok) {
+        rootCauses = (await res.json()).root_causes;
+    }
+    window.anomalyRootCauses = rootCauses;
+}
+
+// Show root cause on anomaly click
+if (document.getElementById('creative-trend-chart')) {
+    document.getElementById('creative-trend-chart').onclick = function(evt) {
+        if (!window.creativeTrendChart) return;
+        const points = window.creativeTrendChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        if (points.length) {
+            const idx = points[0].index;
+            const label = window.creativeTrendChart.data.labels[idx];
+            if (window.anomalyRootCauses && window.anomalyRootCauses[label]) {
+                showNotification('Root Cause(s): ' + window.anomalyRootCauses[label].join('; '));
+            }
+        }
+    };
+}
+
+// Load root causes after anomaly explanations
+if (creativeAnalyticsTab) {
+    creativeAnalyticsTab.addEventListener('shown.bs.tab', () => {
+        setTimeout(loadAnomalyRootCauses, 1400);
+    });
+}
+
+// --- Admin Workflow Actions ---
+async function rejectCreative(creative_id) {
+    const reason = prompt('Reason for rejection?');
+    if (!reason) return;
+    const res = await fetch(`${API_BASE}/api/creative-gallery/reject`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_id, reason })
+    });
+    if (res.ok) {
+        showNotification('Creative rejected.');
+        loadAdminApprovals();
+        loadCreativeGallery();
+    } else {
+        showNotification('Rejection failed', 'error');
+    }
+}
+
+async function escalateCreative(creative_id) {
+    const reason = prompt('Reason for escalation?');
+    if (!reason) return;
+    const res = await fetch(`${API_BASE}/api/creative-gallery/escalate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_id, reason })
+    });
+    if (res.ok) {
+        showNotification('Creative escalated.');
+    } else {
+        showNotification('Escalation failed', 'error');
+    }
 }
 
 // API Calls
@@ -444,5 +748,131 @@ function downloadCSV(csv, filename) {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
 }
+
+// --- Performance by Campaign/Product Chart ---
+async function loadPerformanceChart() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/performance`);
+    let perf = {};
+    if (res.ok) {
+        perf = (await res.json()).performance;
+    }
+    renderPerformanceChart(perf);
+}
+
+function renderPerformanceChart(perf) {
+    const ctx = document.createElement('canvas');
+    ctx.height = 120;
+    ctx.className = 'mb-4';
+    document.getElementById('creative-analytics').querySelector('.card-body').appendChild(ctx);
+    const labels = Object.keys(perf);
+    const approved = labels.map(k => perf[k].approved);
+    const rejected = labels.map(k => perf[k].rejected);
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [
+                { label: 'Approved', data: approved, backgroundColor: '#00ff88' },
+                { label: 'Rejected', data: rejected, backgroundColor: '#ff00cc' }
+            ]
+        },
+        options: {
+            plugins: { legend: { display: true } },
+            scales: { x: { title: { display: true, text: 'Campaign/Product' } }, y: { beginAtZero: true } },
+            onClick: async function(evt, elements) {
+                if (elements.length) {
+                    const idx = elements[0].index;
+                    const key = labels[idx];
+                    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/drilldown/${key}`);
+                    let data = [];
+                    if (res.ok) data = (await res.json()).creatives;
+                    showNotification('Drill-down: ' + data.map(c => c.creative_id).join(', '));
+                }
+            }
+        }
+    });
+}
+
+// --- Export All Analytics Button ---
+async function exportAllAnalyticsCSV() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/analytics/export`);
+    if (res.ok) {
+        const data = await res.json();
+        showNotification('Analytics exported: ' + data.csv, 'success');
+        window.open('/' + data.csv, '_blank');
+    } else {
+        showNotification('Export failed', 'error');
+    }
+}
+
+// Add export button to analytics tab
+if (analyticsTabContent) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-neon mb-3';
+    btn.innerHTML = '<i class="fas fa-download"></i> Export All Analytics';
+    btn.onclick = exportAllAnalyticsCSV;
+    analyticsTabContent.querySelector('.card-body').prepend(btn);
+}
+
+// --- Admin Summary Panel ---
+async function loadAdminSummary() {
+    const res = await fetch(`${API_BASE}/api/creative-gallery/admin-summary`);
+    let summary = {};
+    if (res.ok) {
+        summary = await res.json();
+    }
+    renderAdminSummary(summary);
+}
+
+function renderAdminSummary(summary) {
+    const div = document.createElement('div');
+    div.className = 'alert alert-info';
+    div.innerHTML = `
+        <strong>Admin Summary:</strong> Total: ${summary.total_creatives}, Pending: ${summary.pending}, Approved: ${summary.approved}, Rejected: ${summary.rejected}, Escalated: ${summary.escalated}, Last Approval: ${summary.last_approval}
+    `;
+    document.getElementById('creative-analytics').querySelector('.card-body').prepend(div);
+}
+
+// Load deeper analytics and admin summary when analytics tab is shown
+if (creativeAnalyticsTab) {
+    creativeAnalyticsTab.addEventListener('shown.bs.tab', () => {
+        loadPerformanceChart();
+        loadAdminSummary();
+    });
+}
+
+// Add granular drill-down for creative actions
+function showCreativeActions(creativeId) {
+  fetch(`/creative-gallery/analytics/drilldown/creative/${creativeId}`)
+    .then(r => r.json())
+    .then(data => {
+      let html = '<h4>Action History</h4><ul>';
+      data.actions.forEach(a => {
+        html += `<li>${a.timestamp || ''}: ${a.auto_rejected ? 'Auto-Rejected' : (a.auto_approved ? 'Auto-Approved' : a.action || 'Unknown')}</li>`;
+      });
+      html += '</ul>';
+      showModal(html);
+    });
+}
+
+// Add export as JSON and Excel
+$('#export-json-btn').on('click', function() {
+  fetch('/creative-gallery/analytics/export/json')
+    .then(r => r.json())
+    .then(data => {
+      window.open('/' + data.json, '_blank');
+    });
+});
+$('#export-xlsx-btn').on('click', function() {
+  fetch('/creative-gallery/analytics/export/xlsx')
+    .then(r => r.json())
+    .then(data => {
+      window.open('/' + data.xlsx, '_blank');
+    });
+});
+$('#creative-analytics').on('click', '.creative-drilldown', function() {
+  const creativeId = $(this).data('creative-id');
+  showCreativeActions(creativeId);
+});
 
 console.log('✅ Dashboard client loaded');

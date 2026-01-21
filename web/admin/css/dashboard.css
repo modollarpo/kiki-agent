@@ -1,123 +1,7 @@
-/* KIKI Super-Admin Dashboard Styles */
+/* Import Midnight Neon theme */
+@import url('midnight-neon.css');
 
-:root {
-    --bg-darker: #0a0e27;
-    --bg-dark: #1a1f3a;
-    --bg-card: #151b2f;
-    --border-color: #2d3748;
-    --text-light: #e2e8f0;
-    --text-muted: #a0aec0;
-    --accent-blue: #3b82f6;
-    --accent-green: #10b981;
-    --accent-yellow: #f59e0b;
-    --accent-red: #ef4444;
-}
-
-html,
-body {
-    background-color: var(--bg-darker);
-    color: var(--text-light);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    overflow-x: hidden;
-}
-
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #4a5568;
-}
-
-/* Navbar */
-.navbar {
-    background-color: var(--bg-darker) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    padding: 1rem 2rem;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.navbar-brand i {
-    margin-right: 0.5rem;
-}
-
-/* Cards */
-.card {
-    background-color: var(--bg-card) !important;
-    border-color: var(--border-color) !important;
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    border-color: var(--accent-blue) !important;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
-}
-
-.card-header {
-    background-color: var(--bg-darker) !important;
-    border-color: var(--border-color) !important;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-/* Tables */
-.table {
-    color: var(--text-light);
-    border-color: var(--border-color);
-}
-
-.table-dark {
-    background-color: var(--bg-card);
-}
-
-.table thead th {
-    border-color: var(--border-color);
-    font-weight: 600;
-    color: var(--text-light);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
-
-.table tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.table tbody tr:hover {
-    background-color: rgba(59, 130, 246, 0.1);
-}
-
-.table tbody td {
-    vertical-align: middle;
-    border-color: var(--border-color);
-}
-
-/* Badges */
-.badge {
-    padding: 0.5rem 0.75rem;
-    font-weight: 500;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
+/* Remove Bootstrap, use Tailwind for all styling */
 
 .badge-success {
     background-color: var(--accent-green) !important;
@@ -181,6 +65,21 @@ body {
 
 .btn-link:hover {
     color: var(--accent-blue);
+}
+
+.btn-neon {
+  background: linear-gradient(90deg, #00ff88 0%, #00cfff 100%);
+  color: #18181b;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 0 12px #00ff88cc;
+  transition: box-shadow 0.2s;
+  margin-right: 8px;
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 32px #00ff88cc;
+  color: #fff;
 }
 
 /* Tabs */
@@ -376,6 +275,25 @@ body {
     font-size: 1.1rem;
 }
 
+/* Creative Gallery Styles */
+#gallery-grid .card {
+  background: linear-gradient(135deg, #18181b 0%, #312e81 100%);
+  border: 2px solid #ff00cc;
+  box-shadow: 0 0 16px 2px #00ff8877;
+  transition: transform 0.2s;
+}
+#gallery-grid .card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 32px 4px #00ff88cc;
+}
+#gallery-grid video {
+  border-radius: 0.75rem;
+  border: 2px solid #00ff88;
+}
+.text-neon-green {
+  color: #00ff88 !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .navbar {
@@ -436,6 +354,21 @@ body {
     animation: slideIn 0.3s ease;
 }
 
+@keyframes pulse-neon {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 #ff00cc44;
+    }
+
+    50% {
+        box-shadow: 0 0 16px 8px #ff00cc99;
+    }
+}
+
+.pulse {
+    animation: pulse-neon 1.2s infinite;
+}
+
 /* Dark Mode (Default) */
 .bg-darker {
     background-color: var(--bg-darker) !important;
@@ -451,4 +384,8 @@ body {
 
 .border-secondary {
     border-color: var(--border-color) !important;
+}
+
+.text-neon-green {
+    color: #39ff14 !important;
 }
